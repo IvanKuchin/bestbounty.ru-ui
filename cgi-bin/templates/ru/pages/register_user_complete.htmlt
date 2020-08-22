@@ -1,0 +1,6 @@
+<<template:templates/ru/pages/header.htmlt>>
+
+Пользователь <<vars:login>> создан. Для того что бы активировать свой аккаунт следуйте инструкциям которые отправлены на ваш почтовый ящик
+<<vars:email>>.
+
+<<template:templates/ru/pages/footer.htmlt>>

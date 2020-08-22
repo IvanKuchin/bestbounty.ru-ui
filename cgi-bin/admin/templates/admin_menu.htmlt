@@ -1,0 +1,9 @@
+    <td width="20%" color="#boza">
+
+<ul class="list-group">
+<li class="list-group-item"><a href="/cgi-bin/admin/admin.cgi?act=admin_get_user_list&rand=<<vars:rand>>">Пользователи</a></li>
+<li class="list-group-item"><a href="/cgi-bin/admin/admin.cgi?act=admin_get_regions_list&rand=<<vars:rand>>">Geo Region</a></li>
+<li class="list-group-item"><a href="/cgi-bin/admin/admin.cgi?act=admin_get_localities_list&rand=<<vars:rand>>">Geo Locality</a></li>
+
+</ul>
+    </td>

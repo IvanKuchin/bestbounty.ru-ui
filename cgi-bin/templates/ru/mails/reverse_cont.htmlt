@@ -1,0 +1,7 @@
+subject: Reverse contact
+
+subject: <<vars:subj>>
+name: <<vars:name>>
+email: <<vars:email>>
+
+<<vars:description>>

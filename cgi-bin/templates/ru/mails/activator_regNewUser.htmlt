@@ -1,0 +1,8 @@
+From: "admin" <noreply@bestbounty.ru>
+Subject: <<vars:SERVER_NAME>>: Регистрация пользователя на сайте
+Content-Type: text/plain; charset=utf-8
+
+Для того что бы завершить активацию вам необходимо перейти по ссылке
+http://<<vars:SERVER_NAME>>/activate_me/<<vars:activator_regNewUser>>
+
+.

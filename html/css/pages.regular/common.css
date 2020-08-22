@@ -1,0 +1,50 @@
+/*light colors*/
+
+.single_block {
+  background-color: #ffffff;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.highlight_row {
+  background-color: silver;
+}
+
+.highlight_background {
+	background-color: #f9f9f9;
+}
+
+.zebra_painting:nth-of-type(even) {
+	background-color: #f9f9f9;
+}
+
+.highlight_onhover:hover {
+	background-color: lightgrey;
+}
+
+.highlight_with_marker {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  text-shadow: 0 0 6px yellow, 0 0 6px yellow;
+}
+
+.link {
+  color: darkblue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: blue;
+}
+
+
+.label.label-default > a {
+  color: white;
+}
+

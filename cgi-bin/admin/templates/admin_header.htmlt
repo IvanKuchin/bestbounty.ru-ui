@@ -1,0 +1,30 @@
+	<title>Администрирование <<template:templates/domain.htmlt>></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<!-- TODO: remove and clean-up July 1 -->
+	<!-- jQuery 2.1.3 -->
+	<!-- <script src="/js/jquery/jquery-2.1.3.js"></script> -->
+	<!-- jQuery 3.2.1 -->
+	<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+
+	<!-- TODO: remove and clean-up July 1 -->
+	<!-- jQuery UI v 1.11.4 -->
+	<!--
+	<link href="/css/jquery-ui/jquery-ui.css" rel="stylesheet">
+	<script src="/js/jquery-ui/jquery-ui-1.11.4.js"></script>
+	-->
+	<!-- jQuery UI v 1.12.1 -->
+	<link href="/css/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+	<script src="/js/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<script src="/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Awesome font CSS http://-->
+    <link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Admin style -->
+	<link href="/css/admin/common.css" rel="stylesheet" type="text/css">
+
+	<script src="/js/pages/common.js"></script>

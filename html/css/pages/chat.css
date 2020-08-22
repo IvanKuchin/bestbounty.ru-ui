@@ -1,0 +1,383 @@
+
+/*--- chat layout*/
+body, html {
+  height: 100%;
+  min-height: 100%;
+}
+
+body div.container {
+  height: 90%;
+  min-height: 90%;
+}
+
+body div.container div.row {
+  height: 100%;
+  min-height: 100%;
+}
+
+@media screen and (min-width: 768px)
+{
+  body div.container div.row div#ContactList {
+    height: 100%;
+    min-height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (max-width: 767px)
+{
+  body div.container div.row div#ContactList {
+    height: 100%;
+    min-height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+}
+
+body div.container div.row div#MessageList {
+  height: calc(100% - 80px);
+  min-height: calc(100% - 80px);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+body div.container div.row div#SendingMessage {
+  height: 80px;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+/*--- contact list*/
+.contact_list_row {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.contact_list_item {
+  height: 40px;
+}
+.contact_list_avatar {
+  width: 40px;
+}
+
+.contact_list_name {
+  position: relative;
+  top: -35%;
+}
+
+.contact_list_selected {
+  background-color: #d7d7d9;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+/*
+.contact_list_selected, .contact_list_selected:hover {
+  background-color: #D7D7F7;
+}
+*/
+.contact_list_photo_div {
+  position: relative;
+}
+
+.contact_list_photo_number_of_unread_messages_badge {
+  position: absolute;
+  right: 15px;
+  top: 0px;
+  -webkit-transition: all 0.5s cubic-bezier(.87,-.41,.19,1.44);
+  -moz-transition: all 0.5s cubic-bezier(.87,-.41,.19,1.44);
+  -o-transition: all 0.5s cubic-bezier(.87,-.41,.19,1.44);
+  transition: all 0.5s cubic-bezier(.87,-.41,.19,1.44);
+}
+
+.contact_list_photo_number_of_unread_messages_badge.scale2 {
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+.contact_list_name_number_of_unread_messages_badge_invisible {
+  visibility: hidden;
+}
+
+div.contact_list_row:hover .contact_list_photo_number_of_unread_messages_badge {
+  -webkit-transform: translateX(10px);
+  -moz-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  transform: translateX(10px);
+}
+div.contact_list_row:hover {
+	background-color: #e7e7e9;
+}
+
+
+
+/*--- message window*/
+.message_pane_intermessage_interval {
+  margin-top: 10px;
+}
+.message_pane_from_me {
+  text-align: right;
+  border-radius: 10px 0px 10px 10px;
+  position: relative;
+}
+.message_pane_from_friend {
+  border-radius: 0px 10px 10px 10px;
+  position: relative;
+}
+
+.message_pane_timestamp {
+  font-size: x-small;
+}
+
+.message_pane_align_right {
+  text-align: right;
+}
+
+.message_pane_timestamp_white {
+  color: white;
+}
+
+.message_pane_div_space {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.message_pane_message_unread {
+  /*color: #CCCCCC;*/
+  opacity: 0.4;
+}
+.message_pane_message_unread:hover {
+  opacity: 1;
+}
+
+
+.message_pane_message_delivered {
+  /*color: #CCCCCC;*/
+  opacity: 0.4;
+}
+.message_pane_message_delivered:hover {
+  opacity: 1;
+}
+
+.message_pane_message_sent {
+  /*color: #EEEEEE;*/
+  opacity: 0.3;
+  font-size: smaller;
+}
+.message_pane_message_sent:hover {
+  opacity: 1;
+}
+
+.message_pane_div_message {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+}
+
+.message_pane_div_typing {
+  opacity: 0.0;
+  position: absolute;
+  top: -4px;
+}
+
+.message_pane_div_control_buttons {
+  position: absolute;
+  top: -4px;
+}
+
+.message_pane_div_typing_opacity_05 {
+  opacity: 0.5;
+}
+
+/*--- message seding*/
+.message_send_padding_5px {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+/*--- hight correcter. Used in the event of "on-screen keyboard" fired and creating space for scrolling*/
+.message_pane_correcter_portrait {
+  /*height: 230px;*/
+}
+.message_pane_correcter_landscape {
+  /*height: 230px;*/
+}
+
+.message_pane_image_resize {
+  max-width: 50%;
+  max-height: 240px;
+}
+
+.message_viewin_modal_image_size {
+  max-width: 100%;
+  max-height: 480px;
+  display: block;
+  margin: auto;
+}
+
+
+
+
+/*CSS LOADING start*/
+.cssload-jumping{
+position:relative;
+display:block;
+margin: 97px auto;
+width:107px;
+}
+
+.cssload-jumping, .cssload-jumping * {
+box-sizing: border-box;
+}
+
+.cssload-jumping span {
+display: inline-block;
+height: 15px;
+width: 15px;
+background: rgb(47,172,155);
+border-radius: 487px;
+background-clip: padding-box;
+  -o-background-clip: padding-box;
+  -ms-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+}
+
+.cssload-jumping span:nth-child(1) {
+animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -ms-animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.cssload-jumping span:nth-child(2) {
+animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -ms-animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.cssload-jumping span:nth-child(3) {
+animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -ms-animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.cssload-jumping span:nth-child(4) {
+animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -ms-animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.cssload-jumping span:nth-child(5) {
+animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -ms-animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+
+
+@keyframes scale {
+0% {
+  transform: scale(0);
+}
+25% {
+  transform: scale(0.9, 0.9);
+  background: rgb(147,225,215);
+}
+50% {
+  transform: scale(1, 1);
+  margin: 0 3px;
+  background: rgb(47,172,155);
+}
+100% {
+  transform: scale(0);
+}
+}
+
+@-o-keyframes scale {
+0% {
+  -o-transform: scale(0);
+}
+25% {
+  -o-transform: scale(0.9, 0.9);
+  background: rgb(147,225,215);
+}
+50% {
+  -o-transform: scale(1, 1);
+  margin: 0 3px;
+  background: rgb(47,172,155);
+}
+100% {
+  -o-transform: scale(0);
+}
+}
+
+@-ms-keyframes scale {
+0% {
+  -ms-transform: scale(0);
+}
+25% {
+  -ms-transform: scale(0.9, 0.9);
+  background: rgb(147,225,215);
+}
+50% {
+  -ms-transform: scale(1, 1);
+  margin: 0 3px;
+  background: rgb(47,172,155);
+}
+100% {
+  -ms-transform: scale(0);
+}
+}
+
+@-webkit-keyframes scale {
+0% {
+  -webkit-transform: scale(0);
+}
+25% {
+  -webkit-transform: scale(0.9, 0.9);
+  background: rgb(147,225,215);
+}
+50% {
+  -webkit-transform: scale(1, 1);
+  margin: 0 3px;
+  background: rgb(47,172,155);
+}
+100% {
+  -webkit-transform: scale(0);
+}
+}
+
+@-moz-keyframes scale {
+0% {
+  -moz-transform: scale(0);
+}
+25% {
+  -moz-transform: scale(0.9, 0.9);
+  background: rgb(147,225,215);
+}
+50% {
+  -moz-transform: scale(1, 1);
+  margin: 0 3px;
+  background: rgb(47,172,155);
+}
+100% {
+  -moz-transform: scale(0);
+}
+}
+/*CSS loading end*/

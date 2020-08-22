@@ -1,0 +1,49 @@
+/*dark colors*/
+
+.single_block {
+  background-color: #101010;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.highlight_row {
+  background-color: #303030;
+}
+/*
+div.collapse {
+	background-color: #101010;
+}
+*/
+.highlight_background {
+	background-color: #202020;
+}
+
+.zebra_painting:nth-of-type(even) {
+	background-color: #202020;
+}
+
+.highlight_onhover:hover {
+	background-color: #303030;
+}
+
+.highlight_with_marker {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  text-shadow: 0 0 6px yellow, 0 0 6px yellow;
+}
+
+.link {
+  color: lightskyblue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: lightblue;
+}
+

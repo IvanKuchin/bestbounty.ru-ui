@@ -1,0 +1,118 @@
+html, body {
+  height: 100%;
+}
+
+@media (min-width: 320px) {
+  #wrap {
+    min-height: calc(100% - 60px);
+  }
+}
+@media (min-width: 640px) {
+  #wrap {
+    min-height: calc(100% - 20px);
+  }
+}
+
+body {
+  background-color: #ddd;
+/*  padding-bottom: 40px;
+  padding-top: 40px;*/
+}
+
+.bg-image {
+  margin-top: 50px;
+
+  background-image: url("/images/pages/login/bg_image.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.login_block {
+  background-color: darkgray;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+.has-success {
+  margin-bottom: 1px;
+}
+.form-signin {
+  margin: 0 auto;
+  max-width: 330px;
+  padding: 15px;
+}
+.form-signin-heading,
+.checkbox {
+  margin-bottom: 10px;
+}
+.checkbox {
+  font-weight: normal;
+}
+
+.forgot-pass {
+  float: right;
+}
+
+
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin .input-group-addon {
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="email"] {
+  /*margin-bottom: -1px;*/
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[id="regConfirmPassword"] {
+  margin-bottom: 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[id="inputPassword"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin input[id="signinInputPassword"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin input[id="regSecurityCode"] {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-regPassword {
+  border-radius: 0;
+  /*margin-bottom: -1px;*/
+}
+

@@ -1,0 +1,68 @@
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<meta name="keywords" content="лучший подарок">
+	<meta name="description" content="лучший подарок">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Ivan Kuchin">
+	<link rel="icon" href="/images/pages/logo/logo.png">
+	<link rel="apple-touch-icon" href="/images/pages/logo/logo_mobile.png" />
+	<meta name="apple-mobile-web-app-title" content="Best Bounty" />
+<!-- 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes"> 
+-->
+
+
+	<!-- jQuery 3.2.1 -->
+	<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+
+	<!-- unveil.patched (lazy load) -->
+	<script src="/js/unveil/jquery.unveil.patched.js"></script>
+
+	<!-- TODO: remove and clean-up July 1 -->
+	<!-- jQuery UI v 1.11.4 -->
+	<!--
+	<link href="/css/jquery-ui/jquery-ui.css" rel="stylesheet">
+	<script src="/js/jquery-ui/jquery-ui-1.11.4.js"></script>
+	-->
+	<!-- jQuery UI v 1.12.1 -->
+	<link href="/css/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+	<script src="/js/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+
+	<!-- jQuery.cookie -->
+	<script src="/js/jquery.cookie/jquery.cookie.js"></script>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap<<vars:site_theme>>/bootstrap.min.css" rel="stylesheet">
+	<script src="/js/bootstrap/bootstrap.min.js"></script>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="/js/getbootstrap/ie10-viewport-bug-workaround.js"></script>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	<!-- Awesome font CSS -->
+	<link href="/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- <link href="/css/fontawesome-free-5.0.8/css/fontawesome-all.min.css" rel="stylesheet"> -->
+
+	<!-- Common part -->
+	<link href="/css/pages<<vars:site_theme>>/common.css" rel="stylesheet">
+	<link href="/css/pages/common.css" rel="stylesheet">
+	<script src="/js/pages/common.js"></script>
+	<script src="/js/pages/pd/common_bestbounty.js"></script>
+	<script src="/js/pages/pi/session.js"></script>
+	<script>
+	$(document).ready(function() 
+	{
+		system_calls.Init();
+	});
+	</script>

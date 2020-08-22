@@ -1,0 +1,5 @@
+<<template:templates/ru/pages/header.htmlt>>
+
+<<vars:content>>
+
+<<template:templates/ru/pages/footer.htmlt>>

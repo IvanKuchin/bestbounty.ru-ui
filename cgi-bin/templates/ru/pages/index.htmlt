@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+  </head>
+
+  <body>
+    Перейдите на <a href="/?redirect=from_default_page&rand=<<vars:rand>>">главную страницу</a>
+    <script type="text/javascript">
+      window.location.replace("/?redirect=from_default_page&rand=<<vars:rand>>");
+    </script>
+  </body>
+</html>

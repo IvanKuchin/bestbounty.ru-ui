@@ -1,0 +1,166 @@
+body {
+  /*padding-top: 40px;*/
+  padding-bottom: 40px;
+  background-color: #ddd;
+}
+
+.news_feed_photo_block {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.news_feed_close_button {
+  margin-top: 10px;
+}
+
+.news_feed_timestamp {
+  float: right;
+}
+
+.news_feed_view_message_timestamp {
+  float: right;
+  padding-right: 10px;
+}
+
+.news_feed_view_message_header {
+  padding: 0px;
+}
+
+.news_feed_like {
+  margin-top: -5px;
+}
+
+.news_feed_comment {
+  margin-top: 2px;
+}
+
+.news_feed_trashbin {
+  margin-top: -3px;
+}
+
+.news_feed_trashbin_right {
+  float: right;
+}
+
+.news_feed_pencil {
+  margin-top: -3px;
+}
+
+.news_feed_pencil_right {
+  float: right;
+}
+
+.news_feed_edit_message_preview {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.news_feed_comment_separator {
+  border-top: 1px solid #e5e5e5;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.news_feed_preview_image {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* --- Image uploader --- */
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.divProgressUploadThin {
+  height: 4px;
+}
+
+.progress-string {
+  color: white;
+  left: 46%;
+  position: absolute;
+}
+
+
+
+.shift_down {
+  margin-top: 15px;
+}
+
+
+/*--- Video container ---*/
+.videoPlacement
+{
+  display: block;
+  margin: 0 auto;
+  max-height: 400px;
+  max-width: 100%;
+}
+
+.youtubeVideoPlacement
+{
+  display: block;
+  height: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  /*height: 500px;*/
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  width: 100%;
+}
+.carousel-inner > .item > img {
+  max-height: 400px;
+  display: block;
+  margin: auto;
+/*
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+*/
+}
+
+
+/*
+--------------------------------------------------
+Class to overcome issues in modal dialog on IOS devices
+  1) cursor positioning (https://stackoverflow.com/questions/46339063/ios-11-safari-bootstrap-modal-text-area-outside-of-cursor/46866149#46866149)
+  2) background scroll (https://stackoverflow.com/questions/19060301/how-to-prevent-background-scrolling-when-bootstrap-3-modal-open-on-mobile-browse)
+*/
+body.modal-open.iOS-device {
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<<template:templates/ru/pages/header.htmlt>>
+		
+
+		<title><<vars:title_head>></title>
+
+		<!-- tool tip bouncing -->
+		<script src="/js/pages/tooltip.js"></script>
+		<link href="/css/pages/animate.min.css" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="/css/pages/view_profile.css" rel="stylesheet">
+		<script src="/js/pages/view_profile.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				view_profile.Init();
+			});
+		</script>
+
+	</head>
+
+	<body>
+	<<template:templates/ru/pages/<<vars:user_type>>_navigation_menu.htmlt>>
+
+	<div class="container single_block box-shadow--6dp">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-sm-offset-4 col-md-offset-3 margin_top_bottom_20">
+				<span>
+					<span id="friendName" class="h2"><<vars:friendName>></span> <span id="friendLastName" class="h2" data-friendAvatar="<<vars:friendAvatar>>" data-friendid="<<vars:friendID>>" data-friendfriendshipstate="<<vars:friendFriendshipState>>"><<vars:friendNameLast>></span>
+				</span>
+			</div>
+ 			<div class="col-xs-12 col-sm-12 col-md-3">
+				<span id="viewProfileFriendshipButton">
+				</span>
+			</div>
+	    </div>
+
+<!--			 <div class="col-md-9 col-xs-12 ">
+				<div class="container-fluid">
+ -->
+		<div class="row">
+			<div class="col-md-2 col-sm-4 col-xs-4">
+				<p>
+					<canvas id="canvasForAvatar" width="80" height="80" class="canvas-big-avatar">
+						Your browser does not support the HTML5 canvas tag.
+					</canvas>
+				</p>
+
+				<!-- The container for the uploaded files -->
+				<div id="files" class="files"></div> 
+
+				<p><<vars:isblocked>></p>
+			</div>
+<!--
+ 			<div class="col-md-9 col-sm-8 col-xs-7">
+				<p></p>
+				<span id="viewProfileFriendshipButton" class="view-profile-friendship-button form-group">
+				</span>
+				<p></p>
+				<h6>
+Последний раз заходил(а) на сайт <<vars:friendLastOnlineStatement>>
+				</h6>
+				<p></p>
+			</div>
+			<div class="col-xs-7 col-sm-2 col-md-2 form-group">
+				<a href="" id="linkToUserChat" class="btn btn-default form-control"><span class="fa fa-comment-o" aria-hidden="true"></span></a> 
+			</div>
+			<div class="col-xs-7 col-sm-2 col-md-2 form-group">
+				<a href="" id="linkToUserWall" class="btn btn-default form-control">Стена</a>
+			</div>
+ 			<div class="col-xs-7 col-sm-4 col-md-5 form-group">
+				<span id="viewProfileFriendshipButton" class="form-group">
+				</span>
+			</div>
+ -->
+			<div class="col-md-9 col-sm-8 col-xs-12 form-group">
+				<h6>
+					Последний раз заходил(а) на сайт <<vars:friendLastOnlineStatement>>
+				</h6>
+			</div>
+			<div class="col-md-9 col-sm-8 col-xs-12" id="birthdayDiv">
+				<span><h4>День рождения: </h4></span>
+				<span><p	id="birthdayPlace"></p></span>
+			</div>
+			<div class="col-md-9 col-sm-8 col-xs-12" id="cityDiv">
+				<span><h4>Город: </h4></span>
+				<span><p	id="city"></p></span>
+			</div>
+<!--
+ 			<div class="col-md-9 col-sm-8 col-xs-12">
+				<span><h4>Образование:</h4> </span>
+				<span><p id="educationInTitle"></p></span>
+			</div>
+			<div class="col-xs-12">
+				<h4>О себе:</h4>
+			</div>
+			<div class="col-xs-12 col-sm-11">
+				<p id="userCV"><<vars:friendCV>></p>
+			</div>
+ -->
+ 		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p> <h6><small>Зарегистрирован(а) на сайте <<vars:friendActivatedDifferenceFromNow>></small></h6></p>
+			</div>
+		</div> <!-- row (photo + name + main info) -->
+	</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2 margin_top_bottom_15_0" id="GiftPathHeader">
+											<span class="h3">Хочет такие подарки</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="GiftPath">
+				</div>
+		</div> 
+
+<p></p>
+
+
+<!-- 
+		<div class="container single_block box-shadow--6dp" id="spanHandshakes">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="HandshakingPathHeader">
+											<span class="h3" >Ваши рукопожатия</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="CarrierPathHeader">
+											<span class="h3">Опыт работы</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="CarrierPath">
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="CertificationPathHeader">
+											<span class="h3">Сертификаты</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="CertificationPath">
+					<<vars:CertificationPath>>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="CoursePathHeader">
+											<span class="h3">Курсы</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="CoursePath">
+					<<vars:CoursePath>>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="UniversityPathHeader">
+											<span class="h3">Университет</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="UniversityPath">
+					<<vars:UniversityPath>>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="SchoolPathHeader">
+											<span class="h3">Школа</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="SchoolPath">
+					<<vars:SchoolPath>>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="LanguagePathHeader">
+											<span class="h3">Иностранные языки</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="LanguagePath">
+					<<vars:LanguagePath>>
+				</div>
+		</div> 
+
+<p></p>
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="SkillPathHeader">
+								<span class="h3">Эксперт в</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="SkillPath">
+					<<vars:SkillPath>>
+				</div>
+		</div> 
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2" id="BookPathHeader">
+								<span class="h3">Прочитанные книги</span>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+				<div id="BookPath">
+					<<vars:BookPath>>
+				</div>
+		</div> 
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2 form-group">
+								<span class="h3">Интересующие компании</span>
+						</div>
+				</div>
+				<div id="SubscriptionsCompany">
+				</div>
+		</div> 
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-xs-11 col-md-5 col-xs-offset-1 col-md-offset-2 form-group">
+								<span class="h3">Группы</span>
+						</div>
+				</div>
+				<div id="SubscriptionsGroup">
+				</div>
+		</div> 
+
+		<div class="container single_block box-shadow--6dp">
+				<div class="row">
+						<div class="col-sm-3 col-xs-4 col-sm-offset-2 " id="RecommendationPathHeader">
+											<span class="h3">Рекомендации</span>
+						</div>
+						<div class="col-sm-2 col-xs-4 col-sm-offset-5	col-xs-offset-3">
+											<button type="button" id="AddRecommendationButton" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Написать</button>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+							<p></p>
+						</div>
+				</div>
+
+				<div id="AddRecommendation" class="collapse">
+					<div class="row">
+						<div class="col-xs-12 collapse-top-shadow"><p></p></div>
+						<div class="col-xs-11 col-xs-offset-1">
+							<h4>Новая рекомендация</h4>
+						</div>
+					</div>
+					<div class="row">
+							<div class="col-xs-9 col-xs-offset-1 margin_top_bottom_15_0">
+								<button type="button" id="AppendRecommendationTemplate1" class="btn btn-default">Шаблон 1</button>
+								<button type="button" id="AppendRecommendationTemplate2" class="btn btn-default">Шаблон 2</button>
+								<button type="button" id="AppendRecommendationTemplate3" class="btn btn-default">Шаблон 3</button>
+								<button type="button" id="AppendRecommendationTemplate4" class="btn btn-default">Шаблон 4</button>
+								<button type="button" id="AppendRecommendationTemplate5" class="btn btn-default">Случайный</button>
+								<p/>
+							</div>
+							<div class="col-xs-9 col-xs-offset-1">
+									<textarea rows="4" class="form-control" id="AddRecommendationTitle" placeholder="Рекомендация"></textarea>
+									<p></p>
+							</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-offset-1 col-xs-9">
+							<button type="button" id="AddRecommendationAddButton" class="btn btn-primary">Написать</button>
+							<button type="button" id="AddRecommendationCancelButton" class="btn btn-default" data-dismiss="modal">Отмена</button>
+							<p>&nbsp;</p>
+						</div>
+						<div class="col-xs-12 collapse-bottom-shadow"><p></p></div>
+					</div>
+				</div>
+
+				<div id="RecommendationPath">
+					<<vars:RecommendationPath>>
+				</div>
+		</div> 
+
+ -->
+		<!-- "Are you sure ?" modal	-->
+		<div class="modal fade" id="AreYouSure" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Вы уверены ?</h4>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="Remove" class="btn btn-primary">Удалить</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="DialogFriendshipRemovalYesNo">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Вы уверены в том, что хотите прекратить дружбу ?</h4>
+			</div>
+<!--
+			 <div class="modal-body">
+				<p>Вы уверены в том, что хотите прекратить дружбу ?</p>
+			</div>
+ -->
+			 <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
+				<button type="button" class="btn btn-danger" id="ButtonFriendshipRemovalYes">Уверен</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="ImageDisplayModal" tabindex="-1" role="dialog" aria-labelledby="ImageDisplayModal">
+	<div class="modal-dialog modal-md" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="ImageDisplayModal_Title"></h4>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xs-12">
+					<img class="div_content_center_alignment max_100percents_640px niceborder" id="ImageDisplayModal_Img">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+		</div>
+	</div>
+	</div>
+</div>
+
+
+	<<template:templates/ru/pages/footer.htmlt>>
+
+	</body>
+</html>

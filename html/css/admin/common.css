@@ -1,0 +1,12 @@
+.width_100percent {
+	width: 100%;
+}
+
+.font_weight_normal {
+	font-weight: normal;
+}
+
+.looks_like_link {
+	color: blue;
+	cursor: pointer;
+}

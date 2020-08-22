@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <<template:templates/ru/pages/header.htmlt>>
+
+    <title><<vars:title_head>></title>
+
+    <script src="/js/pages/tooltip.js"></script>
+    <link href="/css/pages/animate.min.css" rel="stylesheet">
+
+    <link href="/css/pages/switcher.css" rel="stylesheet">
+  </head>
+
+  <body>
+  <<template:templates/ru/pages/<<vars:user_type>>_navigation_menu.htmlt>>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <<template:templates/ru/pages/cookie_policy.htmlt>>
+    </div>
+  </div>
+</div>
+
+    <<template:templates/ru/pages/footer.htmlt>>
+  </body>
+</html>

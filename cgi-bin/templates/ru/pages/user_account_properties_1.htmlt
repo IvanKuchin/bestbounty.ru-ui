@@ -1,0 +1,19 @@
+<div class="container single_block box-shadow--6dp">
+	  <div class="row">
+        <div class="col-xs-12"> <!--- main information -->
+          <p>
+            <span>Ссылка на вашу ленту: </span>
+          </p>
+        </div>
+      </div>
+	  <div class="row">
+        <div class="col-xs-12 col-md-6 form-group has-feedback"> <!--- main information -->
+          <input type="input" class="form-control" id="linkToWall" value="" disabled="">
+        </div>
+        <div class="hidden-xs hidden-sm col-md-2"> <!--- main information -->
+        </div>
+        <div class="col-xs-12 col-md-3 form-group">
+          <button class="btn btn-md btn-primary form-control" id="submitSendLink" type="button" data-loading-text="<span class='fa fa-refresh fa-spin fa-fw animateClass'></span> Отправление ...">Отправить ссылку</button>
+        </div>
+      </div>
+</div>
