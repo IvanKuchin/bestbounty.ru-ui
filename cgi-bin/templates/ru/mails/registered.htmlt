@@ -1,9 +1,0 @@
-subject:Registration succesfull
-
-Thank You for your registration!
-
-login: <<vars:login>>
-password: <<vars:passwd>>
-
-To activate your account you must open the following link:
-http://<<vars:host>>/cgi-bin/index.cgi?action=activate&actid=<<vars:actid>>

@@ -1,9 +1,0 @@
-subject:Registration for competition
-
-Name: <<vars:name>>
-Age: <<vars:age>>
-Place of purchase: <<vars:purchase>>
-Name of good: <<vars:good>>
-Registrationn number: <<vars:regno>>
-Phone: <<vars:phone>>
-E-mail: <<vars:email>>
