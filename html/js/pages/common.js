@@ -1599,7 +1599,7 @@ system_calls = (function()
 							{
 								handlerButton.text("Добавить в друзья");
 								handlerButton.removeClass().addClass("btn").addClass("btn-primary");
-								handlerButton.data("action", "requested");
+								handlerButton.data("action", "confirm");
 
 								// --- remove "accept" buttonAccept
 								handlerButton.siblings().remove();
