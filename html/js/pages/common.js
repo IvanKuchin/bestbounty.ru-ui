@@ -96,8 +96,13 @@ system_calls = (function()
 		window.setTimeout(SendEchoRequest, 1000);
 
 		// --- Main search
-		$("#navMenuSearchText").on("input", navMenu_search.OnInputHandler)
-								.on("keyup", navMenu_search.OnKeyupHandler);
+		$("#navMenuSearchText")
+								.on("keyup", navMenu_search.OnKeyupHandler)
+								.autocomplete({
+												source: "/cgi-bin/anyrole_1.cgi?action=AJAX_getUserAutocompleteList",
+												select: navMenu_search.AutocompleteSelectHandler,
+											});
+
 		$("#navMenuSearchSubmit").on("click", navMenu_search.OnSubmitClickHandler);
 	};
 
@@ -2565,77 +2570,8 @@ navMenu_search = (function()
 		var	selectedID = ui.item.id;
 		var selectedLabel = ui.item.label;
 
-		console.debug("navMenu_search.AutocompleteSelectHandler: start. (seletedID=" + selectedID + ", selectedLabel=" + selectedLabel + ")");
-
 		window.location.href = "/userprofile/" + selectedID;
-
-		console.debug("navMenu_search.AutocompleteSelectHandler: end");
 	};
-
-	var OnInputHandler = function() 
-	{
-		var		inputValue = $(this).val();
-		console.debug("navMenu_search.OnInputHandler: start. input.val() " + $(this).val());
-
-		if(inputValue.length >= 2)
-		{
-			$.getJSON(
-				'/cgi-bin/index.cgi',
-				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:inputValue})
-				.done(function(data) {
-						AutocompleteList = [];
-						data.forEach(function(item, i, arr)
-							{
-								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
-							});
-
-
-						$("#navMenuSearchText").autocomplete({
-							delay : 300,
-							source: AutocompleteList,
-							select: AutocompleteSelectHandler,
-							change: function (event, ui) { 
-								console.debug ("navMenu_search.OnInputHandler autocomplete.change: change event handler"); 
-							},
-							close: function (event, ui) 
-							{ 
-								console.debug ("navMenu_search.OnInputHandler autocomplete.close: close event handler"); 
-							},
-							create: function () {
-								console.debug ("navMenu_search.OnInputHandler autocomplete.create: _create event handler"); 
-							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
-							{
-								var	that = this;
-								var currentCategory = "";
-								$.each( items, function( index, item ) {
-									var li;
-								    if ( item.category != currentCategory ) {
-								    	ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-								        currentCategory = item.category;
-								    }
-									li = that._renderItemData( ul, item );
-									if ( item.category ) {
-									    li.attr( "aria-label", item.category + " : " + item.label + item.login );
-									} // --- getJSON.done() autocomplete.renderMenu foreach() if(item.category)
-								}); // --- getJSON.done() autocomplete.renderMenu foreach()
-							} // --- getJSON.done() autocomplete.renderMenu
-						}); // --- getJSON.done() autocomplete
-					}); // --- getJSON.done()
-
-		}
-		else
-		{
-			AutocompleteList = [];
-			$("#navMenuSearchText").autocomplete({
-							delay : 300,
-							source: AutocompleteList
-						});
-		} // --- if(inputValue.length >= 2)
-
-		console.debug("navMenu_search.OnInputHandler: end ");
-	};
-
 
 	var OnKeyupHandler = function(event)
 	{
@@ -2649,15 +2585,11 @@ navMenu_search = (function()
 			$("#navMenuSearchText").autocomplete("close");
 			// FindFriendsFormSubmitHandler();
 		}
-
-		console.debug("navMenu_search.OnKeyupHandler: end");
 	};
 
 	var OnSubmitClickHandler = function(event)
 	{
 		var		searchText = $("#navMenuSearchText").val();
-
-		console.debug("navMenu_search.OnSubmitClickHandler: start");
 
 		if(searchText.length <= 2)
 		{
@@ -2673,9 +2605,9 @@ navMenu_search = (function()
 	};
 
 	return {
-		OnInputHandler: OnInputHandler,	
 		OnKeyupHandler: OnKeyupHandler,
-		OnSubmitClickHandler: OnSubmitClickHandler
+		OnSubmitClickHandler: OnSubmitClickHandler,
+		AutocompleteSelectHandler: AutocompleteSelectHandler,
 	};
 }
 )();

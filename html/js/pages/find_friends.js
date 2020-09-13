@@ -18,7 +18,6 @@ var find_friends = (function()
 
 			// --- search field
 			$("#friendSearchText")	
-									// .on("input", FindFriendsOnInputHandler)
 									.on("keyup", FindFriendsOnKeyupHandler)
 									.autocomplete({
 													source: "/cgi-bin/anyrole_1.cgi?action=AJAX_getUserAutocompleteList",
