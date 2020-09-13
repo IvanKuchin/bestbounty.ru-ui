@@ -17,8 +17,14 @@ var find_friends = (function()
 				SendRequestAndRefreshList("JSON_getMyNetworkFriendList", "");
 
 			// --- search field
-			$("#friendSearchText")	.on("input", FindFriendsOnInputHandler)
-									.on("keyup", FindFriendsOnKeyupHandler);
+			$("#friendSearchText")	
+									// .on("input", FindFriendsOnInputHandler)
+									.on("keyup", FindFriendsOnKeyupHandler)
+									.autocomplete({
+													source: "/cgi-bin/anyrole_1.cgi?action=AJAX_getUserAutocompleteList",
+													select: JSON_getFindFriendByID_SelectHandler,
+												});
+
 			$("#friendSearchButton").on("click", FindFriendsFormSubmitHandler);
 		}
 		else
@@ -47,67 +53,6 @@ var find_friends = (function()
 		}
 
 		return tempTag;
-	};
-
-	var FindFriendsOnInputHandler = function() 
-	{
-		var		inputValue = $(this).val();
-		// console.debug("FindFriendsOnInputHandler: start. input.val() " + $(this).val());
-
-		if(inputValue.length == 3)
-		{
-			$.getJSON(
-				'/cgi-bin/index.cgi',
-				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:inputValue})
-				.done(function(data) {
-						JSON_FindFriendsList_Autocomplete = [];
-						data.forEach(function(item, i, arr)
-							{
-								JSON_FindFriendsList_Autocomplete.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
-							});
-
-
-						$("#friendSearchText").autocomplete({
-							delay : 300,
-							source: JSON_FindFriendsList_Autocomplete,
-							select: JSON_getFindFriendByID_SelectHandler,
-							change: function (event, ui) { 
-								console.debug ("FindFriendsOnInputHandler autocomplete.change: change event handler"); 
-							},
-							close: function (event, ui) 
-							{ 
-								console.debug ("FindFriendsOnInputHandler autocomplete.close: close event handler"); 
-							},
-							create: function () {
-								console.debug ("FindFriendsOnInputHandler autocomplete.create: _create event handler"); 
-							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
-							{
-								var	that = this;
-								currentCategory = "";
-								$.each( items, function( index, item ) {
-									var li;
-								    if ( item.category != currentCategory ) {
-								    	ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-								        currentCategory = item.category;
-								    }
-									li = that._renderItemData( ul, item );
-									if ( item.category ) {
-									    li.attr( "aria-label", item.category + " : " + item.label + item.login );
-									} // --- getJSON.done() autocomplete.renderMenu foreach() if(item.category)
-								}); // --- getJSON.done() autocomplete.renderMenu foreach()
-							} // --- getJSON.done() autocomplete.renderMenu
-						}); // --- getJSON.done() autocomplete
-					}); // --- getJSON.done()
-		}
-		else if(inputValue.length < 3)
-		{
-			JSON_FindFriendsList_Autocomplete = [];
-			$("#friendSearchText").autocomplete({
-							delay : 300,
-							source: JSON_FindFriendsList_Autocomplete
-						});
-		} // --- if(inputValue.length >= 2)
 	};
 
 	var	SendRequestAndRefreshList = function(action, lookForKey)
@@ -157,10 +102,7 @@ var find_friends = (function()
 
 	var	FindFriendsOnKeyupHandler = function(event)
 	{
-		/* Act on the event */
 		var	keyPressed = event.keyCode;
-
-		// console.debug("FindFriendsOnKeyupHandler: start. Pressed key [" + keyPressed + "]");
 
 		if(keyPressed == 13) {
 			/*Enter pressed*/
