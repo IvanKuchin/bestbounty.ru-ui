@@ -23,6 +23,7 @@ view_profile = (function()
 		FillinUserProfile();
 	};
 
+
 	var FillinUserProfile = function()
 	{
 		$.getJSON('/cgi-bin/index.cgi?action=JSON_getUserProfile', {id: $("#friendLastName").data("friendid")})
@@ -34,6 +35,7 @@ view_profile = (function()
 					RenderBirthday();
 					RenderCity();
 					RenderControlButtons();
+					HandShakers();
 
 					if(system_calls.GetParamFromURL("scrollto").length) system_calls.ScrollWindowToElementID("#" + system_calls.GetParamFromURL("scrollto"));
 				}
@@ -43,10 +45,32 @@ view_profile = (function()
 				}
 			})
 			.fail(function() {
-				system_calls.PopoverError("friendName", "ошибка ответа сервера")
+				system_calls.PopoverError("friendName", "ошибка ответа сервера");
 				console.error("ERROR parsing JSON response");
 			});
 
+	};
+
+	var	HandShakers = function()
+	{
+		var		my_user_id = $("#myUserID").data("myuserid");
+		var		friend_user_id = $("#friendLastName").data("friendid");
+
+		if(parseInt(my_user_id) && parseInt(friend_user_id))
+		{
+			$.getJSON('/cgi-bin/index.cgi?action=JSON_getFindFriendByID', {lookForKey: friend_user_id})
+		 		.done(function(data) 
+		 		{
+					if(data.result == "success")
+					{
+						system_calls.RenderFriendshipButtons(data.users[0], $("#viewProfileFriendshipButton"));
+					}
+					else
+					{
+						console.debug("HandShakers: getJSON(JSON_getShakeHands).done(): ERROR [" + data.description + "]");
+					}
+				});
+		}
 	};
 
 	var	DrawFriendAvatar = function (friendImage, friendName, friendLastName)
@@ -111,7 +135,7 @@ view_profile = (function()
 								{
 									if(item1.companyID == item2.companyID) 
 									{
-										if(IsCompanyDuplicate(handshakeCompanies, item1.companyID) == false)
+										if(IsCompanyDuplicate(handshakeCompanies, item1.companyID) === false)
 										{
 											handshakeCompanies.push({companyID : item1.companyID, company : item1.company});
 										}
@@ -1424,7 +1448,7 @@ view_profile = (function()
 		$("div#RecommendationPath .removeRecommendationEntry").on("click", RemoveRecommendationEntry);
 
 		userCache.AddCallbackRunsAfterCacheUpdate(view_profile.RenderRecommendationPath);
-		window.setTimeout(userCache.RequestServerToUpdateCache, 1000)
+		window.setTimeout(userCache.RequestServerToUpdateCache, 1000);
 	};
 
 	var		SkillConfirmationClickHandler = function(event)
@@ -1573,31 +1597,13 @@ view_profile = (function()
 		var		templates = [
 "Свои обязанности сотрудник выполнял отлично. В течение всего срока своей работы сотрудник демонстрировал высокий уровень внимательности, аналитические и математические способности, стремление к повышению профессионального уровня, аккуратность, исполнительность. Сотрудник является эмоционально устойчивым и коммуникабельным человеком. Кроме того, он постоянно стремился самостоятельно повысить свой профессиональный уровень. Я, как его непосредственный руководитель, с уверенностью могу рекомендовать сотрудника для работы на аналогичной должности. ",
 "В процессе работы сотрудник продемонстрировал способность хорошо ориентироваться на рынке, знание конкурентов и их потребности. Сотрудник, не только работал с существующими клиентами, но и умело искал новых. В течение всего времени работы в нашей компании сотрудник демонстрировал стремление к повышению профессионализма, прошел несколько профессиональных тренингов. Также сотрудник показал себя как работник с высоким уровнем самоорганизации, лояльности к компании, мотивации, нацеленностью на результат. Сотрудник коммуникабелен, умеет находить общий язык с клиентами и сотрудниками, неконфликтен. Рекомендую сотрудника, как способного на любые должности, связанные с его профессиональным опытом работы.",
-"Выражаю глубокую признательность и благодарность за Ваше профессиональное мастерство, талант, душевную щедрость.\
-Особенно хочется Вас поблагодарить за индивидуальный подход, компетентность, ответственность и доброжелательность.\
-Вы умный, талантливый, неповторимый профессионал своего дела!\n\
-Спасибо за все, что Вы делаете, и благодарю Вас за творческое отношение к работе, энтузиазм, открытость и доброжелательность!",
-
-"Меня вы выручили ловко,\n\
-За помощь вас благодарю.\n\
-Поддержку вашу и заботу,\n\
-Поверьте, очень я ценю.\n\n\
-Пускай судьба подарит счастье,\n\
-Вы славный, добрый человек.\n\
-Пускай здоровым и прекрасным\n\
-Лишь будет Ваш достойный век.",
-
-"Помочь – всегда святое дело,\n\
-И мне не отказали вы.\n\
-Спасибо вам за понимание,\n\
-Пусть станут явью все мечты.\n\n\
-Вы не оставили с проблемой\n\
-Меня страдать наедине.\n\
-Желаю вам всегда везения\n\
-И счастья яркого в судьбе.",
-
+"Выражаю глубокую признательность и благодарность за Ваше профессиональное мастерство, талант, душевную щедрость.",
+"Особенно хочется Вас поблагодарить за индивидуальный подход, компетентность, ответственность и доброжелательность.",
+"Вы умный, талантливый, неповторимый профессионал своего дела!\n",
+"Спасибо за все, что Вы делаете, и благодарю Вас за творческое отношение к работе, энтузиазм, открытость и доброжелательность!",
+"Меня вы выручили ловко,\nЗа помощь вас благодарю.\nПоддержку вашу и заботу,\nПоверьте, очень я ценю.\n\nПускай судьба подарит счастье,\nВы славный, добрый человек.\nПускай здоровым и прекрасным\nЛишь будет Ваш достойный век.",
+"Помочь – всегда святое дело,\nИ мне не отказали вы.\nСпасибо вам за понимание,\nПусть станут явью все мечты.\n\nВы не оставили с проблемой\nМеня страдать наедине.\nЖелаю вам всегда везения\nИ счастья яркого в судьбе.",
 "Благодарю Вас за снисхождение, оказанное мне в начале моей карьеры, за некоторые незначительные поблажки, на совершенные мной автоматические ошибки, за веру в мой проект и за возможность самореализации.",
-
 "Милый, я тебе клянусь,\nОт любви к тебе рехнусь!",
 		];
 		$("#AddRecommendationTitle").val("Уважаемый " + $("#friendName").text() + "!\n\n" + templates[Math.floor(Math.random() * templates.length)]);
