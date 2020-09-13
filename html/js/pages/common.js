@@ -1578,7 +1578,7 @@ system_calls = (function()
 				.done(function(data) {
 						console.debug("AJAX_setFindFriend_FriendshipStatus.done(): sucess");
 
-						if(data.result == "ok")
+						if(data.result == "success")
 						{
 							console.debug("AJAX_setFindFriend_FriendshipStatus.done(): success");
 
