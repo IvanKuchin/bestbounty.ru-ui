@@ -271,7 +271,7 @@ EventChecklist = function()
 					.add($("<div>").addClass("row form-group"))
 					.add(
 						$("<div>").addClass("row form-group").append(
-							$("<div>").addClass("col-xs-offset-8 col-xs-4 col-md-offset-10 col-md-2").append(submit_button)
+							$("<div>").addClass("col-xs-offset-6 col-xs-6 col-md-offset-10 col-md-2").append(submit_button)
 						)
 					);
 
