@@ -195,10 +195,10 @@
  				</div>
 				<div class="row">
 					<div class="col-md-5 col-xs-12 form-group">
-						<input type="input" class="form-control" id="custom_checklist_item_category" placeholder="Категория" maxlength="36">
+						<input type="input" class="form-control" id="custom_checklist_item_category" list="custom_checklist_item_category_datalist" placeholder="Категория" maxlength="36">
 					</div>
 					<div class="col-md-5 col-xs-12 form-group">
-						<input type="input" class="form-control" id="custom_checklist_item_title" placeholder="Добавить в мой спсиок" data-action="AJAX_addItemToChecklist" maxlength="36">
+						<input type="input" class="form-control" id="custom_checklist_item_title" placeholder="Добавить в мой список" data-action="AJAX_addItemToChecklist" maxlength="36">
 					</div>
  					<div class="col-md-2 col-xs-12 form-group">
 						<button type="button" id="ButtonAddItemToChecklist" class="btn btn-primary form-control" data-loading-text="<span class='fa fa-refresh fa-spin fa-fw animateClass'></span> Ждите ...">Добавить</button>

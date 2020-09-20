@@ -44,16 +44,16 @@ edit_event = (function()
 		$("#eventHost").on("keyup", AddHost_KeyupHandler);
 		// --- use timeout to wait until input will be updated, otherwise handler will be called before new value pasted to input
 		// --- bind(this) is reference to event source rather than regular object in setTimeout
-		$("#eventHost").on("paste", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0) });
-		$("#eventHost").on("cut", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0) });
+		$("#eventHost").on("paste", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0); });
+		$("#eventHost").on("cut", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0); });
 
 		CreateAutocompleteWithSelectCallback("#eventGuest", [{0:"0"}], AddGuest_SelectHandler);
 		$("#eventGuest").on("input", AddGuest_InputHandler);
 		$("#eventGuest").on("keyup", AddGuest_KeyupHandler);
 		// --- use timeout to wait until input will be updated, otherwise handler will be called before new value pasted to input
 		// --- bind(this) is reference to event source rather than regular object in setTimeout
-		$("#eventGuest").on("paste", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0) });
-		$("#eventGuest").on("cut", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0) });
+		$("#eventGuest").on("paste", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0); });
+		$("#eventGuest").on("cut", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0); });
 
 
 		$("#custom_checklist_item_category")
@@ -149,7 +149,7 @@ edit_event = (function()
 						RenderEventGuests();
 						InitNoGiftLabel();
 
-						eventChecklist_global.SetData(eventProfile.checklists[0])
+						eventChecklist_global.SetData(eventProfile.checklists[0]);
 						RenderChecklist();
 
 						$.getJSON('/cgi-bin/event.cgi?action=AJAX_getFavoriteChecklistsCategories')
@@ -203,7 +203,7 @@ edit_event = (function()
 					console.error("ERROR parsing JSON response from server");
 				});
 		}
-	}
+	};
 
 	var	AddHost_SelectHandler = function(event, ui)
 	{
@@ -467,7 +467,7 @@ edit_event = (function()
 		$("span#eventTitle").html(eventProfile.title);
 		$("span#eventLink").html(eventProfile.link);
 		$("span#eventAddress").html(eventProfile.address.length ? eventProfile.address : "(без адреса)");
-		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)")
+		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)");
 
 		$("div#eventInfo .editableSpan").on("click", editableFuncReplaceSpanToInput);
 		$("div#eventInfo .editableSpan").mouseenter(editableFuncHighlightBgcolor);
@@ -516,7 +516,7 @@ edit_event = (function()
 
 	var	RenderChecklist = function()
 	{
-		$("#eventChecklist").empty().append(eventChecklist_global.GetDOM())
+		$("#eventChecklist").empty().append(eventChecklist_global.GetDOM());
 	};
 
 	var	EventHostZeroize = function()
@@ -1222,7 +1222,7 @@ edit_event = (function()
 			// --- don't replace datepicker back to span
 			// --- it expose bootstrap error, few ms after replacement
 
-			eventProfile.startTimestamp = GetEventStartTimestamp()
+			eventProfile.startTimestamp = GetEventStartTimestamp();
 			ajaxValue = eventProfile.startTimestamp;
 		}
 		else
@@ -1348,7 +1348,7 @@ edit_event = (function()
 
 							if(resultJSON.result === "success")
 							{
-								if(filteredEventDescription == "")
+								if(filteredEventDescription === "")
 								{
 									$("#eventDescription").empty().append("(описание отсутствует)");
 								}
@@ -1370,7 +1370,7 @@ edit_event = (function()
 		} // --- if textarea value changed
 		else
 		{
-			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change")
+			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
 		editableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
@@ -1514,7 +1514,7 @@ edit_event = (function()
 			{
 				$(tag).append($("<option>")	.append(system_calls.eventTypes[item])
 											.attr("value", item));
-			})
+			});
 		}
 		if($(this).data("action") == "AJAX_updateStartTime")
 		{
@@ -1522,7 +1522,7 @@ edit_event = (function()
 			{
 				$(tag).append($("<option>")	.append(system_calls.startTime[item])
 											.attr("value", item));
-			})
+			});
 		}
 
 		$(tag).val(currentValue); 
@@ -1564,7 +1564,7 @@ edit_event = (function()
 		}
 
 		$(tag).select();
-	}
+	};
 
 
 
@@ -1802,7 +1802,7 @@ edit_event = (function()
 					}, 200);
 				});
 		}
-	}
+	};
 
 	var	AddCheckListitem_ClickHandler = function(e)
 	{
@@ -1849,7 +1849,7 @@ edit_event = (function()
 		}
 		else
 		{
-			system_calls.PopoverError(curr_tag, "Заполните название")
+			system_calls.PopoverError(curr_tag, "Заполните название");
 		}
 	};
 
