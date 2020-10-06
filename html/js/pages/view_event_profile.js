@@ -91,7 +91,8 @@ view_event_profile = (function()
 
 	// --- not in system_class because of 
 	// --- 1) user id not in ".id", rather in ".user_id"
-	// --- 2) hint having additional field "(extra persons)"
+	// --- 2) user status must be accepted instead of all users
+	// --- 3) hint having additional field "(extra persons)"
 	var	GetAvatarsList = function(usersArray)
 	{
 		var		guestAvatarsList = $();
