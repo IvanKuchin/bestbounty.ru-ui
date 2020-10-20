@@ -135,7 +135,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6 col-sm-1 form-switcher">
+        <div class="col-xs-3 col-sm-1 form-switcher">
           <input type="checkbox" id="case_subscripiton_email" name="case_subscripiton_email" data-script="account.cgi" data-action="AJAX_updateHelpdeskEmailSubscription">
           <label class="switcher" for="case_subscripiton_email"></label>
         </div>
@@ -144,7 +144,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6 col-sm-1 form-switcher">
+        <div class="col-xs-3 col-sm-1 form-switcher">
           <input type="checkbox" id="case_subscripiton_sms" name="case_subscripiton_sms" data-script="account.cgi" data-action="AJAX_updateHelpdeskSMSSubscription">
           <label class="switcher" for="case_subscripiton_sms"></label>
         </div>
@@ -170,8 +170,21 @@
           <span class="h3">GIT commit</span>
         </div>
       </div>
-      <div>
-        <<vars:git_commit_id>>
+      <div class="row">
+        <div class="col-xs-6 col-sm-1">
+          Backend:
+        </div>
+        <div class="col-xs-12 col-sm-11">
+          <<vars:git_commit_id>>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-1">
+          GUI:
+        </div>
+        <div class="col-xs-12 col-sm-11">
+          <<template:templates/git_commit_id>>
+        </div>
       </div>
     </div>
 
