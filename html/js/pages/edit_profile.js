@@ -2562,19 +2562,41 @@ var	GiftGrantorThank_ClickHandler = function()
 	}
 };
 
+var	isGiftObjectValid = function(gift)
+{
+	var	result = true;
+
+	if(gift.AddGiftTitle === "")
+	{
+		result = false;
+		system_calls.PopoverError($("input#AddGiftTitle"), "Добавте название");
+	}
+	if(gift.AddGiftLink.length)
+	{
+		if(system_calls.isValidHTTPURL(gift.AddGiftLink))
+		{
+		}
+		else
+		{
+			result = false;
+			system_calls.PopoverError($("input#AddGiftLink"), "Некорректрый URL (должен начинаться с http:// или https://)");
+		}
+	}
+
+	return result;
+}
+
 var AddGiftButton_ClickHandler = function()
 {
+	var	curr_tag = $(this);
+
 	addBook.AddGiftTitle = $("input#AddGiftTitle").val();
 	addBook.AddGiftLink = $("input#AddGiftLink").val();
 	addBook.AddGiftPrice = $("input#AddGiftPrice").val();
 	addBook.AddGiftQuantity = $("input#AddGiftQuantity").val();
 	addBook.AddGiftDescription = $("textarea#AddGiftDescription").val();
 
-	if(addBook.AddGiftTitle === "")
-	{
-		system_calls.PopoverError("AddGiftTitle", "Укажите название подарка.");
-	}
-	else
+	if(isGiftObjectValid(addBook))
 	{
 		$("#AddGiftAddButton").button('loading');
 
@@ -2634,6 +2656,10 @@ var AddGiftButton_ClickHandler = function()
 			$("#AddGiftAddButton").button('reset');
 		}) // --- .always()
 		;
+	}
+	else
+	{
+		system_calls.PopoverError(curr_tag, "Некоторые поля заролнены некорректно");
 	}
 };
 

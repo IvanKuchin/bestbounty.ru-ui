@@ -2298,6 +2298,21 @@ system_calls = (function()
 		return result;
 	};
 
+	var	isValidHTTPURL = function(url_str)
+	{
+		var		url_must_have1 = /https?:\/\//;
+		var		result = false;
+		
+		if(isValidURL && url_must_have1.exec(url_str) && (url_str.length > 10))
+		{
+			result = true;
+		}
+
+		return result;
+	};
+
+
+
 	var ClearSession = function()
 	{
 		$.removeCookie("sessid");
@@ -2382,6 +2397,7 @@ system_calls = (function()
 		DrawImgOnCanvas_ScaleImgDownTo640x480: DrawImgOnCanvas_ScaleImgDownTo640x480,
 		isValidEmail: isValidEmail,
 		isValidURL: isValidURL,
+		isValidHTTPURL: isValidHTTPURL,
 		ClearSession: ClearSession
 	};
 }
