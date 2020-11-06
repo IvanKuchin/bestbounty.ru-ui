@@ -4,7 +4,7 @@
 
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
     <<template:templates/ru/pages/header.htmlt>>
-    <script src="/js/pages/sha512.js"></script>
+    <script src="/js/sha512/sha512.js"></script>
     <script src="/js/pages/user_account_properties.js"></script>
     
 

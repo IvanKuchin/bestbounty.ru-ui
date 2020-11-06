@@ -6,7 +6,7 @@
     <<template:templates/ru/pages/header.htmlt>>
     <script src="/js/pages/main.js"></script>
     <script src="/js/pages/login.js"></script>
-    <script src="/js/pages/sha512.js"></script>
+    <script src="/js/sha512/sha512.js"></script>
     <script src="/js/pages/pi/domain_replacer.js"></script>
 
     <title><<vars:title>></title>
