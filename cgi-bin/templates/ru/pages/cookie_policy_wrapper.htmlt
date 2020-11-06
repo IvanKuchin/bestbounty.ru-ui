@@ -7,9 +7,6 @@
 
     <title><<vars:title_head>></title>
 
-    <script src="/js/pages/tooltip.js"></script>
-    <link href="/css/pages/animate.min.css" rel="stylesheet">
-
     <link href="/css/pages/switcher.css" rel="stylesheet">
   </head>
 

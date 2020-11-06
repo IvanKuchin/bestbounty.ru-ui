@@ -9,9 +9,6 @@
 
     <script src="/js/pages/pi/faq.js"></script>
 
-    <script src="/js/pages/tooltip.js"></script>
-    <link href="/css/pages/animate.min.css" rel="stylesheet">
-
     <script src="/js/chartjs/2.7.2/Chart.bundle.js"></script>
 
     <script>

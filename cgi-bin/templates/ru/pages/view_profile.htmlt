@@ -5,12 +5,7 @@
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 		<<template:templates/ru/pages/header.htmlt>>
 		
-
 		<title><<vars:title_head>></title>
-
-		<!-- tool tip bouncing -->
-		<script src="/js/pages/tooltip.js"></script>
-		<link href="/css/pages/animate.min.css" rel="stylesheet">
 
 		<!-- Custom styles for this template -->
 		<link href="/css/pages/view_profile.css" rel="stylesheet">
