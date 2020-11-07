@@ -113,7 +113,7 @@ var	user_notifications = (function()
 
 			hrefAvatar.attr("href", "/companyprofile/" + item.notificationFromCompany[0].id)
 					.addClass("UnreadChatListHrefLineHeigh")
-					.append(system_calls.CutLongMesssages(item.notificationFromCompany[0].type + " " + item.notificationFromCompany[0].name));
+					.append(system_calls.CutLongMessages(item.notificationFromCompany[0].type + " " + item.notificationFromCompany[0].name));
 
 			if(item.notificationFromCompany[0].logo_folder.length && item.notificationFromCompany[0].logo_filename.length)
 				avatarPath = "/images/companies/" + item.notificationFromCompany[0].logo_folder + "/" + item.notificationFromCompany[0].logo_filename;

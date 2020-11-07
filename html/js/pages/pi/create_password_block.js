@@ -82,7 +82,7 @@ create_password_block = (function ()
 		return result;
 	};
 
-	var	TransliteRusToEng = function(src)
+	var	TranslateRusToEng = function(src)
 	{
 		var		result = src;
 
@@ -175,7 +175,7 @@ create_password_block = (function ()
 				example = adjectives_list_global[rand1] + "" + Math.round(Math.random() * 1000) + "" + noun_list_global[rand2];
 
 				if(result.length) result += ", ";
-				result += TransliteRusToEng(example);
+				result += TranslateRusToEng(example);
 			}
 		}
 		else

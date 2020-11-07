@@ -436,7 +436,7 @@ var	helpdesk_ticket_obj = function()
 									.attr("data-type", "upload_file")
 									.addClass("label label-default")
 									.data("original-file", file)
-									.append(system_calls.CutLongMesssages(file.name, 20))
+									.append(system_calls.CutLongMessages(file.name, 20))
 									.append("&nbsp;&nbsp;&nbsp;")
 									.append(remove_button);
 

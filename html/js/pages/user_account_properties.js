@@ -50,8 +50,8 @@ user_account_properties = (function()
 		$("#submitSendLink").on("click", SendWallLink);
 
 
-		$("label[for=\"case_subscripiton_email\"]")	.on("click", Switcher_ClickHandler);
-		$("label[for=\"case_subscripiton_sms\"]")	.on("click", Switcher_ClickHandler);
+		$("label[for=\"case_subscription_email\"]")	.on("click", Switcher_ClickHandler);
+		$("label[for=\"case_subscription_sms\"]")	.on("click", Switcher_ClickHandler);
 
 		// --- sms login block
 		sms_confirmation.SetCountryCodeSelector	("#country_code");
@@ -572,8 +572,8 @@ user_account_properties = (function()
 
 	var	RenderHelpdeskSubscriptions = function(sms_subscriptions, email_subscriptions)
 	{
-		$("#case_subscripiton_sms")		.prop("checked",   sms_subscriptions[0] == "Y" ? "checked" : "");
-		$("#case_subscripiton_email")	.prop("checked", email_subscriptions[0] == "Y" ? "checked" : "");
+		$("#case_subscription_sms")		.prop("checked",   sms_subscriptions[0] == "Y" ? "checked" : "");
+		$("#case_subscription_email")	.prop("checked", email_subscriptions[0] == "Y" ? "checked" : "");
 	};
 
 	var	Switcher_ClickHandler = function(e)
