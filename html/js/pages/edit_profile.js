@@ -420,11 +420,11 @@ var AddCarrierPathCollapsibleInit = function()
 														function() {
 															$(this).children("img").data("initial_src", $(this).children("img").attr("src"));
 															// $(this).children("img").attr("src", "/images/pages/common/checkbox_animated.gif"); 
-															$(this).addClass("editable_highlited_class", 400);
+															$(this).addClass("editable_highlighted_class", 400);
 														}, 
 														function() {
 															// $(this).children("img").attr("src", $(this).children("img").data("initial_src")); 
-															$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+															$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 														})
 														.on("click", AddCarrierPathCollapsibleCurrentEmployment_ClickHandler);
 	$("div#AddCarrierCompany button#AddCarrierCompanyAddButton").on("click", AddCarrierCompanyAddButton_ClickHandler);
@@ -3102,11 +3102,11 @@ var	RenderCarrierPath = function()
 														function() {
 															$(this).children("img").data("initial_src", $(this).children("img").attr("src"));
 															$(this).children("img").attr("src", "/images/pages/common/checkbox_animated.gif"); 
-															$(this).addClass("editable_highlited_class", 400);
+															$(this).addClass("editable_highlighted_class", 400);
 														}, 
 														function() {
 															$(this).children("img").attr("src", $(this).children("img").data("initial_src")); 
-															$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+															$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 														})
 													.on("click", ChangeCurrentStatus_ClickHandler);
 		var		spanClose = $("<span>").attr("data-id", item.companyID)
@@ -4874,7 +4874,7 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).on('keyup', keyupEventHandler);
 		$(tag).on('change', selectChangeHandler);
 		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass('editable_highlighted_class');
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -4942,7 +4942,7 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).on('keyup', keyupEventHandler);
 		$(tag).on('change', selectChangeHandler);
 		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass('editable_highlighted_class');
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -5007,7 +5007,7 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).on('keyup', keyupEventHandler);
 		$(tag).on('change', selectChangeHandler);
 		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass('editable_highlighted_class');
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -5061,7 +5061,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		$(this).replaceWith(tag);
 		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass('editable_highlighted_class');
 
 		if($(tag).data("action") == "AJAX_updateFirstName") 
 		{
@@ -5702,7 +5702,7 @@ var	ajaxReturnSuccess = function(data) {
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass('editable_highlighted_class');
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
 		$(tag).on('keyup', keyupEventHandler);
@@ -6072,11 +6072,11 @@ var	ajaxReturnSuccess = function(data) {
 	};
 
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 
 	};
 

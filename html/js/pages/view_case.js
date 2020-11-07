@@ -176,7 +176,7 @@ var	view_case = (function()
 					.empty()
 					.append(helpdesk_ticket.TicketHistory_GetDOM(ticket));
 
-		// --- update input field only if it called regulat flow, 
+		// --- update input field only if it called regular flow, 
 		if(isIntervalFlag())
 		{
 			ResetIntervalFlag();

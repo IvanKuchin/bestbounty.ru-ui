@@ -459,7 +459,7 @@ create_group = (function()
 
 		$(this).replaceWith(tag);
 		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('createable_highlited_class');
+		$(tag).removeClass('createable_highlighted_class');
 
 		if($(tag).data("action") == "AJAX_updateGroupLink") 
 		{
@@ -719,7 +719,7 @@ create_group = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('createable_highlited_class');
+		$(tag).removeClass('createable_highlighted_class');
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
 		$(tag).on('keyup', keyupEventHandler);
@@ -808,7 +808,7 @@ create_group = (function()
 		$(tag).on('keyup', keyupEventHandler);
 		$(tag).on('change', selectChangeHandler);
 		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('createable_highlited_class');
+		$(tag).removeClass('createable_highlighted_class');
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -886,11 +886,11 @@ create_group = (function()
 	};
 
 	var createableFuncHighlightBgcolor = function () {
-		$(this).addClass("createable_highlited_class", 400);
+		$(this).addClass("createable_highlighted_class", 400);
 	};
 
 	var createableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("createable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("createable_highlighted_class", 200, "easeInOutCirc");
 	};
 
 	return {
