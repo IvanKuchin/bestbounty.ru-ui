@@ -10,7 +10,7 @@ var	view_case = (function()
 	var	data_global;
 	var	helpdesk_ticket_obj_global;
 	var	user_global;
-	var	interfal_flag_global = 0;
+	var	interval_flag_global = 0;
 
 	var	Init = function()
 	{
@@ -30,9 +30,9 @@ var	view_case = (function()
 					}, 60000);
 	};
 
-	var	SetIntervalFlag		= function() { interfal_flag_global = 1; };
-	var	ResetIntervalFlag	= function() { interfal_flag_global = 0; };
-	var	isIntervalFlag		= function() { return interfal_flag_global; };
+	var	SetIntervalFlag		= function() { interval_flag_global = 1; };
+	var	ResetIntervalFlag	= function() { interval_flag_global = 0; };
+	var	isIntervalFlag		= function() { return interval_flag_global; };
 
 	var	GetCaseFromServer = function(case_id)
 	{
