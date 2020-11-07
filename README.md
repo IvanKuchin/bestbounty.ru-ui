@@ -1,3 +1,3 @@
 # bestbounty.ru-ui
-123
-qwerty
+
+![Spell checking](https://github.com/IvanKuchin/bestbounty.ru-ui/workflows/Spell%20checking/badge.svg)
