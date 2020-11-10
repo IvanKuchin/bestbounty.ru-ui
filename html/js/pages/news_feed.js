@@ -735,7 +735,7 @@ var	EditNewsFeedPostMessage = function ()
 
 var DeleteMessage = function(messageID) 
 {
-	// --- improve user expirience by removing message immediately
+	// --- improve user experience by removing message immediately
 	// --- on a slow speed links users can continue seeing it some time
 	$("div#message" + messageID).parent().empty();
 	$.getJSON('/cgi-bin/index.cgi?action=AJAX_deleteNewsFeedMessage', {messageID: messageID})
@@ -2100,7 +2100,7 @@ var RenderBookMainInfo = function(jsonBook, DOMtag)
 	{
 		// --- this function will be invoked for feed rendering and modal rendering
 		// --- require to keep attr("id") uniq
-		// --- first time will always be choosen Init value
+		// --- first time will always be chosen Init value
 		// --- first time will appear on rendering main page
 		var		uniqueID = jsonBook.bookID;
 		while($("#bookCommonRating" + uniqueID).length) {

@@ -204,7 +204,7 @@ var	Init = function()
 
 		$("#DeleteAvatarDialogBoxBS").modal("hide");
 
-		// --- Real avatar deletion after closing dialog to improve User Expirience
+		// --- Real avatar deletion after closing dialog to improve User Experience
 		DeletePreviewAvatar($("#DeteledAvatarID_InBSForm").val());
 	});
 
@@ -6120,7 +6120,7 @@ var	ajaxReturnSuccess = function(data) {
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately) 
+		// --- To improve User Experience (react on user actions immediately) 
 		// ---	 I'm updating GUI immediately after click, not waiting server response
 		if(affectedAction == "AJAX_removeCompanyExperience")
 		{

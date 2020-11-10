@@ -1234,7 +1234,7 @@ system_calls = (function()
 							.data("action", "companyProfileTakeOwnership")
 							.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
 							.attr("title", "Моя компания !")
-							.attr("data-target", "#PosessionAlertModal")
+							.attr("data-target", "#PossessionAlertModal")
 							.attr("data-toggle", "modal")
 							.tooltip({ animation: "animated bounceIn", placement: "top" });
 		}
@@ -1245,7 +1245,7 @@ system_calls = (function()
 							.addClass("btn btn-danger form-control")
 							.data("action", "companyProfileRequestOwnership")
 							.attr("title", "Отправить запрос")
-							.attr("data-target", "#PosessionRequestModal")
+							.attr("data-target", "#PossessionRequestModal")
 							.attr("data-toggle", "modal")
 							.tooltip({ animation: "animated bounceIn", placement: "top" });
 		}

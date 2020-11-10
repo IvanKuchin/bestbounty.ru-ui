@@ -24,9 +24,9 @@ var	events_list = (function()
 			window.location.href="/createnewevent?rand=" + system_calls.GetUUID();
 		});
 
-		// $("#PosessionAlertModal_Submit").on("click", SendPosessionAlert);
-		// $("#PosessionRequestModal_Submit").on("click", SendPosessionRequest);
-		// $("#PosessionRequestModal").on("hidden.bs.modal", function() { setTimeout(SendPosessionRequestResult, 100); });
+		// $("#PossessionAlertModal_Submit").on("click", SendPossessionAlert);
+		// $("#PossessionRequestModal_Submit").on("click", SendPossessionRequest);
+		// $("#PossessionRequestModal").on("hidden.bs.modal", function() { setTimeout(SendPossessionRequestResult, 100); });
 	};
 
 	// --- event button callback function 

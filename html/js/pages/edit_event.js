@@ -996,10 +996,10 @@ edit_event = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_dropCompanyPosession")
+		if(currTag.data("action") == "AJAX_dropCompanyPossession")
 		{
 			$("#AreYouSure #Remove").data("id", companyProfile.id);
-			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPosession");
+			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPossession");
 			$("#AreYouSure #Remove").data("script", "company.cgi");
 
 			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");

@@ -367,7 +367,7 @@ create_group = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately, inspite on potential server error's) 
+		// --- To improve User Experience (react on user actions immediately, inspite on potential server error's) 
 		if(affectedAction == "AJAX_removeGroupFounder")
 		{
 			var		removeItemIndex = -1;

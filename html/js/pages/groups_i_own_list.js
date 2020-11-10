@@ -67,7 +67,7 @@ var	groups_i_own_list = (function()
 		}
 		else if(currAction == "groupProfileRequestOwnership")
 		{
-			$("#PosessionRequestModal_Submit")	.data("id", currTag.data("id"))
+			$("#PossessionRequestModal_Submit")	.data("id", currTag.data("id"))
 												.data("name", currTag.data("name"));
 		}
 	}

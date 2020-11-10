@@ -54,8 +54,8 @@ edit_company = (function()
 
 		PrefillInternalStructures();
 
-		// --- Drop company posession
-		$("button#companyDropPosession").on("click", AreYouSureClickHandler);
+		// --- Drop company possession
+		$("button#companyDropPossession").on("click", AreYouSureClickHandler);
 
 		// --- Founder add
 		$("input#companyFounderItem").on("keyup", InputKeyupHandler);
@@ -1749,10 +1749,10 @@ edit_company = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_dropCompanyPosession")
+		if(currTag.data("action") == "AJAX_dropCompanyPossession")
 		{
 			$("#AreYouSure #Remove").data("id", companyProfile.id);
-			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPosession");
+			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPossession");
 			$("#AreYouSure #Remove").data("script", "company.cgi");
 
 			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
@@ -1789,7 +1789,7 @@ edit_company = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately, inspite on potential server error's) 
+		// --- To improve User Experience (react on user actions immediately, inspite on potential server error's) 
 		if(affectedAction == "AJAX_removeCompanyFounder")
 		{
 			var		removeItemIndex = -1;
@@ -1842,7 +1842,7 @@ edit_company = (function()
 		{
 			$("#rowAppliedCandidate" + affectedID).remove();
 		}
-		if(affectedAction == "AJAX_dropCompanyPosession")
+		if(affectedAction == "AJAX_dropCompanyPossession")
 		{
 			window.location.href = "/companies_i_own_list?rand=" + system_calls.GetUUID();
 		}

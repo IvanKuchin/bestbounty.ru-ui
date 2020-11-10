@@ -435,7 +435,7 @@ var	user_notifications = (function()
 			divNotificationRow	.append(divImg).append(divTitle).append(divBody);
 		}
 
-		// --- company posession request
+		// --- company possession request
 		if(item.notificationTypeID == 60)
 		{
 			var		divImg = $("<div>").addClass("col-xs-5 col-sm-3 col-md-2 margin_top_15 form-group");
@@ -444,7 +444,7 @@ var	user_notifications = (function()
 			var		divOK = $("<div>").addClass("col-xs-6 col-sm-4 col-md-5");
 			var		buttonOK = $("<button>").addClass("btn btn-primary form-control")
 												.data("id", item.notificationID)
-												.data("action", "AJAX_grantPosessionRequest")
+												.data("action", "AJAX_grantPossessionRequest")
 												.data("script", "company.cgi")
 												.append("Передать")
 												.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
@@ -452,7 +452,7 @@ var	user_notifications = (function()
 			var		divReject = $("<div>").addClass("col-xs-6 col-sm-4 col-md-5");
 			var		buttonReject = $("<button>").addClass("btn btn-danger form-control")
 												.data("id", item.notificationID)
-												.data("action", "AJAX_rejectPosessionRequest")
+												.data("action", "AJAX_rejectPossessionRequest")
 												.data("script", "company.cgi")
 												.append("Отказать")
 												.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
@@ -482,12 +482,12 @@ var	user_notifications = (function()
 			divNotificationRow	.append(divBody)
 								.append(divImg)
 								.append(divTitle);
-			if(item.notificationPosessionStatus == "requested")
+			if(item.notificationPossessionStatus == "requested")
 				divNotificationRow	.append(divOK)
 									.append(divReject);
 		}
 
-		// --- granted company posession request
+		// --- granted company possession request
 		if(item.notificationTypeID == 61)
 		{
 			var		divImg = $("<div>").addClass("col-xs-5 col-sm-3 col-md-2 margin_top_15 form-group");
@@ -540,13 +540,13 @@ var	user_notifications = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_grantPosessionRequest")
+		if(currTag.data("action") == "AJAX_grantPossessionRequest")
 		{
 
 			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
 			$("#AreYouSure #Remove").empty().append("Согласен");
 		}
-		else if(currTag.data("action") == "AJAX_rejectPosessionRequest")
+		else if(currTag.data("action") == "AJAX_rejectPossessionRequest")
 		{
 			$("#AreYouSure .description").empty();
 			$("#AreYouSure #Remove").empty().append("Отказать");
