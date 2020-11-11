@@ -1,4 +1,5 @@
 /*jslint devel: true, indent: 4, maxerr: 50*/ 
+/*globals system_calls:off*/
 
 // --- change it in (chat.js, common.js, localy.h)
 var FREQUENCY_ECHO_REQUEST = 60;
