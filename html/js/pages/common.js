@@ -12,6 +12,7 @@
 /*globals module:false*/
 /*globals define:false*/
 
+
 // --- change it in (chat.js, common.js, localy.h)
 var FREQUENCY_ECHO_REQUEST = 60;
 var FREQUENCY_USRENOTIFICATION_REQUEST = 60 * 5;
