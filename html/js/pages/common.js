@@ -1,17 +1,4 @@
 /*jslint devel: true, indent: 4, maxerr: 50*/ 
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
-
 
 // --- change it in (chat.js, common.js, localy.h)
 var FREQUENCY_ECHO_REQUEST = 60;
