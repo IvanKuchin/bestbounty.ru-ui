@@ -6,14 +6,24 @@ env:
 
 # --- avoid no-undef warning for variables below
 globals:
-    system_calls: writable,
-    userCache: writable,
-    system_notifications: writeable,
-    troubleshooting: writeable,
-    DrawUserAvatar: writeable,
+    document: writeable,
     DrawCompanyAvatar: writeable,
-    window: writable
-
+    DrawUserAvatar: writeable,
+    Image: writeable,
+    isMobile: writeable,
+    jQuery: writeable,
+    localStorage: writeable,
+    location: writeable,
+    navigator: writeable,
+    Notification: writeable,
+    session_pi: writeable,
+    setTimeout: writeable,
+    system_calls: writeable,
+    system_notifications: writeable,
+    StackTrace: writeable,
+    troubleshooting: writeable,
+    userCache: writeable,
+    window: writeable
 
 # --- rules turn on/off
 #rules:
