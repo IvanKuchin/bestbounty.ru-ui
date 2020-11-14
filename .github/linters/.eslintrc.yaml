@@ -6,7 +6,14 @@ env:
 
 # --- avoid no-undef warning for variables below
 globals:
-    system_calls: readonly
+    system_calls: writable,
+    userCache: writable,
+    system_notifications: writeable,
+    troubleshooting: writeable,
+    DrawUserAvatar: writeable,
+    DrawCompanyAvatar: writeable,
+    window: writable
+
 
 # --- rules turn on/off
 #rules:
