@@ -6,6 +6,7 @@ var FREQUENCY_ECHO_REQUEST = 60;
 var FREQUENCY_USRENOTIFICATION_REQUEST = 60 * 5;
 var FREQUENCY_RANDOM_FACTOR = 10;
 
+
 // -- global var used because of setTimeout don't support parameters in IE9
 var	navMenu_search = navMenu_search || {};
 var	navMenu_chat = navMenu_chat || {};
