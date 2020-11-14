@@ -17,7 +17,6 @@ var		JSON_university = [];
 var		JSON_school = [];
 var		JSON_language = [];
 var		JSON_skill = [];
-var		JSON_book = [];
 var		JSON_dataForProfile = {};
 var		userProfile;
 var		addCarrierCompany = {};
@@ -28,7 +27,6 @@ var		addUniversity = {};
 var		addLanguage = {};
 var		addSkill = {};
 var		addBook = {};
-var		addRecommendation = {};
 var		datepickerDateFormat;
 var		AutocompleteList = [];
 
@@ -92,39 +90,39 @@ var	Init = function()
 						.done(function(data) {
 							JSON_dataForProfile = data;
 
-							data.geo_country.forEach(function(item, i, arr)
+							data.geo_country.forEach(function(item)
 							{
 								JSON_geoCountry.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.geo_region.forEach(function(item, i, arr)
+							data.geo_region.forEach(function(item)
 							{
 								JSON_geoRegion.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.geo_locality.forEach(function(item, i, arr)
+							data.geo_locality.forEach(function(item)
 							{
 								JSON_geoLocality.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.university.forEach(function(item, i, arr)
+							data.university.forEach(function(item)
 							{
 								JSON_university.push(system_calls.ConvertHTMLToText(item.title));
 							});
 							jQuery.unique(JSON_university);
 
-							data.school.forEach(function(item, i, arr)
+							data.school.forEach(function(item)
 							{
 								JSON_school.push(system_calls.ConvertHTMLToText(item.title));
 							});
 							jQuery.unique(JSON_school);
 
-							data.language.forEach(function(item, i, arr)
+							data.language.forEach(function(item)
 							{
 								JSON_language.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.skill.forEach(function(item, i, arr)
+							data.skill.forEach(function(item)
 							{
 								JSON_skill.push(system_calls.ConvertHTMLToText(item.title));
 							});
@@ -262,18 +260,6 @@ var	ScrollToElementID = function(elementID)
 {
 	if((elementID.length > 1) && $(elementID).length) // --- elementID is "#XXXX"
 		system_calls.ScrollWindowToElementID(elementID);
-};
-
-var	getDate = function ( elem ) 
-{
-  var date;
-  try {
-	date = $.datepicker.parseDate( datepickerDateFormat, elem.value );
-  } catch( error ) {
-	date = null;
-  }
-
-  return date;
 };
 
 var AddCarrierPathCollapsibleZeroize = function()
@@ -5778,10 +5764,9 @@ var	ajaxReturnSuccess = function(data) {
 				data: {action:ajaxAction, id:ajaxActionID, value:dateReadBook.getTime()/1000}
 			}).done(function (data) 
 				{
-					var		ajaxResul = JSON.parse(data);
 					console.debug("UpdateBookReadDatePickerOnChangeHandler(" + data + "): enter");
 
-					userProfile.companies.forEach(function(item, i, arr)
+					userProfile.companies.forEach(function(item)
 					{
 						if(item.companyID == ajaxActionID)
 						{
@@ -5796,7 +5781,7 @@ var	ajaxReturnSuccess = function(data) {
 		}
 	};
 
-	var UpdateOccupationStartDatePickerOnChangeHandler = function(event) {
+	var UpdateOccupationStartDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue = $(this).val();
@@ -5809,10 +5794,9 @@ var	ajaxReturnSuccess = function(data) {
 			data: {action:ajaxAction, id:ajaxActionID, value:ajaxValue}
 		}).done(function (data) 
 			{
-				var		ajaxResul = JSON.parse(data);
 				console.debug("UpdateOccupationStartDatePickerOnChangeHandler(" + data + "): enter");
 
-				userProfile.companies.forEach(function(item, i, arr)
+				userProfile.companies.forEach(function(item)
 				{
 					if(item.companyID == ajaxActionID)
 					{
@@ -5824,7 +5808,7 @@ var	ajaxReturnSuccess = function(data) {
 			});
 	};
 
-	var UpdateOccupationFinishDatePickerOnChangeHandler = function(event) {
+	var UpdateOccupationFinishDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue = $(this).val();
@@ -5839,7 +5823,7 @@ var	ajaxReturnSuccess = function(data) {
 			{
 				console.debug("UpdateOccupationFinishDatePickerOnChangeHandler(" + data + "): enter");
 
-				userProfile.companies.forEach(function(item, i, arr)
+				userProfile.companies.forEach(function(item)
 				{
 					if(item.companyID == ajaxActionID)
 					{

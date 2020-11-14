@@ -1636,14 +1636,14 @@ edit_company = (function()
 
 			if((currentTS <= publishFinishTS))
 			{
-				var		publissDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
+				var		publishDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
 
 				spanStatus = $("<span>").addClass("fa-stack")
 										.append($("<i>").addClass("fa fa-circle-o fa-stack-2x color_green"))
 										.append($("<i>").addClass("fa fa-check fa-stack-1x color_green"))
 										.attr("data-toggle", "tooltip")
 										.attr("data-placement", "top")
-										.attr("title", "Опубликована (еще " + publissDaysRemains + " " + system_calls.GetDaysSpelling(publissDaysRemains) + ")");
+										.attr("title", "Опубликована (еще " + publishDaysRemains + " " + system_calls.GetDaysSpelling(publishDaysRemains) + ")");
 			}
 			else
 			{

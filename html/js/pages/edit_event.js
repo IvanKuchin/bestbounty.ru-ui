@@ -644,15 +644,15 @@ var edit_event = (function()
 
 	var	FriendModal_SelectAll_ChangeHandler = function()
 	{
-		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
+		var	allIngredients = $("input.friend_checkbox");
+		var	checkedIngredientCounter = 0;
 
-		allIngridients.each(function() 
+		allIngredients.each(function() 
 			{
-				if($(this).is(":checked")) ++checkedIngridientCounter;
+				if($(this).is(":checked")) ++checkedIngredientCounter;
 			});
 
-		if(checkedIngridientCounter)
+		if(checkedIngredientCounter)
 		{
 			$("#GuestListModal .submit").removeAttr("disabled");
 		}
@@ -664,11 +664,11 @@ var edit_event = (function()
 
 	var	FriendModal_SelectAll_ClickHandler = function()
 	{
-		var	allIngridients = $("input.friend_checkbox");
+		var	allIngredients = $("input.friend_checkbox");
 		var	switchPace = 100;
 		var	actionToDo = $("#checkboxSelectAll").is(":checked");
 
-		allIngridients.each(function(idx) 
+		allIngredients.each(function(idx) 
 			{
 				var		currCheckBox = $(this);
 				setTimeout(function() 
@@ -737,9 +737,9 @@ var edit_event = (function()
 	{
 		var		usersListToInvite = [];
 
-		var	allIngridients = $("input.friend_checkbox");
+		var	allIngredients = $("input.friend_checkbox");
 
-		allIngridients.each(function() 
+		allIngredients.each(function() 
 			{
 				if($(this).is(":checked")) usersListToInvite.push($(this).val());
 			});
