@@ -127,7 +127,7 @@ user_account_properties = (function()
 		$("#submitSendLink").button("loading");
 		setTimeout(function() { $("#submitSendLink").button("reset"); }, 1000);
 
-	    window.location.href = link;
+		window.location.href = link;
 	};
 
 	var ChangeButtons = function()

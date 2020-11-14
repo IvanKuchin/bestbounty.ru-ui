@@ -65,27 +65,27 @@ login_page = (function()
 		if($("#regInputEmail").val() === "")
 		{
 			system_calls.PopoverError("regInputEmail", "Укажите e-mail");
-       		$('#regInputEmail').focus();
+	   		$('#regInputEmail').focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regPassword")) || !create_password_block.Check_NewPassword_Letters($("#regPassword")) || !create_password_block.Check_NewPassword_Digits($("#regPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regPassword")))
 		{
 			system_calls.PopoverError("regPassword", "Неподходящий пароль");
-       		$('#regPassword').focus();
+	   		$('#regPassword').focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Letters($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Digits($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regConfirmPassword")))
 		{
 			system_calls.PopoverError("regConfirmPassword", "Неподходящий пароль");
-       		$('#regConfirmPassword').focus();
+	   		$('#regConfirmPassword').focus();
 		}
 		else if($("#regPassword").val() != $("#regConfirmPassword").val())
 		{
 			system_calls.PopoverError("regConfirmPassword", "Пароли не совпадают");
-       		$('#regConfirmPassword').focus();
+	   		$('#regConfirmPassword').focus();
 		}
 		else if($("#regSecurityCode").val() === "")
 		{
 			system_calls.PopoverError("regSecurityCode", "Укажите код безопасности");
-       		$('#regSecurityCode').focus();
+	   		$('#regSecurityCode').focus();
 		}
 		else
 		{
@@ -139,48 +139,48 @@ login_page = (function()
 	{
 		/* Check for email duplication */
 		var formData = {
-	        'regEmail'              : $('#regInputEmail').val(),
-	        'action'				: 'ajax_regNewUser_checkUser'
-	    };
+			'regEmail'			  : $('#regInputEmail').val(),
+			'action'				: 'ajax_regNewUser_checkUser'
+		};
 
-	    if(formData.regEmail !== "") {
-	    	$.ajax({
-	            type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
-	            url         : '/cgi-bin/index.cgi', // the url where we want to POST
-	            data        : formData, // our data object
-	            dataType    : 'json', // what type of data do we expect back from the server
-	            encode      : true
-	        })
-	            // using the done promise callback
-	            .done(function(data) {
-	            	console.log("DEBUG: CheckregInputEmailValidity().ajax().done: retrieved data.regEmail = " + data.regEmail);
-	            	if(data.regEmail == "already used"){
-	            		$('#regInputEmail').focus();
-	            		$('#regEmail_checked').val("0");
+		if(formData.regEmail !== "") {
+			$.ajax({
+				type		: 'GET', // define the type of HTTP verb we want to use (POST for our form)
+				url		 : '/cgi-bin/index.cgi', // the url where we want to POST
+				data		: formData, // our data object
+				dataType	: 'json', // what type of data do we expect back from the server
+				encode	  : true
+			})
+				// using the done promise callback
+				.done(function(data) {
+					console.log("DEBUG: CheckregInputEmailValidity().ajax().done: retrieved data.regEmail = " + data.regEmail);
+					if(data.regEmail == "already used"){
+						$('#regInputEmail').focus();
+						$('#regEmail_checked').val("0");
 
-	            		// --- Update field with Error sign
-	            		$('#regDivEmail').removeClass("has-success").addClass("has-error");
-	            		$('#regSpanEmail').removeClass("glyphicon-ok").addClass("glyphicon-remove");
+						// --- Update field with Error sign
+						$('#regDivEmail').removeClass("has-success").addClass("has-error");
+						$('#regSpanEmail').removeClass("glyphicon-ok").addClass("glyphicon-remove");
 
-	            	}
-	            	else {
-	            		$('#regEmail_checked').val("1");
+					}
+					else {
+						$('#regEmail_checked').val("1");
 
-	            		// --- Update field with Success sign
-	            		$('#regDivEmail').removeClass("has-error").addClass("has-success");
-	            		$('#regSpanEmail').removeClass("glyphicon-remove").addClass("glyphicon-ok");
-	            	}
+						// --- Update field with Success sign
+						$('#regDivEmail').removeClass("has-error").addClass("has-success");
+						$('#regSpanEmail').removeClass("glyphicon-remove").addClass("glyphicon-ok");
+					}
 
-	                // here we will handle errors and validation messages
-	            });
-	    }
-	    else {
-	    	$('#regEmail_checked').val("0");
+					// here we will handle errors and validation messages
+				});
+		}
+		else {
+			$('#regEmail_checked').val("0");
 
 			// --- cleanup Email field
 			$('#regDivEmail').removeClass("has-error has-success");
 			$('#regSpanEmail').removeClass("glyphicon-remove glyphicon-ok");
-	    }
+		}
 	};
 
 	var RedirectTo = function(_url)
