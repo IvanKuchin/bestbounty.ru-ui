@@ -6,26 +6,26 @@ env:
 
 # --- avoid no-undef warning for variables below
 globals:
-    helpdesk_ticket_list_obj: writable,
-    document: writable,
-    DrawCompanyAvatar: writable,
-    DrawUserAvatar: writable,
-    Image: writable,
-    isMobile: writable,
-    jQuery: writable,
-    localStorage: writable,
-    location: writable,
-    navigator: writable,
-    Notification: writable,
-    session_pi: writable,
-    setTimeout: writable,
-    sms_confirmation: writable,
-    system_calls: writable,
-    system_notifications: writable,
-    StackTrace: writable,
-    troubleshooting: writable,
-    Uint8Array: writable,
-    userCache: writable,
+    helpdesk_ticket_list_obj: writable
+    document: writable
+    DrawCompanyAvatar: writable
+    DrawUserAvatar: writable
+    Image: writable
+    isMobile: writable
+    jQuery: writable
+    localStorage: writable
+    location: writable
+    navigator: writable
+    Notification: writable
+    session_pi: writable
+    setTimeout: writable
+    sms_confirmation: writable
+    system_calls: writable
+    system_notifications: writable
+    StackTrace: writable
+    troubleshooting: writable
+    Uint8Array: writable
+    userCache: writable
     window: writable
 
 # --- rules turn on/off
