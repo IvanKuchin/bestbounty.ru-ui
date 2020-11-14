@@ -3,7 +3,7 @@ var	events_list = events_list || {};
 
 var	events_list = (function()
 {
-    'use strict';
+    "use strict";
 
 	var	JSON_FindEventsList_Autocomplete = [];
 	var JSON_MyEventsList;
@@ -83,7 +83,7 @@ var	events_list = (function()
 	var	GetEventsList = function () 
 	{
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{ action:"AJAX_getMyEventsList" })
 			.done(function(data) {
 						if(data.status == "success")
@@ -113,7 +113,7 @@ var	events_list = (function()
 		console.debug("AJAX_findEventByID autocomplete.select: seletedID=" + selectedID + " selectedLabel=" + selectedLabel);
 
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{action:"AJAX_findEventByID", lookForKey:selectedID})
 			.done(function(data) {
 						if(data.status == "success")
@@ -145,7 +145,7 @@ var	events_list = (function()
 		if(inputValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{action:"AJAX_getFindEventsListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -161,7 +161,7 @@ var	events_list = (function()
 
 									if((item.title.length > 0))
 									{
-										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; };
+										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; }
 										autocompleteLabel += item.title;
 									}
 
@@ -230,7 +230,7 @@ var	events_list = (function()
 		if(inputValue.length >= 3)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{action:"AJAX_getFindEventsList", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -251,10 +251,10 @@ var	events_list = (function()
 			// --- tooltip alert
 			$("#eventSearchText").attr("title", "Напишите более 2 букв")
 									.attr("data-placement", "top")
-									.tooltip('show');
+									.tooltip("show");
 			window.setTimeout(function()
 				{
-					$("#eventSearchText").tooltip('destroy');
+					$("#eventSearchText").tooltip("destroy");
 				}
 				, 3000);
 									// .tooltip('hide');

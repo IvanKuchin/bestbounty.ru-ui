@@ -1,4 +1,4 @@
-var	password_recovery = password_recovery || {}
+var	password_recovery = password_recovery || {};
 
 password_recovery = (function()
 {
@@ -21,17 +21,17 @@ password_recovery = (function()
 		else if(!create_password_block.Check_NewPassword_Len($("#regPassword")) || !create_password_block.Check_NewPassword_Letters($("#regPassword")) || !create_password_block.Check_NewPassword_Digits($("#regPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regPassword")))
 		{
 			system_calls.PopoverError("regPassword", "Неподходящий пароль");
-	   		$('#regPassword').focus();
+	   		$("#regPassword").focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Letters($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Digits($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regConfirmPassword")))
 		{
 			system_calls.PopoverError("regConfirmPassword", "Неподходящий пароль");
-	   		$('#regConfirmPassword').focus();
+	   		$("#regConfirmPassword").focus();
 		}
 		else if($("#regPassword").val() != $("#regConfirmPassword").val())
 		{
 			system_calls.PopoverError("regConfirmPassword", "Пароли не совпадают");
-	   		$('#regConfirmPassword').focus();
+	   		$("#regConfirmPassword").focus();
 		}
 		else
 		{
@@ -43,7 +43,7 @@ password_recovery = (function()
 
 			$("#AJAX_recoverPasswordSubmit").button("loading");
 
-			$.getJSON('/cgi-bin/index.cgi?action=AJAX_recoverPassword',
+			$.getJSON("/cgi-bin/index.cgi?action=AJAX_recoverPassword",
 						{
 							activator_id: activator_id,
 							password_hash: password_hash

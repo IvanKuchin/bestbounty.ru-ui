@@ -2,7 +2,7 @@ var		login_page = login_page || {};
 
 login_page = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	country_selector		= "#signinInputCountry";
 	var	login_selector			= "#signinInputLogin";
@@ -65,27 +65,27 @@ login_page = (function()
 		if($("#regInputEmail").val() === "")
 		{
 			system_calls.PopoverError("regInputEmail", "Укажите e-mail");
-	   		$('#regInputEmail').focus();
+	   		$("#regInputEmail").focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regPassword")) || !create_password_block.Check_NewPassword_Letters($("#regPassword")) || !create_password_block.Check_NewPassword_Digits($("#regPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regPassword")))
 		{
 			system_calls.PopoverError("regPassword", "Неподходящий пароль");
-	   		$('#regPassword').focus();
+	   		$("#regPassword").focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Letters($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Digits($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regConfirmPassword")))
 		{
 			system_calls.PopoverError("regConfirmPassword", "Неподходящий пароль");
-	   		$('#regConfirmPassword').focus();
+	   		$("#regConfirmPassword").focus();
 		}
 		else if($("#regPassword").val() != $("#regConfirmPassword").val())
 		{
 			system_calls.PopoverError("regConfirmPassword", "Пароли не совпадают");
-	   		$('#regConfirmPassword').focus();
+	   		$("#regConfirmPassword").focus();
 		}
 		else if($("#regSecurityCode").val() === "")
 		{
 			system_calls.PopoverError("regSecurityCode", "Укажите код безопасности");
-	   		$('#regSecurityCode').focus();
+	   		$("#regSecurityCode").focus();
 		}
 		else
 		{
@@ -102,9 +102,9 @@ login_page = (function()
 
 				password_hash = shaObj.getHash("HEX");
 
-				$('#regSubmit').button('loading');
+				$("#regSubmit").button("loading");
 
-				$.getJSON('/cgi-bin/index.cgi?action=regNewUser', {
+				$.getJSON("/cgi-bin/index.cgi?action=regNewUser", {
 																	regEmail: $("#regInputEmail").val(),
 																	regPassword: password_hash,
 																	regSecurityCode: $("#regSecurityCode").val()
@@ -129,7 +129,7 @@ login_page = (function()
 					})
 					.always(function(data)
 					{
-						setTimeout(function() { $('#regSubmit').button('reset'); }, 300);
+						setTimeout(function() { $("#regSubmit").button("reset"); }, 300);
 					});
 			}
 		}
@@ -139,47 +139,47 @@ login_page = (function()
 	{
 		/* Check for email duplication */
 		var formData = {
-			'regEmail'			  : $('#regInputEmail').val(),
-			'action'				: 'ajax_regNewUser_checkUser'
+			"regEmail"			  : $("#regInputEmail").val(),
+			"action"				: "ajax_regNewUser_checkUser"
 		};
 
 		if(formData.regEmail !== "") {
 			$.ajax({
-				type		: 'GET', // define the type of HTTP verb we want to use (POST for our form)
-				url		 : '/cgi-bin/index.cgi', // the url where we want to POST
+				type		: "GET", // define the type of HTTP verb we want to use (POST for our form)
+				url		 : "/cgi-bin/index.cgi", // the url where we want to POST
 				data		: formData, // our data object
-				dataType	: 'json', // what type of data do we expect back from the server
+				dataType	: "json", // what type of data do we expect back from the server
 				encode	  : true
 			})
 				// using the done promise callback
 				.done(function(data) {
 					console.log("DEBUG: CheckregInputEmailValidity().ajax().done: retrieved data.regEmail = " + data.regEmail);
 					if(data.regEmail == "already used"){
-						$('#regInputEmail').focus();
-						$('#regEmail_checked').val("0");
+						$("#regInputEmail").focus();
+						$("#regEmail_checked").val("0");
 
 						// --- Update field with Error sign
-						$('#regDivEmail').removeClass("has-success").addClass("has-error");
-						$('#regSpanEmail').removeClass("glyphicon-ok").addClass("glyphicon-remove");
+						$("#regDivEmail").removeClass("has-success").addClass("has-error");
+						$("#regSpanEmail").removeClass("glyphicon-ok").addClass("glyphicon-remove");
 
 					}
 					else {
-						$('#regEmail_checked').val("1");
+						$("#regEmail_checked").val("1");
 
 						// --- Update field with Success sign
-						$('#regDivEmail').removeClass("has-error").addClass("has-success");
-						$('#regSpanEmail').removeClass("glyphicon-remove").addClass("glyphicon-ok");
+						$("#regDivEmail").removeClass("has-error").addClass("has-success");
+						$("#regSpanEmail").removeClass("glyphicon-remove").addClass("glyphicon-ok");
 					}
 
 					// here we will handle errors and validation messages
 				});
 		}
 		else {
-			$('#regEmail_checked').val("0");
+			$("#regEmail_checked").val("0");
 
 			// --- cleanup Email field
-			$('#regDivEmail').removeClass("has-error has-success");
-			$('#regSpanEmail').removeClass("glyphicon-remove glyphicon-ok");
+			$("#regDivEmail").removeClass("has-error has-success");
+			$("#regSpanEmail").removeClass("glyphicon-remove glyphicon-ok");
 		}
 	};
 
@@ -211,7 +211,7 @@ login_page = (function()
 				shaObj.update(password);
 				var hash = shaObj.getHash("HEX");
 
-				$.getJSON('/cgi-bin/index.cgi?action=AJAX_loginUser', {login: login, password: hash, signinRemember: $("#signinRemember").prop("checked") ? "remember-me" : ""})
+				$.getJSON("/cgi-bin/index.cgi?action=AJAX_loginUser", {login: login, password: hash, signinRemember: $("#signinRemember").prop("checked") ? "remember-me" : ""})
 				.done(function(data)
 					{
 						if(data.result == "success")
@@ -242,7 +242,7 @@ login_page = (function()
 	{
 		var		curr_tag = $(country_selector);
 
-		$.getJSON('/cgi-bin/noauth.cgi?action=AJAX_getGeoCountryList')
+		$.getJSON("/cgi-bin/noauth.cgi?action=AJAX_getGeoCountryList")
 			.done(function(data)
 			{
 				if(data.result == "success")
@@ -258,7 +258,7 @@ login_page = (function()
 			.fail(function(data)
 			{
 				system_calls.PopoverError(curr_tag, "Ошибка JSON ответа сервера");
-			})
+			});
 
 	};
 
@@ -291,14 +291,14 @@ login_page = (function()
 		if(str_to_test.match(/^ *(\+\d+)? *(\(\d+\))?[\d\- ]+\d[\d ]*$/))
 		{
 			for (var i = str_to_test.length - 1; i >= 0; i--) {
-				if(('0' <= str_to_test[i]) && (str_to_test[i] <= '9')) digits_only.push(str_to_test[i]);
+				if(("0" <= str_to_test[i]) && (str_to_test[i] <= "9")) digits_only.push(str_to_test[i]);
 			}
 
 			if(digits_only.length >= 10) result = true;
 		}
 
 		return result;
-	}
+	};
 
 	var	HidePasswordIfPhoneNumber_KeyupHandler = function(e)
 	{

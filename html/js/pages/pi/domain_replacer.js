@@ -14,7 +14,7 @@
 
 domain_replacer = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var Init = function()
 	{

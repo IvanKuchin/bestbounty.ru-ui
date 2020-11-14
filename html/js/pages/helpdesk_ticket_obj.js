@@ -2,7 +2,7 @@
 
 var	helpdesk_ticket_obj = function()
 {
-	'use strict';
+	"use strict";
 
 	var	DATE_FORMAT_GLOBAL = "DD MMMM YYYY HH:mm:ss";
 	var	MOBILE_DATE_FORMAT_GLOBAL = "DD MMMM";
@@ -47,44 +47,44 @@ var	helpdesk_ticket_obj = function()
 		var		result = $();
 
 		result = result.add(
-'	  <div class="row form-group" id="severity_row" ' + (form_type_global.severity_hidden_show) + '>' +
-'		<div class="col-xs-12 col-md-3">'+
-'		  <label>'+
-'			<input type="radio" name="severity" id="severity_1" value="1">'+
-'			Экстренная помощь (S1)'+
-'		  </label>'+
-'		</div>'+
-'		<div class="col-xs-12 col-md-3">'+
-'		  <label>'+
-'			<input type="radio" name="severity" id="severity_2" value="2">'+
-'			Решение проблемы (S2)'+
-'		  </label>'+
-'		</div>'+
-'		<div class="col-xs-12 col-md-3">'+
-'		  <label>'+
-'			<input type="radio" name="severity" id="severity_3" value="3">'+
-'			Вопрос специалисту (S3)'+
-'		  </label>'+
-'		</div>'+
-'		<div class="col-xs-12 col-md-3">'+
-'		  <label>'+
-'			<input type="radio" name="severity" id="severity_4" value="4">'+
-'			Запрос на доп фунционал (S4)'+
-'		  </label>'+
-'		</div>'+
-'	  </div>'+
-'	  <div class="row form-group" ' + (form_type_global.title_hidden_show) + '>'+
-'		<div class="col-xs-12">'+
-'		  <input maxlength="256" id="title" class="transparent form-control" placeholder="Краткое описание">'+
-'		  <label></label>'+
-'		</div>'+
-'	  </div>'+
-'	  <div class="row form-group">'+
-'		<div class="col-xs-12">'+
-'		  <textarea id="description" class="transparent form-control" placeholder="Полное описание (ссылка на страницу, последовательность действий, сообщение об ошибке и т.д.)." rows="10"></textarea>'+
-'		  <input type="hidden" id="ticket_id">'+
-'		</div>'+
-'	  </div>'
+"	  <div class=\"row form-group\" id=\"severity_row\" " + (form_type_global.severity_hidden_show) + ">" +
+"		<div class=\"col-xs-12 col-md-3\">"+
+"		  <label>"+
+"			<input type=\"radio\" name=\"severity\" id=\"severity_1\" value=\"1\">"+
+"			Экстренная помощь (S1)"+
+"		  </label>"+
+"		</div>"+
+"		<div class=\"col-xs-12 col-md-3\">"+
+"		  <label>"+
+"			<input type=\"radio\" name=\"severity\" id=\"severity_2\" value=\"2\">"+
+"			Решение проблемы (S2)"+
+"		  </label>"+
+"		</div>"+
+"		<div class=\"col-xs-12 col-md-3\">"+
+"		  <label>"+
+"			<input type=\"radio\" name=\"severity\" id=\"severity_3\" value=\"3\">"+
+"			Вопрос специалисту (S3)"+
+"		  </label>"+
+"		</div>"+
+"		<div class=\"col-xs-12 col-md-3\">"+
+"		  <label>"+
+"			<input type=\"radio\" name=\"severity\" id=\"severity_4\" value=\"4\">"+
+"			Запрос на доп фунционал (S4)"+
+"		  </label>"+
+"		</div>"+
+"	  </div>"+
+"	  <div class=\"row form-group\" " + (form_type_global.title_hidden_show) + ">"+
+"		<div class=\"col-xs-12\">"+
+"		  <input maxlength=\"256\" id=\"title\" class=\"transparent form-control\" placeholder=\"Краткое описание\">"+
+"		  <label></label>"+
+"		</div>"+
+"	  </div>"+
+"	  <div class=\"row form-group\">"+
+"		<div class=\"col-xs-12\">"+
+"		  <textarea id=\"description\" class=\"transparent form-control\" placeholder=\"Полное описание (ссылка на страницу, последовательность действий, сообщение об ошибке и т.д.).\" rows=\"10\"></textarea>"+
+"		  <input type=\"hidden\" id=\"ticket_id\">"+
+"		</div>"+
+"	  </div>"
 		);
 
 		if(ticket && (typeof(ticket.id) != "undefined"))
@@ -117,7 +117,7 @@ var	helpdesk_ticket_obj = function()
 		{
 			$("#CloseTicketModal").modal("show");
 		}
-	}
+	};
 
 	var	ControlButtons_GetDOM = function()
 	{
@@ -212,27 +212,27 @@ var	helpdesk_ticket_obj = function()
 			var col_91 = $("<div>")
 							.addClass("col-xs-12")
 							.append(
-'	<div class="modal fade" id="CloseTicketModal" tabindex="-1" role="dialog">' +
-'	  <div class="modal-dialog modal-md" role="document">' +
-'	  <div class="modal-content">' +
-'		<div class="modal-header">' +
-'		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-'		<h4 class="modal-title">Закрытие кейса</h4>' +
-'		</div>' +
-'		<div class="modal-body">' +
-'		  <div class="row">' +
-'			<div class="col-xs-12 description">' +
-'			  Вы уверены, что хотите закрыть кейс ?' +
-'			</div>' +
-'		  </div>' +
-'		</div>' +
-'		<div class="modal-footer">'+
-'		  <button type="button" class="btn btn-primary submit" data-action="AJAX_closeCase">Закрыть кейс</button>' +
-'		  <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>' +
-'		</div>' +
-'	  </div>' +
-'	  </div>' +
-'	</div>'
+"	<div class=\"modal fade\" id=\"CloseTicketModal\" tabindex=\"-1\" role=\"dialog\">" +
+"	  <div class=\"modal-dialog modal-md\" role=\"document\">" +
+"	  <div class=\"modal-content\">" +
+"		<div class=\"modal-header\">" +
+"		<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>" +
+"		<h4 class=\"modal-title\">Закрытие кейса</h4>" +
+"		</div>" +
+"		<div class=\"modal-body\">" +
+"		  <div class=\"row\">" +
+"			<div class=\"col-xs-12 description\">" +
+"			  Вы уверены, что хотите закрыть кейс ?" +
+"			</div>" +
+"		  </div>" +
+"		</div>" +
+"		<div class=\"modal-footer\">"+
+"		  <button type=\"button\" class=\"btn btn-primary submit\" data-action=\"AJAX_closeCase\">Закрыть кейс</button>" +
+"		  <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Отмена</button>" +
+"		</div>" +
+"	  </div>" +
+"	  </div>" +
+"	</div>"
 								);
 
 			col_91.find("button.submit").on("click", function(e) 
@@ -287,7 +287,7 @@ var	helpdesk_ticket_obj = function()
 		}
 		else
 		{
-			console.error("unknown form_type_global.action (" + form_type_global.action + ")")
+			console.error("unknown form_type_global.action (" + form_type_global.action + ")");
 		}
 
 
@@ -297,12 +297,12 @@ var	helpdesk_ticket_obj = function()
 	var	GetCaseOpenerHiMessage = function()
 	{
 		return "Здравствуйте " + $("#case_opener .first_name").text() + ",\n\n";
-	}
+	};
 
 	var	GetWorkingHoursMessage = function()
 	{
 		return "\n\nЦентр поддержки работает по рабочим дням с 12:00 до 21:00 по Московскому времени.";
-	}
+	};
 
 
 	var	Prefill_WelcomeMessage = function()
@@ -372,7 +372,7 @@ var	helpdesk_ticket_obj = function()
 					"Спасибо, что обратились в центр поддержки, мне было приятно работать с Вами над решением проблемы \"" + $("#case_title").val() + "\".\n" +
 					"С Вашего разрешения я закрываю кейс.\n" +
 					"Если Вам понадобится доп. информацию по этой проблеме, Вы можете продолжить работу в рамках данного кейса с помощью кнопки добавления записи.\n" +
-					"\nХорошего дня !"
+					"\nХорошего дня !";
 
 		$("#description").val(result);
 
@@ -518,13 +518,13 @@ var	helpdesk_ticket_obj = function()
 		});
 
 		$.ajax({
-				url: '/cgi-bin/helpdesk.cgi',
+				url: "/cgi-bin/helpdesk.cgi",
 				cache: false,
 				contentType: false,
 				processData: false,
 				async: true,
 				data: form_data,
-				type: 'post',
+				type: "post",
 				success: function(raw_data)
 				{
 					var		data = (
@@ -699,7 +699,7 @@ var	helpdesk_ticket_obj = function()
 
 		ticket.history.sort(function(a, b)
 		{
-			var 	timeA = parseInt(a.eventTimestamp)
+			var 	timeA = parseInt(a.eventTimestamp);
 			var		timeB = parseInt(b.eventTimestamp);
 			var		result = 0;
 
@@ -927,7 +927,7 @@ var	helpdesk_ticket_obj = function()
 
 var helpdesk_ticket_list_obj = function()
 {
-	'use strict';
+	"use strict";
 
 	var	data_global;
 
@@ -947,7 +947,7 @@ var helpdesk_ticket_list_obj = function()
 
 		data_global.forEach(function(ticket)
 		{
-			result = result.add(obj.CollapsedInfo_GetDOM(ticket))
+			result = result.add(obj.CollapsedInfo_GetDOM(ticket));
 		});
 
 		return result;

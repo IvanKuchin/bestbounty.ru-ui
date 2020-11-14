@@ -4,7 +4,7 @@ var	view_case = view_case || {};
 
 var	view_case = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	DATE_FORMAT_GLOBAL = "DD MMMM YYYY HH:mm:ss";
 	var	data_global;
@@ -39,7 +39,7 @@ var	view_case = (function()
 		var	curr_tag = $("#case_view");
 
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				action:			"AJAX_getCase",
 				id: 			case_id,
@@ -74,7 +74,7 @@ var	view_case = (function()
 	var	GetUserInfoFromServer = function()
 	{
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				action:	"AJAX_getUserInfo",
 			})

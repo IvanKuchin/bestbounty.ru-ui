@@ -6,6 +6,7 @@ env:
 
 # --- avoid no-undef warning for variables below
 globals:
+    helpdesk_ticket_list_obj: writeable,
     document: writeable,
     DrawCompanyAvatar: writeable,
     DrawUserAvatar: writeable,
@@ -18,6 +19,7 @@ globals:
     Notification: writeable,
     session_pi: writeable,
     setTimeout: writeable,
+    sms_confirmation: writeable,
     system_calls: writeable,
     system_notifications: writeable,
     StackTrace: writeable,

@@ -37,7 +37,7 @@ session_pi = (function()
 		else
 		{
 			// --- save sessid to persistence storage
-			$.getJSON('/cgi-bin/account.cgi', {action:"AJAX_sessionHandshake"})
+			$.getJSON("/cgi-bin/account.cgi", {action:"AJAX_sessionHandshake"})
 				.done(function(data)
 				{
 					if(data.result == "success")

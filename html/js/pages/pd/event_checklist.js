@@ -1,6 +1,6 @@
 EventChecklist = function()
 {
-	'use strict';
+	"use strict";
 
 	var	ANIMATION_DURATION = 300;
 	var data_global;
@@ -34,7 +34,7 @@ EventChecklist = function()
 				.tooltip({animation: "animated bounceIn", placement: "top"});
 		// label_tag
 		// 	.tooltip({title: input_tag.prop("checked") ? "Сделано" : "Предстоит сделать"});
-	}
+	};
 
 	var GetSwitch = function(item)
 	{
@@ -93,7 +93,7 @@ EventChecklist = function()
 
 					if(item.category == category)
 					{
-						var	div_wrappaer	= $("<div>").addClass("__checklist_item_wrapper  highlight_onhover zebra_painting")
+						var	div_wrappaer	= $("<div>").addClass("__checklist_item_wrapper  highlight_onhover zebra_painting");
 						var	row				= $("<div>").addClass("row");
 						var	trigger_button	= GetSwitch(item);
 						var	remove_button	= $("<span>")
@@ -203,7 +203,7 @@ EventChecklist = function()
 		var	category_wrapper		= curr_tag.closest(".__category_wrapper");
 
 		$.getJSON(
-			'/cgi-bin/' + curr_tag.attr("data-script"),
+			"/cgi-bin/" + curr_tag.attr("data-script"),
 			{
 				action: curr_tag.attr("data-action"),
 				id: curr_tag.attr("data-id"),

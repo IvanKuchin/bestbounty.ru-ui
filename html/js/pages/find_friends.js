@@ -58,7 +58,7 @@ var find_friends = (function()
 	{
 		curr_tag = $("#find_friends");
 
-		$.getJSON('/cgi-bin/index.cgi', {action:action, lookForKey:lookForKey})
+		$.getJSON("/cgi-bin/index.cgi", {action:action, lookForKey:lookForKey})
 			.done(function(data) 
 			{
 				if(data.result == "success")

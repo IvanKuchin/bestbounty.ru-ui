@@ -2,7 +2,7 @@ var	user_account_properties = user_account_properties || {};
 
 user_account_properties = (function()
 {
-	'use strict';
+	"use strict";
 
 	var Init = function()
 	{
@@ -13,10 +13,10 @@ user_account_properties = (function()
 		$("#ButtonAccountBlock1").on("click", 
 			function () 
 			{
-				$("#DialogAccountBlockYesNo").modal('show');
+				$("#DialogAccountBlockYesNo").modal("show");
 			});
 
-		$("#DialogAccountBlockYesNo").on('shown.bs.modal', 
+		$("#DialogAccountBlockYesNo").on("shown.bs.modal", 
 			function()
 			{
 				$("#ButtonAccountCancel2").focus();
@@ -27,10 +27,10 @@ user_account_properties = (function()
 		$("#ButtonAccountEnable1").on("click", 
 			function () 
 			{
-				$("#DialogAccountEnableYesNo").modal('show');
+				$("#DialogAccountEnableYesNo").modal("show");
 			});
 
-		$("#DialogAccountEnableYesNo").on('shown.bs.modal', 
+		$("#DialogAccountEnableYesNo").on("shown.bs.modal", 
 			function()
 			{
 				$("#ButtonAccountEnable3").focus();
@@ -67,7 +67,7 @@ user_account_properties = (function()
 
 	var UpdateAccountInfo = function()
 	{
-		$.getJSON('/cgi-bin/index.cgi?action=JSON_getUserProfile')
+		$.getJSON("/cgi-bin/index.cgi?action=JSON_getUserProfile")
 			.done(
 				function(data) 
 				{
@@ -122,7 +122,7 @@ user_account_properties = (function()
 
 	var	SendWallLink = function()
 	{
-		var link = 'mailto:?subject=Моя лента ' + '&body=' + encodeURIComponent('Добрый день,\n\n\tМою ленту можно посмотреть по этой ссылке: ' + $("#linkToWall").val() + "\n\nС уважением, " + $("#myFirstName").text() + " " + $("#myLastName").text());
+		var link = "mailto:?subject=Моя лента " + "&body=" + encodeURIComponent("Добрый день,\n\n\tМою ленту можно посмотреть по этой ссылке: " + $("#linkToWall").val() + "\n\nС уважением, " + $("#myFirstName").text() + " " + $("#myLastName").text());
 
 		$("#submitSendLink").button("loading");
 		setTimeout(function() { $("#submitSendLink").button("reset"); }, 1000);
@@ -145,11 +145,11 @@ user_account_properties = (function()
 	{
 		console.debug("BlockAccount: start");
 
-		$("#DialogAccountBlockYesNo").modal('hide');
+		$("#DialogAccountBlockYesNo").modal("hide");
 		$("#ButtonAccountBlock1").attr("disabled", "disabled");
 		$("#ButtonAccountBlock1").text("Блокировка ...");
 
-		$.getJSON('/cgi-bin/index.cgi?action=AJAX_block_user_account', {param1: ''})
+		$.getJSON("/cgi-bin/index.cgi?action=AJAX_block_user_account", {param1: ""})
 		.done(
 			function(data) 
 			{
@@ -176,11 +176,11 @@ user_account_properties = (function()
 	{
 		console.debug("EnableAccount: start");
 
-		$("#DialogAccountEnableYesNo").modal('hide');
+		$("#DialogAccountEnableYesNo").modal("hide");
 		$("#ButtonAccountEnable1").attr("disabled", "disabled");
 		$("#ButtonAccountEnable1").text("Разблокировка ...");
 
-		$.getJSON('/cgi-bin/index.cgi?action=AJAX_enable_user_account', {param1: ''})
+		$.getJSON("/cgi-bin/index.cgi?action=AJAX_enable_user_account", {param1: ""})
 		.done(
 			function(data) 
 			{
@@ -220,15 +220,15 @@ user_account_properties = (function()
 
 	var	ChangeEmail_ClickHandler = function()
 	{
-		let curr_tag = $(this);
-		let new_email = $("#changeEmail").val();
+		var curr_tag = $(this);
+		var new_email = $("#changeEmail").val();
 
 
 		if(new_email.length)
 		{
 			curr_tag.button("loading");
 			
-			$.getJSON('/cgi-bin/account.cgi?action=AJAX_changeEmail', {login: new_email})
+			$.getJSON("/cgi-bin/account.cgi?action=AJAX_changeEmail", {login: new_email})
 			.done(
 				function(data) 
 				{
@@ -243,13 +243,13 @@ user_account_properties = (function()
 					} // --- if(data.status == "success")
 				})
 			.fail(
-				function(data) 
+				function() 
 				{
 					// --- Fail to block the account
 					system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 				})
 			.always(
-				function(data)
+				function()
 				{
 					curr_tag.button("reset");
 				});
@@ -272,7 +272,7 @@ user_account_properties = (function()
 
 				$("#submitChangeLogin").button("loading");
 						
-				$.getJSON('/cgi-bin/account.cgi?action=AJAX_changeLogin', {login: newLogin})
+				$.getJSON("/cgi-bin/account.cgi?action=AJAX_changeLogin", {login: newLogin})
 				.done(
 					function(data) 
 					{
@@ -379,7 +379,7 @@ user_account_properties = (function()
 							shaObj.update(password1);
 							password_hash = shaObj.getHash("HEX");
 
-							$.getJSON('/cgi-bin/index.cgi?action=AJAX_changeUserPassword', {password: password_hash})
+							$.getJSON("/cgi-bin/index.cgi?action=AJAX_changeUserPassword", {password: password_hash})
 							.done(
 								function(data) 
 								{
@@ -510,7 +510,7 @@ user_account_properties = (function()
 											{
 												var		currTag = $(this);
 
-												$.getJSON('/cgi-bin/index.cgi?action=AJAX_updateSiteTheme', {theme_id: currTag.data("theme_id")})
+												$.getJSON("/cgi-bin/index.cgi?action=AJAX_updateSiteTheme", {theme_id: currTag.data("theme_id")})
 													.done(function(data) {
 														if(data.status === "success")
 														{
@@ -583,7 +583,7 @@ user_account_properties = (function()
 		var		curr_value = !input_tag.prop("checked");
 
 		$.getJSON(
-			'/cgi-bin/' + input_tag.attr("data-script"),
+			"/cgi-bin/" + input_tag.attr("data-script"),
 			{
 				action: input_tag.attr("data-action"),
 				value: (curr_value ? "Y" : "N"),
@@ -620,7 +620,7 @@ user_account_properties = (function()
 
 		if(email.indexOf("@"))
 		{
-			window.open('https://' + email.substr(email.indexOf("@") + 1), '_blank');
+			window.open("https://" + email.substr(email.indexOf("@") + 1), "_blank");
 		}
 		else
 		{

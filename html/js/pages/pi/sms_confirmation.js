@@ -14,7 +14,7 @@
 
 sms_confirmation = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var	country_code_selector_global = "";
 	var	phone_number_selector_global = "";
@@ -31,23 +31,23 @@ sms_confirmation = (function ()
 		$(".sms-confirmation-code").on("input", PhoneConfirmationCode_InputHandler);
 	};
 
-	var	SetTriggerSelector		= function(item) 	{ $(item).on('click', PhoneConfirmation_ClickHandler); };
+	var	SetTriggerSelector		= function(item) 	{ $(item).on("click", PhoneConfirmation_ClickHandler); };
 	var	SetCountryCodeSelector	= function(item)	{ country_code_selector_global			= item; };
 	var	SetPhoneNumberSelector	= function(item)	{ phone_number_selector_global			= item; };
 	var	SetSuccessCallback		= function(item)	{ success_callback_global				= item; };
 	var	SetFailCallback			= function(item)	{ fail_callback_global					= item; };
 
 	var	SetAdditionalParams1	= function(item)	{ additional_params1_selector_global	= item; };
-	var	SetScript1				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-script1', item); };
-	var	SetAction1				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-action1', item); };
+	var	SetScript1				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-script1", item); };
+	var	SetAction1				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-action1", item); };
 	var	SetAdditionalParams2	= function(item)	{ additional_params2_selector_global	= item; };
-	var	SetScript2				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-script2', item); };
-	var	SetAction2				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-action2', item); };
+	var	SetScript2				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-script2", item); };
+	var	SetAction2				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-action2", item); };
 
 	// --- phone part
 	var	GetOnlyDigits = function(param)
 	{
-		return param.replace(/\D/g, '');
+		return param.replace(/\D/g, "");
 	};
 
 	var PhoneConfirmation_ClickHandler = function(event)

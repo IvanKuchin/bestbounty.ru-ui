@@ -1,8 +1,9 @@
 /*jslint devel: true, indent: 4, maxerr: 50, esversion: 6*/
 
+/*exported cases_list*/
 var	cases_list = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	data_global;
 	var	helpdesk_ticket_list_obj_global;
@@ -12,12 +13,12 @@ var	cases_list = (function()
 		GetCasesListFromServer();
 	};
 
-	var	GetCasesListFromServer = function(case_id)
+	var	GetCasesListFromServer = function()
 	{
-		let	curr_tag = $("#cases_list");
+		var	curr_tag = $("#cases_list");
 
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				action:			"AJAX_getCasesList",
 				filter:			($.urlParam("filter"))
@@ -37,7 +38,7 @@ var	cases_list = (function()
 					system_calls.PopoverInfo(curr_tag, data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 			})
@@ -56,7 +57,7 @@ var	cases_list = (function()
 		helpdesk_ticket_list_obj_global.SetCaseList(case_list);
 
 		$("#cases_list").empty().append(helpdesk_ticket_list_obj_global.GetDOM());
-	}
+	};
 
 	return {
 		Init: Init

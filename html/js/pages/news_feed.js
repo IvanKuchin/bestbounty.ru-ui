@@ -2,7 +2,7 @@ var	news_feed = news_feed || {};
 
 news_feed = (function()
 {
-'use strict';
+"use strict";
 
 var	myCompanies = [];
 var	globalPageCounter = 0;  // --- used for transfer arg to function HandlerScrollToShow
@@ -70,9 +70,9 @@ var Init = function()
 		// --- New message image uploader
 		$(function () {
 			// Change this to the location of your server-side upload handler:
-			$('#newMessageFileUpload').fileupload({
-				url: '/cgi-bin/imageuploader.cgi',
-				dataType: 'json',
+			$("#newMessageFileUpload").fileupload({
+				url: "/cgi-bin/imageuploader.cgi",
+				dataType: "json",
 				maxFileSize: 250 * 1024 * 1024,
 				// acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 				acceptFileTypes: uploadFileRegexImageVideo,
@@ -97,7 +97,7 @@ var Init = function()
 							console.debug("newimageuploader: always handler: filename [" + item.name + "]");
 
 							--globalUploadImageCounter;
-							$("#NewsFeedMessageSubmit").text('Загрузка (' + (globalUploadImageTotal - globalUploadImageCounter) + ' из ' + globalUploadImageTotal + ') ...');
+							$("#NewsFeedMessageSubmit").text("Загрузка (" + (globalUploadImageTotal - globalUploadImageCounter) + " из " + globalUploadImageTotal + ") ...");
 
 							// TODO: 2delete: debug function to check upload functionality
 							globalUploadImage_UnloadedList = jQuery.grep(globalUploadImage_UnloadedList, function(itemList, numList) { return itemList != item.name; } );
@@ -108,13 +108,13 @@ var Init = function()
 							if(!globalUploadImageCounter)
 							{
 								// $("#NewsFeedMessageSubmit").button('reset');
-								$("#NewsFeedMessageSubmit").text('Написать');
+								$("#NewsFeedMessageSubmit").text("Написать");
 							}
 
 							// --- reset progress bar
-							$('#NewMessageProgress .progress-bar').removeClass("active")
-																  .css('width', '0%');
-							$('#NewMessageProgress .progress-string').empty();
+							$("#NewMessageProgress .progress-bar").removeClass("active")
+																  .css("width", "0%");
+							$("#NewMessageProgress .progress-string").empty();
 
 
 							if(typeof(data.result) != "undefined")
@@ -168,7 +168,7 @@ var Init = function()
 					var originalAdd = $.blueimp.fileupload.prototype.options.add;
 
 					data.process(function () {
-						return $this.fileupload('process', data);
+						return $this.fileupload("process", data);
 					});
 					originalAdd.call(this, e, data);
 
@@ -191,22 +191,22 @@ var Init = function()
 					if(globalUploadImageCounter)
 					{
 						// $("#NewsFeedMessageSubmit").button('loading');
-						$("#NewsFeedMessageSubmit").text('Загрузка (0 из ' + globalUploadImageCounter + ') ...');
+						$("#NewsFeedMessageSubmit").text("Загрузка (0 из " + globalUploadImageCounter + ") ...");
 					}
 					console.debug("newimageuploader: add handler: number of uploading images is " + globalUploadImageCounter);
 				},
 				progressall: function (e, data) {
 					var progress = parseInt(data.loaded / data.total * 100, 10);
 
-					$('#NewMessageProgress .progress-bar').css('width', progress + '%');
+					$("#NewMessageProgress .progress-bar").css("width", progress + "%");
 					if(progress > 97) 
 					{
-						$('#NewMessageProgress .progress-bar').addClass("active");
-						$('#NewMessageProgress .progress-string').empty().append("Обработка...");
+						$("#NewMessageProgress .progress-bar").addClass("active");
+						$("#NewMessageProgress .progress-string").empty().append("Обработка...");
 					}
 					else
 					{
-						$('#NewMessageProgress .progress-string').empty().append(progress + "%");
+						$("#NewMessageProgress .progress-string").empty().append(progress + "%");
 					}
 				},
 				fail: function (e, data) {
@@ -215,7 +215,7 @@ var Init = function()
 				}
 
 				})
-				.on('fileuploadprocessalways', function (e, data) {
+				.on("fileuploadprocessalways", function (e, data) {
 					if(
 						(typeof(data.files.error) !=  "undefined") && data.files.error &&
 						(typeof(data.files[0].error) !=  "undefined") && (data.files[0].error == "File is too large")
@@ -233,17 +233,17 @@ var Init = function()
 					console.log("fileuploader:fileuploadprocessalways: submit to upload", data.files[0].name);//error message
 					return true;
 				})
-				.prop('disabled', !$.support.fileInput)
-				.parent().addClass($.support.fileInput ? undefined : 'disabled');
+				.prop("disabled", !$.support.fileInput)
+				.parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 
 		// --- Edit image uploader
 		$(function () {
 			// Change this to the location of your server-side upload handler:
-			$('#editFileupload').fileupload({
-				url: '/cgi-bin/imageuploader.cgi',
-				dataType: 'json',
+			$("#editFileupload").fileupload({
+				url: "/cgi-bin/imageuploader.cgi",
+				dataType: "json",
 				maxFileSize: 250 * 1024 * 1024, 
 				// acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 				acceptFileTypes: uploadFileRegexImageVideo,
@@ -269,7 +269,7 @@ var Init = function()
 							console.debug("editimageuploader: always handler: filename [" + item.name + "]");
 		
 							--globalUploadImageCounter;
-							$("#editNewsFeedMessageSubmit").text('Загрузка (' + (globalUploadImageTotal - globalUploadImageCounter) + ' из ' + globalUploadImageTotal + ') ...');
+							$("#editNewsFeedMessageSubmit").text("Загрузка (" + (globalUploadImageTotal - globalUploadImageCounter) + " из " + globalUploadImageTotal + ") ...");
 
 							// TODO: 2delete: debug function to check upload functionality
 							globalUploadImage_UnloadedList = jQuery.grep(globalUploadImage_UnloadedList, function(itemList, numList) { return itemList != item.name; } );
@@ -279,13 +279,13 @@ var Init = function()
 							if(!globalUploadImageCounter)
 							{
 								// $("#editNewsFeedMessageSubmit").button('reset');
-								$("#editNewsFeedMessageSubmit").text('Написать');
+								$("#editNewsFeedMessageSubmit").text("Написать");
 							}
 
 							// --- reset progress bar
-							$('#EditMessageProgress .progress-bar').removeClass("active")
-																  .css('width', '0%');
-							$('#EditMessageProgress .progress-string').empty();
+							$("#EditMessageProgress .progress-bar").removeClass("active")
+																  .css("width", "0%");
+							$("#EditMessageProgress .progress-string").empty();
 
 							if(typeof(data.result) != "undefined")
 							{							
@@ -339,7 +339,7 @@ var Init = function()
 					var originalAdd = $.blueimp.fileupload.prototype.options.add;
 
 					data.process(function () {
-						return $this.fileupload('process', data);
+						return $this.fileupload("process", data);
 					});
 					originalAdd.call(this, e, data);
 
@@ -360,7 +360,7 @@ var Init = function()
 					if(globalUploadImageCounter)
 					{
 						// $("#NewsFeedMessageSubmit").button('loading');
-						$("#editNewsFeedMessageSubmit").text('Загрузка (0 из ' + globalUploadImageCounter + ') ...');
+						$("#editNewsFeedMessageSubmit").text("Загрузка (0 из " + globalUploadImageCounter + ") ...");
 					}
 
 					console.debug("editimageuploader: add handler: number of uploading images is " + globalUploadImageCounter);
@@ -368,15 +368,15 @@ var Init = function()
 				progressall: function (e, data) {
 					var progress = parseInt(data.loaded / data.total * 100, 10);
 
-					$('#EditMessageProgress .progress-bar').css('width', progress + '%');
+					$("#EditMessageProgress .progress-bar").css("width", progress + "%");
 					if(progress > 97) 
 					{
-						$('#EditMessageProgress .progress-bar').addClass("active");
-						$('#EditMessageProgress .progress-string').empty().append("Обработка...");
+						$("#EditMessageProgress .progress-bar").addClass("active");
+						$("#EditMessageProgress .progress-string").empty().append("Обработка...");
 					}
 					else
 					{
-						$('#EditMessageProgress .progress-string').empty().append(progress + "%");
+						$("#EditMessageProgress .progress-string").empty().append(progress + "%");
 					}
 				},
 				fail: function (e, data) {
@@ -385,7 +385,7 @@ var Init = function()
 				}
 
 			})
-				.on('fileuploadprocessalways', function (e, data) {
+				.on("fileuploadprocessalways", function (e, data) {
 					if(
 						(typeof(data.files.error) !=  "undefined") && data.files.error &&
 						(typeof(data.files[0].error) !=  "undefined") && (data.files[0].error == "File is too large")
@@ -403,8 +403,8 @@ var Init = function()
 					console.log("fileuploader:fileuploadprocessalways: submit to upload", data.files[0].name);//error message
 					return true;
 				})
-				.prop('disabled', !$.support.fileInput)
-				.parent().addClass($.support.fileInput ? undefined : 'disabled');
+				.prop("disabled", !$.support.fileInput)
+				.parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 
@@ -477,13 +477,13 @@ var Init = function()
 		*/
 		if(isMobile.apple.device)
 		{
-			$('body').addClass('iOS-device');
+			$("body").addClass("iOS-device");
 
-			$('.modal').on('show.bs.modal', function() {
+			$(".modal").on("show.bs.modal", function() {
 					modalScrollPosition = $(window).scrollTop();
 				});
-			$('.modal').on('hidden.bs.modal', function() {
-					$('.iOS-device').css('top', 0);
+			$(".modal").on("hidden.bs.modal", function() {
+					$(".iOS-device").css("top", 0);
 					$(window).scrollTop(modalScrollPosition);    
 				});
 		}
@@ -514,11 +514,11 @@ var EditNewsFeedModalShownHandler = function()
 	globalPostMessageImageList = [];
 
 	// --- set progress bar to 0 length
-	$('div.progress .progress-bar').css('width', '0%');
+	$("div.progress .progress-bar").css("width", "0%");
 
 	// --- set var imageTempSet to random
 	imageTempSet = Math.floor(Math.random()*99999999);
-	$('#editFileupload').fileupload({formData: {imageTempSet: imageTempSet, messageID: $("#editNewsFeedMessageSubmit").data("messageID")}});
+	$("#editFileupload").fileupload({formData: {imageTempSet: imageTempSet, messageID: $("#editNewsFeedMessageSubmit").data("messageID")}});
 
 	globalNewsFeed.forEach(function(item, i, arr)
 		{
@@ -608,7 +608,7 @@ var EditNewsFeedModalShownHandler = function()
 		});
 
 	// --- zeroize tempSet for user at image_news table
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_prepareEditFeedImages', {messageID: editMessageID, imageTempSet: imageTempSet})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_prepareEditFeedImages", {messageID: editMessageID, imageTempSet: imageTempSet})
 			.done(function(data) {
 				console.debug("EditNewsFeedModalShownHandler: $(document).getJSON(AJAX_cleanupFeedImages).done(): result = " + data.result);
 			});
@@ -622,7 +622,7 @@ var EditNewsFeedModalRemoveImage = function(e)
 
 	$("div#rowPreviewImageID" + imageID).remove();
 
-	$.getJSON('/cgi-bin/index.cgi?action=' + currAction, {imageID: imageID})
+	$.getJSON("/cgi-bin/index.cgi?action=" + currAction, {imageID: imageID})
 			.done(function(data) {
 				if(data.result == "success")
 				{
@@ -643,13 +643,13 @@ var EditNewsFeedModalHiddenHandler = function()
 	globalPostMessageImageList = [];
 
 	// --- set progress bar to 0 length
-	$('div.progress .progress-bar').css('width', '0%');
+	$("div.progress .progress-bar").css("width", "0%");
 
 	// --- clean-up error message
 	$("#newsFeedEditMessageError").empty().removeClass();
 
 	// --- cleanup picture list from the posted message
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_editCleanupFeedImages', {imageTempSet: imageTempSet})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_editCleanupFeedImages", {imageTempSet: imageTempSet})
 			.done(function(data) {
 				console.debug("EditNewsFeedModalHiddenHandler: $(document).getJSON(AJAX_editCleanupFeedImages).done(): result = " + data.result);
 			});
@@ -657,7 +657,7 @@ var EditNewsFeedModalHiddenHandler = function()
 
 	// --- set var imageSet to NULL
 	imageTempSet = "";
-	$('#editFileupload').fileupload({formData: {imageTempSet: imageTempSet}});
+	$("#editFileupload").fileupload({formData: {imageTempSet: imageTempSet}});
 
 };
 
@@ -694,12 +694,12 @@ var	EditNewsFeedPostMessage = function ()
 		$("#NewsFeedMessageSubmit").button("loading");
 
 		$.ajax({
-				url: '/cgi-bin/index.cgi', 
-				type: 'POST',
-				dataType: 'json',
+				url: "/cgi-bin/index.cgi", 
+				type: "POST",
+				dataType: "json",
 				data: 
 				{
-					action: 'AJAX_updateNewsFeedMessage',
+					action: "AJAX_updateNewsFeedMessage",
 					newsFeedMessageID:	 $("#editNewsFeedMessageSubmit").data("messageID"),
 					newsFeedMessageTitle:  $("#editNewsFeedMessageTitle").val(),
 					newsFeedMessageLink:   $("#editNewsFeedMessageLink").val(),
@@ -738,7 +738,7 @@ var DeleteMessage = function(messageID)
 	// --- improve user experience by removing message immediately
 	// --- on a slow speed links users can continue seeing it some time
 	$("div#message" + messageID).parent().empty();
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_deleteNewsFeedMessage', {messageID: messageID})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_deleteNewsFeedMessage", {messageID: messageID})
 	 		.done(function(data) 
 	 		{
 				if(data.result == "success")
@@ -754,7 +754,7 @@ var DeleteMessage = function(messageID)
 
 var DeleteMessageComment = function(commentID) 
 {
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_deleteNewsFeedComment', {commentID: commentID})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_deleteNewsFeedComment", {commentID: commentID})
 	 		.done(function(data) 
 	 		{
 				if(data.result == "success")
@@ -798,8 +798,8 @@ var NewMessageModalFreezeAllFields = function()
 	$("#newsFeedMessageLink").attr("disabled", "");
 	$("#newsFeedMessageText").attr("disabled", "");
 
-	$("#newsFeed_NewMessageLink_GetDataButton").button('loading');
-	$("#NewsFeedMessageSubmit").button('loading');
+	$("#newsFeed_NewMessageLink_GetDataButton").button("loading");
+	$("#NewsFeedMessageSubmit").button("loading");
 };
 
 var NewMessageModalResetLayout = function()
@@ -808,8 +808,8 @@ var NewMessageModalResetLayout = function()
 	$("#newsFeedMessageLink").removeAttr("disabled");
 	$("#newsFeedMessageText").removeAttr("disabled");
 
-	$("#newsFeed_NewMessageLink_GetDataButton").button('reset');
-	$("#NewsFeedMessageSubmit").button('reset');
+	$("#newsFeed_NewMessageLink_GetDataButton").button("reset");
+	$("#NewsFeedMessageSubmit").button("reset");
 };
 
 var GetDataFromProvidedURL = function()
@@ -820,7 +820,7 @@ var GetDataFromProvidedURL = function()
 	{
 		NewMessageModalFreezeAllFields();
 
-		$.getJSON('/cgi-bin/index.cgi?action=AJAX_getURLMetaData', {url: newMessageURL, imageTempSet: imageTempSet})
+		$.getJSON("/cgi-bin/index.cgi?action=AJAX_getURLMetaData", {url: newMessageURL, imageTempSet: imageTempSet})
 		 		.done(function(data) {
 					if(data.result == "success")
 					{
@@ -972,7 +972,7 @@ var UsernameUpdate = function()
 	$("#myLastName").text(lastName);
 
 
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_updateFirstLastName', {firstName: firstName, lastName: lastName})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_updateFirstLastName", {firstName: firstName, lastName: lastName})
 	 		.done(function(data) {
 				console.debug("UsernameUpdateClickHandler: getJSON(AJAX_updateFirstLastName).done(): receive answer from server on 'like' click");
 
@@ -995,8 +995,8 @@ var BuildFriendBlock = function(item)
 	tagCompanyLink	= $("<a>").attr("href", "/view_company?id=" + item.friendCompanyID);
 	tagPhotoCanvas	= $("<canvas>")	.attr("width", "40")
 									.attr("height", "40")
-									.addClass('canvas-big-avatar')
-									.addClass('canvas-width40px');
+									.addClass("canvas-big-avatar")
+									.addClass("canvas-width40px");
 	tagMainInfo		= $("<div/>")	.addClass("col-md-10 col-xs-10 container ");
 
 	tagContainer	.append(tagRowContainer);
@@ -1129,7 +1129,7 @@ var ButtonMessageLikeClickHandler = function ()
 
 	buttonLike.attr("disabled", "");
 
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_ClickLikeHandler', {messageId: buttonLike.data().messageId, messageLikeType: messageLikeType})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_ClickLikeHandler", {messageId: buttonLike.data().messageId, messageLikeType: messageLikeType})
 	 		.done(function(data) {
 				console.debug("ButtonMessageLikeClickHandler: getJSON(JSON_ClickLikeHandler).done(): receive answer from server on 'like' click");
 
@@ -1182,7 +1182,7 @@ var WriteCommentButtonHandler = function()
 			});
 
 
-		$.getJSON('/cgi-bin/index.cgi', {action: action, comment: replyToUserList.join('') + comment, messageID: messageID})
+		$.getJSON("/cgi-bin/index.cgi", {action: action, comment: replyToUserList.join("") + comment, messageID: messageID})
 				.done(function(data) {
 					console.debug("WriteCommentButtonHandler: done(): result = " + data.result);
 
@@ -1269,7 +1269,7 @@ var ButtonViewMessageClickHandler = function ()
 		{
 			BuildCarousel(messageObject.messageImageList, $("#divNewsFeedMessageBody"));
 			setTimeout(function() {
-				$("#divNewsFeedMessageBody div.carousel.slide[data-ride='carousel']").carousel('pause');
+				$("#divNewsFeedMessageBody div.carousel.slide[data-ride='carousel']").carousel("pause");
 			}, 1000);
 			
 		}
@@ -1641,7 +1641,7 @@ var RefreshMessageCommentsList = function(messageID)
 	$("#divNewsFeedMessageComments").text("");
 	Workaround_iOS_Scroll_Bug(true);
 
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnMessage', {messageID: messageID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnMessage", {messageID: messageID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -1681,7 +1681,7 @@ var RefreshBookCommentsList = function(bookID)
 	$("#textareaNewsFeedViewMessage").val("");
 	$("#divNewsFeedMessageReplyTo").empty("");
 	$("#divNewsFeedMessageComments").text("");
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnBook', {messageID: bookID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnBook", {messageID: bookID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -1716,7 +1716,7 @@ var RefreshCertificationCommentsList = function(certificationID)
 	$("#textareaNewsFeedViewMessage").val("");
 	$("#divNewsFeedMessageReplyTo").empty("");
 	$("#divNewsFeedMessageComments").text("");
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnCertification', {messageID: certificationID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnCertification", {messageID: certificationID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -1753,7 +1753,7 @@ var RefreshScienceDegreeCommentsList = function(scienceDegreeID)
 	$("#textareaNewsFeedViewMessage").val("");
 	$("#divNewsFeedMessageReplyTo").empty("");
 	$("#divNewsFeedMessageComments").text("");
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnScienceDegree', {messageID: scienceDegreeID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnScienceDegree", {messageID: scienceDegreeID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -1788,7 +1788,7 @@ var RefreshCompanyCommentsList = function(companyID)
 	$("#textareaNewsFeedViewMessage").val("");
 	$("#divNewsFeedMessageReplyTo").empty("");
 	$("#divNewsFeedMessageComments").text("");
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnCompany', {messageID: companyID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnCompany", {messageID: companyID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -1823,7 +1823,7 @@ var RefreshLanguageCommentsList = function(languageID)
 	$("#textareaNewsFeedViewMessage").val("");
 	$("#divNewsFeedMessageReplyTo").empty("");
 	$("#divNewsFeedMessageComments").text("");
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getCommentsOnLanguage', {messageID: languageID})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getCommentsOnLanguage", {messageID: languageID})
 	.done(function(data) {
 		if(data.result == "success")
 		{
@@ -2051,7 +2051,7 @@ var RenderBookMainInfo = function(jsonBook, DOMtag)
 {
 	var		ratingCallback = function(rating)
 							{
-								$.getJSON('/cgi-bin/book.cgi?action=AJAX_setBookRating', {bookID: bookID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+								$.getJSON("/cgi-bin/book.cgi?action=AJAX_setBookRating", {bookID: bookID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 								.done(function(data) {
 									if(data.result == "success")
 									{
@@ -2274,7 +2274,7 @@ var RenderCourseMainInfo = function(jsonCourse, DOMtag)
 
 	var		ratingCallback = function(rating)
 							{
-								$.getJSON('/cgi-bin/index.cgi?action=AJAX_setCourseRating', {courseID: courseID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+								$.getJSON("/cgi-bin/index.cgi?action=AJAX_setCourseRating", {courseID: courseID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 								.done(function(data) {
 									if(data.result == "success")
 									{
@@ -2976,7 +2976,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	canvasCtx = canvasSrcObj[0].getContext("2d");
 	if((typeof(jsonMessage.dstObj) == "object") && (typeof(jsonMessage.dstObj.type) == "string") && (jsonMessage.dstObj.type == "group"))
 	{
-		canvasSrcObj.addClass('canvas-big-avatar-corners');
+		canvasSrcObj.addClass("canvas-big-avatar-corners");
 		DrawCompanyAvatar(canvasCtx, jsonMessage.dstObj.avatar, jsonMessage.dstObj.name, jsonMessage.dstObj.nameLast);
 
 		hrefUsername.append(jsonMessage.dstObj.name + " " + jsonMessage.dstObj.nameLast)
@@ -2985,7 +2985,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	}
 	else if(jsonMessage.srcObj.type == "company")
 	{
-		canvasSrcObj.addClass('canvas-big-avatar-corners');
+		canvasSrcObj.addClass("canvas-big-avatar-corners");
 		DrawCompanyAvatar(canvasCtx, jsonMessage.srcObj.avatar, jsonMessage.srcObj.name, jsonMessage.srcObj.nameLast);
 
 		hrefUsername.append(jsonMessage.srcObj.companyType + " " + jsonMessage.srcObj.name + " " + jsonMessage.srcObj.nameLast)
@@ -2994,7 +2994,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	}
 	else
 	{
-		canvasSrcObj.addClass('canvas-big-avatar');
+		canvasSrcObj.addClass("canvas-big-avatar");
 		DrawUserAvatar(canvasCtx, jsonMessage.srcObj.avatar, jsonMessage.srcObj.name, jsonMessage.srcObj.nameLast);
 
 		hrefUsername.append(jsonMessage.srcObj.name + " " + jsonMessage.srcObj.nameLast)
@@ -3194,7 +3194,7 @@ var	GetNewsFeedFromServer = function(cleanBeforeUpdate, scrollToElementID)
 
 	if(action.length && cgiScript.length)
 	{
-		$.getJSON('/cgi-bin/' + cgiScript + '?action=' + action, cgiParams)
+		$.getJSON("/cgi-bin/" + cgiScript + "?action=" + action, cgiParams)
 			.done(function(data) {
 				if(data.status == "success")
 				{
@@ -3260,9 +3260,9 @@ var HandlerScrollToShow = function()
 			var		tag = $(this);
 			// console.debug("HandlerScrollToShow: carousel id [" + tag.attr('id') + "] top position is " + tag.offset().top + " compare to " + windowPosition + " - " + (windowPosition + clientHeight));
 			if((tag.offset().top >= windowPosition) && (tag.offset().top <= windowPosition + clientHeight))
-				tag.carousel('cycle');
+				tag.carousel("cycle");
 			else
-				tag.carousel('pause');
+				tag.carousel("pause");
 		});
 
 	// console.debug("HandlerScrollToShow: defining position of each carousel");
@@ -3329,13 +3329,13 @@ var	NewsFeedPostMessage = function ()
 		$("#NewsFeedMessageSubmit").button("loading");
 
 		$.ajax({
-				url: '/cgi-bin/index.cgi', 
-				type: 'POST',
-				dataType: 'json',
+				url: "/cgi-bin/index.cgi", 
+				type: "POST",
+				dataType: "json",
 				cache: false,
 				data: 
 				{
-					action: 'AJAX_postNewsFeedMessage',
+					action: "AJAX_postNewsFeedMessage",
 					newsFeedMessageDstType: $("#news_feed").data("dsttype"),
 					newsFeedMessageDstID: $("#news_feed").data("dstid"),
 					newsFeedMessageSrcType: $("#srcEntity option:selected").data("srcType"),
@@ -3399,21 +3399,21 @@ var NewMessageNewsFeedModalShownHandler = function()
 	Update_PostMessage_ListUnloaded(globalUploadImage_UnloadedList);
 
 	// $("#NewsFeedMessageSubmit").button('reset');
-	$("#NewsFeedMessageSubmit").text('Написать');
+	$("#NewsFeedMessageSubmit").text("Написать");
 
 	// --- clean-up preview pictures in PostMessage modal window 
 	$("#PostMessage_PreviewImage").empty();
 	globalPostMessageImageList = [];
 
 	// --- set progress bar to 0 length
-	$('#progress .progress-bar').css('width', '0%');
+	$("#progress .progress-bar").css("width", "0%");
 
 	// --- set var imageTempSet to random
 	imageTempSet = Math.floor(Math.random()*99999999);
-	$('#newMessageFileUpload').fileupload({formData: {imageTempSet: imageTempSet}});
+	$("#newMessageFileUpload").fileupload({formData: {imageTempSet: imageTempSet}});
 
 	// --- zeroize tempSet for user at image_news table
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_prepareFeedImages', {param1: ''})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_prepareFeedImages", {param1: ""})
 			.done(function(data) {
 				if(data.result == "success")
 				{
@@ -3480,13 +3480,13 @@ var NewMessageNewsFeedModalHiddenHandler = function()
 	globalPostMessageImageList = [];
 
 	// --- set progress bar to 0 length
-	$('#progress .progress-bar').css('width', '0%');
+	$("#progress .progress-bar").css("width", "0%");
 
 	// --- clean-up error mesage div
 	$("#newsFeedNewMessageError").empty().removeClass();
 
 	// --- cleanup picture list from the posted message
-	$.getJSON('/cgi-bin/index.cgi?action=AJAX_cleanupFeedImages', {imageTempSet: imageTempSet})
+	$.getJSON("/cgi-bin/index.cgi?action=AJAX_cleanupFeedImages", {imageTempSet: imageTempSet})
 			.done(function(data) {
 				console.debug("NewMessageNewsFeedModalHiddenHandler: $(document).getJSON(AJAX_cleanupFeedImages).done(): result = " + data.result);
 			});
@@ -3494,7 +3494,7 @@ var NewMessageNewsFeedModalHiddenHandler = function()
 
 	// --- set var imageSet to NULL
 	imageTempSet = "";
-	$('#newMessageFileUpload').fileupload({formData: {imageTempSet: imageTempSet}});
+	$("#newMessageFileUpload").fileupload({formData: {imageTempSet: imageTempSet}});
 };
 
 // TODO: 2delete: debug function to check upload functionality

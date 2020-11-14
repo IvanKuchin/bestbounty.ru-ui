@@ -21,7 +21,7 @@ var	user_notifications = (function()
 	var	UpdateUserNotificationList = function()
 	{		
 		$.getJSON(
-			'/cgi-bin/index.cgi',
+			"/cgi-bin/index.cgi",
 			{action:"AJAX_getUserNotification"})
 			.done(function(data) {
 					usersNotificationArray = data;
@@ -58,7 +58,7 @@ var	user_notifications = (function()
 			// console.debug("HandlerScrollToShow: globalPageCounter = " + globalPageCounter);
 			// --- AJAX get news_feed from the server 
 			scrollLock = true;
-			$.getJSON('/cgi-bin/index.cgi?action=AJAX_getUserNotification', {page: ++globalPageCounter})
+			$.getJSON("/cgi-bin/index.cgi?action=AJAX_getUserNotification", {page: ++globalPageCounter})
 			 		.done(function(data) {
 						// console.debug("HandlerScrollToShow: getJSON(AJAX_getNewsFeed).done(): ajax getNewsFeed");
 						usersNotificationArray = usersNotificationArray.concat(data);
@@ -103,7 +103,7 @@ var	user_notifications = (function()
 						.addClass("UnreadChatListHrefLineHeigh")
 						.append(item.notificationFriendUserName + " " + item.notificationFriendUserNameLast);
 
-			canvasAvatar.addClass('canvas-big-avatar');
+			canvasAvatar.addClass("canvas-big-avatar");
 			DrawUserAvatar(canvasAvatar[0].getContext("2d"), friendAvatar, item.notificationFriendUserName, item.notificationFriendUserNameLast);
 
 		}
@@ -118,7 +118,7 @@ var	user_notifications = (function()
 			if(item.notificationFromCompany[0].logo_folder.length && item.notificationFromCompany[0].logo_filename.length)
 				avatarPath = "/images/companies/" + item.notificationFromCompany[0].logo_folder + "/" + item.notificationFromCompany[0].logo_filename;
 
-			canvasAvatar.addClass('canvas-big-avatar-corners');
+			canvasAvatar.addClass("canvas-big-avatar-corners");
 			DrawCompanyAvatar(canvasAvatar[0].getContext("2d"), avatarPath, item.notificationFromCompany[0].name, "");
 		}
 
@@ -558,7 +558,7 @@ var	user_notifications = (function()
 		}
 
 		$("#AreYouSure").modal("show");
-	}
+	};
 
 	var ModalActionConfirmedClickHandler = function()
 	{
@@ -571,7 +571,7 @@ var	user_notifications = (function()
 			currTag.button("loading");
 
 			$.getJSON(
-				'/cgi-bin/' + script,
+				"/cgi-bin/" + script,
 				{ action:action, id:currTag.data("id") })
 				.done(function(data) {
 						if(data.result == "success")
@@ -597,11 +597,11 @@ var	user_notifications = (function()
 
 		}
 
-	}
+	};
 
 	return {
 		Init: Init,
 		BuildUserNotificationList:BuildUserNotificationList
-	}
+	};
 
 })();

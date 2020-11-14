@@ -2,7 +2,7 @@ var		view_profile = view_profile || {};
 
 view_profile = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		userProfile;
 	var		addRecommendation = {};
@@ -26,7 +26,7 @@ view_profile = (function()
 
 	var FillinUserProfile = function()
 	{
-		$.getJSON('/cgi-bin/index.cgi?action=JSON_getUserProfile', {id: $("#friendLastName").data("friendid")})
+		$.getJSON("/cgi-bin/index.cgi?action=JSON_getUserProfile", {id: $("#friendLastName").data("friendid")})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -58,7 +58,7 @@ view_profile = (function()
 
 		if(parseInt(my_user_id) && parseInt(friend_user_id))
 		{
-			$.getJSON('/cgi-bin/index.cgi?action=JSON_getFindFriendByID', {lookForKey: friend_user_id})
+			$.getJSON("/cgi-bin/index.cgi?action=JSON_getFindFriendByID", {lookForKey: friend_user_id})
 		 		.done(function(data) 
 		 		{
 					if(data.result == "success")
@@ -79,7 +79,7 @@ view_profile = (function()
 
 		$("#canvasForAvatar").attr("width", "160")
 							.attr("height", "160")
-							.addClass('canvas-big-avatar');
+							.addClass("canvas-big-avatar");
 		canvasCtx = $("#canvasForAvatar")[0].getContext("2d");
 
 		DrawUserAvatar(canvasCtx, friendImage, friendName, friendLastName);
@@ -164,14 +164,14 @@ view_profile = (function()
 
 			var		user1Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "top")
 												.attr("title", data.user1.name + " " + data.user1.nameLast);
 			var		user1CanvasCtx = user1Canvas[0].getContext("2d");
 			var		user2Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "top")
 												.attr("title", data.user2.name + " " + data.user2.nameLast);
@@ -196,7 +196,7 @@ view_profile = (function()
 						var		hrefUserLink = $("<a>").attr("href", "/userprofile/" + item.id);
 						var		friendCanvas = $("<canvas>").attr("width", "40")
 															.attr("height", "40")
-															.addClass('canvas-big-avatar class-tooltip');
+															.addClass("canvas-big-avatar class-tooltip");
 						var		friendCanvasCtx = friendCanvas[0].getContext("2d");
 						var		fullName = "", name = "", nameLast = "";
 
@@ -267,14 +267,14 @@ view_profile = (function()
 		{
 			var		user1Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "bottom")
 												.attr("title", data.user1.name + " " + data.user1.nameLast);
 			var		user1CanvasCtx = user1Canvas[0].getContext("2d");
 			var		user2Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "bottom")
 												.attr("title", data.user2.name + " " + data.user2.nameLast);
@@ -343,7 +343,7 @@ view_profile = (function()
 			}
 		}
 
-		$('.class-tooltip').tooltip();
+		$(".class-tooltip").tooltip();
 
 		console.debug("DrawPathFromUser1ToUser2: end");
 	};
@@ -646,7 +646,7 @@ view_profile = (function()
 									{
 										var		id = $(this).data("id");
 
-										$.getJSON('/cgi-bin/index.cgi?action=AJAX_setCourseRating', {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+										$.getJSON("/cgi-bin/index.cgi?action=AJAX_setCourseRating", {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 										.done(function(data) {
 											if(data.result == "success")
 											{	
@@ -1086,7 +1086,7 @@ view_profile = (function()
 									{
 										var		id = $(this).data("id");
 
-										$.getJSON('/cgi-bin/book.cgi?action=AJAX_setBookRating', {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+										$.getJSON("/cgi-bin/book.cgi?action=AJAX_setBookRating", {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 										.done(function(data) {
 											if(data.result == "success")
 											{	
@@ -1458,7 +1458,7 @@ view_profile = (function()
 		var		currTagID = currTag.data("id");
 		var		myUserID = parseInt($("#myUserID").data("myuserid"));
 
-		$.getJSON('/cgi-bin/index.cgi', {action:currTagAction, id:currTagID})
+		$.getJSON("/cgi-bin/index.cgi", {action:currTagAction, id:currTagID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1546,7 +1546,7 @@ view_profile = (function()
 
 			AddRecommendationPathToggleCollapsible();
 
-			$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+			$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 							{
 								"action" : "AJAX_addViewProfileAddRecommendation",
 								"title": system_calls.FilterUnsupportedUTF8Symbols(addRecommendation.AddRecommendationTitle),
@@ -1627,16 +1627,16 @@ view_profile = (function()
 		$("#AreYouSure #Remove").data("action", affectedAction);
 
 
-		$("#AreYouSure").modal('show');
+		$("#AreYouSure").modal("show");
 	};
 
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
 		var		affectedAction = $("#AreYouSure #Remove").data("action");
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/index.cgi?action=' + affectedAction, {id: affectedID})
+		$.getJSON("/cgi-bin/index.cgi?action=" + affectedAction, {id: affectedID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1704,7 +1704,7 @@ view_profile = (function()
 				{
 					if(currentContent === "") {	currentContent = "Опишите круг своих обязанностей работы в компании.";	}
 
-					$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+					$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							id: $(currentTag).data("id"), content: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
 							action: "AJAX_updateRecommendationTitle",
@@ -1748,7 +1748,7 @@ view_profile = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceToTextarea);
+		$(newTag).on("click", editableFuncReplaceToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -1812,10 +1812,10 @@ view_profile = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlighted_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 

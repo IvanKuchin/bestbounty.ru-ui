@@ -2,7 +2,7 @@ var	edit_event = edit_event || {};
 
 edit_event = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		eventProfile = {};
 	var		AutocompleteList = [];
@@ -75,10 +75,10 @@ edit_event = (function()
 		$(function () 
 		{
 		    // Change this to the location of your server-side upload handler:
-		    $('#fileupload').fileupload({
-		        url: '/cgi-bin/generalimageuploader.cgi',
+		    $("#fileupload").fileupload({
+		        url: "/cgi-bin/generalimageuploader.cgi",
 		        formData: {type:"event", id:eventProfile.id, rand:system_calls.GetUUID()},
-		        dataType: 'json',
+		        dataType: "json",
 		        maxFileSize: 30 * 1024 * 1024, 
 		        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
@@ -111,17 +111,17 @@ edit_event = (function()
 		        },
 		        progressall: function (e, data) {
 		            var progress = parseInt(data.loaded / data.total * 100, 10);
-		            $('#progress .progress-bar').css(
-		                'width',
-		                progress + '%'
+		            $("#progress .progress-bar").css(
+		                "width",
+		                progress + "%"
 		            );
 		        },
 		        fail: function (e, data) {
 		        	alert("ошибка загрузки фаила: " + data.textStatus);
 		        }
 
-		    }).prop('disabled', !$.support.fileInput)
-		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    }).prop("disabled", !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 	};
@@ -129,7 +129,7 @@ edit_event = (function()
 
 	var RenderEventProfileFromServer = function()
 	{
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_getEventProfile', {id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_getEventProfile", {id: eventProfile.id})
 			.done(function(data) 
 			{
 				if((data.result === "success") && (data.events.length))
@@ -152,7 +152,7 @@ edit_event = (function()
 						eventChecklist_global.SetData(eventProfile.checklists[0]);
 						RenderChecklist();
 
-						$.getJSON('/cgi-bin/event.cgi?action=AJAX_getFavoriteChecklistsCategories')
+						$.getJSON("/cgi-bin/event.cgi?action=AJAX_getFavoriteChecklistsCategories")
 							.done(function(data) 
 							{
 								if(data.result === "success")
@@ -187,7 +187,7 @@ edit_event = (function()
 		if(currentValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:currentValue})
 				.done(function(data) {
 						var	AutocompleteList = [];
@@ -239,7 +239,7 @@ edit_event = (function()
 					$("button#ButtonAddEventHost").button("loading");
 					$("input#eventHost").attr("disabled", "");
 
-					$.getJSON('/cgi-bin/event.cgi?action=AJAX_addEventHost', {user_id: userID, event_id: eventProfile.id})
+					$.getJSON("/cgi-bin/event.cgi?action=AJAX_addEventHost", {user_id: userID, event_id: eventProfile.id})
 						.done(function(data) {
 							if(data.result === "success")
 							{
@@ -397,7 +397,7 @@ edit_event = (function()
 
 		}
 
-		$.getJSON('/cgi-bin/event.cgi?action=' + currTag.data("action"), {id: currTag.data("id"), rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/event.cgi?action=" + currTag.data("action"), {id: currTag.data("id"), rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -838,7 +838,7 @@ edit_event = (function()
 		$("#" + modalID + " .modal-body").empty().append("<div class=\"wait-notice\"><center>Подождите <span class='fa fa-refresh fa-spin fa-fw animateClass'></span></center>");
 
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{action:"AJAX_getFriendsNotOnEvent", event_id: eventProfile.id})
 			.done(function(data) {
 				$("#" + modalID + " .modal-body .wait-notice").hide(250);
@@ -866,7 +866,7 @@ edit_event = (function()
 		// if(currentValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:currentValue})
 				.done(function(data) {
 						var	AutocompleteList = [];
@@ -930,7 +930,7 @@ edit_event = (function()
 		$("button#ButtonAddEventGuest").button("loading");
 		$("input#eventGuest").attr("disabled", "");
 
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_addEventGuest', {user_id: obj.user_id, user_email: obj.user_email, event_id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_addEventGuest", {user_id: obj.user_id, user_email: obj.user_email, event_id: eventProfile.id})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -984,7 +984,7 @@ edit_event = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		$("#AreYouSure").modal('show');
+		$("#AreYouSure").modal("show");
 	};
 
 	var	AreYouSure_ClickHandler = function()
@@ -1022,9 +1022,9 @@ edit_event = (function()
 		if((typeof(affectedScript) == "undefined") || (affectedScript === ""))
 			affectedScript = "event.cgi";
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				var		removeItemIndex;
 
@@ -1133,12 +1133,12 @@ edit_event = (function()
 		$(tag).width($(this).width() + 30);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('editable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if(!$(this).hasClass("formatDate")) 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateStartDate") 
 		{
@@ -1202,7 +1202,7 @@ edit_event = (function()
 	{
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
 		var		newTag = $("<span>", {
-					text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+					text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 					id: $(currentTag).attr("id"),
 					class: $(currentTag).attr("class")
 				});
@@ -1228,7 +1228,7 @@ edit_event = (function()
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on('click', editableFuncReplaceSpanToInput);
+			$(newTag).on("click", editableFuncReplaceSpanToInput);
 			$(newTag).mouseenter(editableFuncHighlightBgcolor);
 			$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 		}
@@ -1306,7 +1306,7 @@ edit_event = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceParagraphToTextarea);
+		$(newTag).on("click", editableFuncReplaceParagraphToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -1335,7 +1335,7 @@ edit_event = (function()
 
 				eventProfile.description = filteredEventDescription;
 
-				$.post('/cgi-bin/event.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/event.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						description: filteredEventDescription,
 						action: "AJAX_updateEventDescription",
@@ -1442,10 +1442,10 @@ edit_event = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlighted_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
@@ -1554,10 +1554,10 @@ edit_event = (function()
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -1578,10 +1578,10 @@ edit_event = (function()
 		var		ajaxValue;
 
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
-		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 
 		var	newTag = $("<span>", {
-			text: $(currentTag).children("[value='" + currentTag.val() + "']").text().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).children("[value='" + currentTag.val() + "']").text().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -1591,7 +1591,7 @@ edit_event = (function()
 		$(newTag).data("value", $(currentTag).val());
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -1646,7 +1646,7 @@ edit_event = (function()
 		var		tagCanvas = $("#canvasForEventLogo");
 		var		logoPath = "";
 
-		$('#progress .progress-bar').css('width', '0%');
+		$("#progress .progress-bar").css("width", "0%");
 		if(eventProfile.logo_filename.length) logoPath = "/images/events/" + eventProfile.logo_folder + "/" + eventProfile.logo_filename;
 
 
@@ -1670,7 +1670,7 @@ edit_event = (function()
 		if(state == "Y") state = "N"; else state = "Y";
 
 
-		$.getJSON('/cgi-bin/event.cgi?action=' + (state == "Y" ? "AJAX_setNoGift_Y" : "AJAX_setNoGift_N"), {event_id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=" + (state == "Y" ? "AJAX_setNoGift_Y" : "AJAX_setNoGift_N"), {event_id: eventProfile.id})
 		.done(function(data) {
 			if(data.result == "success")
 			{	
@@ -1733,7 +1733,7 @@ edit_event = (function()
 		if(curr_tag.empty())
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_getFavoriteChecklistItems",
 					id: id,
@@ -1778,7 +1778,7 @@ edit_event = (function()
 		if(checklist_id)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_addFavoriteChecklistItems",
 					event_id: eventProfile.id,
@@ -1820,7 +1820,7 @@ edit_event = (function()
 		if(isValid())
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_addChecklistItem",
 					title: title,

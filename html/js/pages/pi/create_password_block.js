@@ -14,7 +14,7 @@
 
 create_password_block = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var	password_selector		= "#signinInputPassword";
 
@@ -54,11 +54,11 @@ create_password_block = (function ()
 	{
 		var		result = false;
 
-		if(('A' <= letter) && (letter <= 'Z'))
+		if(("A" <= letter) && (letter <= "Z"))
 		{
 			result = true;
 		}
-		if(('А' <= letter) && (letter <= 'Я'))
+		if(("А" <= letter) && (letter <= "Я"))
 		{
 			result = true;
 		}
@@ -70,11 +70,11 @@ create_password_block = (function ()
 	{
 		var		result = false;
 
-		if(('а' <= letter) && (letter <= 'я'))
+		if(("а" <= letter) && (letter <= "я"))
 		{
 			result = true;
 		}
-		if(('А' <= letter) && (letter <= 'Я'))
+		if(("А" <= letter) && (letter <= "Я"))
 		{
 			result = true;
 		}

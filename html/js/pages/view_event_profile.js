@@ -2,7 +2,7 @@ var		view_event_profile = view_event_profile || {};
 
 view_event_profile = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		eventProfile;
 	var		myUserProfile;
@@ -33,7 +33,7 @@ view_event_profile = (function()
 
 	var FillinEventProfile = function()
 	{
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_getEventProfileAndUser', {id: eventID})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_getEventProfileAndUser", {id: eventID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -252,7 +252,7 @@ view_event_profile = (function()
 		{
 			currTag.button("loading");
 
-			$.getJSON('/cgi-bin/' + script + '?action=' + action, {event_id: eventID, kidsCounter: kidsCounter, adultsCounter: adultsCounter})
+			$.getJSON("/cgi-bin/" + script + "?action=" + action, {event_id: eventID, kidsCounter: kidsCounter, adultsCounter: adultsCounter})
 				.done(function(data) 
 				{
 					if(data.result === "success")
@@ -287,9 +287,9 @@ view_event_profile = (function()
 		var		affectedID = $("#AreYouSure #Remove").data("id");
 		var		affectedAction = $("#AreYouSure #Remove").data("action");
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/index.cgi?action=' + affectedAction, {id: affectedID})
+		$.getJSON("/cgi-bin/index.cgi?action=" + affectedAction, {id: affectedID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -357,7 +357,7 @@ view_event_profile = (function()
 				{
 					if(currentContent === "") {	currentContent = "Опишите круг своих обязанностей работы в компании.";	}
 
-					$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+					$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							id: $(currentTag).data("id"), content: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
 							action: "AJAX_updateRecommendationTitle",
@@ -401,7 +401,7 @@ view_event_profile = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceToTextarea);
+		$(newTag).on("click", editableFuncReplaceToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -465,10 +465,10 @@ view_event_profile = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlighted_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 

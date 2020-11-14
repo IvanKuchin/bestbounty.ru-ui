@@ -2,7 +2,7 @@ var	create_event = create_event || {};
 
 create_event = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		eventProfile = {};
 	var		uploadImg;
@@ -184,7 +184,7 @@ create_event = (function()
 		{
 			$("#submitButton").button("loading");
 
-			$.getJSON('/cgi-bin/event.cgi?action=AJAX_createEvent', {title:title, timestamp:timestamp.getTime() / 1000, accessType:accessType, address: address, description:description})
+			$.getJSON("/cgi-bin/event.cgi?action=AJAX_createEvent", {title:title, timestamp:timestamp.getTime() / 1000, accessType:accessType, address: address, description:description})
 				.done(function(eventData)
 				{
 					if(eventData.result === "success")
@@ -211,7 +211,7 @@ create_event = (function()
 										processData: false,
 										async: true,
 										data: formData,
-										type: 'post',
+										type: "post",
 										success: function(imageData) {
 											// debugger;
 											window.location.href = "/edit_event?eventid=" + eventData.events[0].id + "&rand=" + system_calls.GetUUID();
@@ -375,14 +375,14 @@ create_event = (function()
 		{
 			if(keyPressed == 13) AddEventIndustry("", currentTag.val());
 		}
-	}
+	};
 
 	var	RenderEventTitle = function()
 	{
 		$("span#eventTitle").html(eventProfile.title);
 		$("span#eventLink").html(eventProfile.link);
 		$("span#eventFoundationDate").html(system_calls.GetLocalizedDateNoTimeFromSeconds(eventProfile.eventTimestampCreation));
-		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)")
+		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)");
 
 		$("div#eventInfo .createableSpan").on("click", createableFuncReplaceSpanToInput);
 		$("div#eventInfo .createableSpan").mouseenter(createableFuncHighlightBgcolor);
@@ -408,8 +408,8 @@ create_event = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		$("#AreYouSure").modal('show');
-	}
+		$("#AreYouSure").modal("show");
+	};
 
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
@@ -419,9 +419,9 @@ create_event = (function()
 		if((typeof(affectedScript) == "undefined") || (affectedScript == ""))
 			affectedScript = "event.cgi";
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -524,16 +524,16 @@ create_event = (function()
 		$(tag).width($(this).width() + 30);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("createable_highlighted_class");
 
 		if($(tag).data("action") == "AJAX_updateEventLink") 
 		{
-			$(tag).on('blur', createableFuncReplaceInputToSpan);
+			$(tag).on("blur", createableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateEventEmployeeNumber") 
 		{
-			$(tag).on('blur', createableFuncReplaceInputToSpan);
+			$(tag).on("blur", createableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateEventFoundationDate") 
 		{
@@ -562,7 +562,7 @@ create_event = (function()
 	{
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -578,7 +578,7 @@ create_event = (function()
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on('click', createableFuncReplaceSpanToInput);
+			$(newTag).on("click", createableFuncReplaceSpanToInput);
 			$(newTag).mouseenter(createableFuncHighlightBgcolor);
 			$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 		}
@@ -659,7 +659,7 @@ create_event = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', createableFuncReplaceParagraphToTextarea);
+		$(newTag).on("click", createableFuncReplaceParagraphToTextarea);
 		$(newTag).mouseenter(createableFuncHighlightBgcolor);
 		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 	};
@@ -688,7 +688,7 @@ create_event = (function()
 
 				eventProfile.description = filteredEventDescription;
 
-				$.post('/cgi-bin/event.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/event.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						description: filteredEventDescription,
 						action: "AJAX_updateEventDescription",
@@ -713,7 +713,7 @@ create_event = (function()
 		} // --- if textarea value changed
 		else
 		{
-			console.error("createableFuncReplaceToParagraphAccept: textarea value hasn't change")
+			console.error("createableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
 		createableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
@@ -785,10 +785,10 @@ create_event = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).removeClass("createable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
@@ -871,15 +871,15 @@ create_event = (function()
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("createable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
 		}
-	}
+	};
 
 	// --- Replacement Select to Span
 	// --- input: 1) tag
@@ -891,10 +891,10 @@ create_event = (function()
 		var		ajaxValue;
 
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
-		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -903,7 +903,7 @@ create_event = (function()
 		$(newTag).data("action", $(currentTag).data("action"));
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(createableFuncHighlightBgcolor);
 		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 

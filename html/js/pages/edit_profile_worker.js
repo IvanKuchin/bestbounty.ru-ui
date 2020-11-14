@@ -12,15 +12,15 @@ var ConvertHTMLToText = function(htmlText)
 	result = result.replace(/&quot;/img, "\"");
 	result = result.replace(/&#92;/img, "\\");
 	result = result.replace(/&#39;/img, "'");
-	result = result.replace(/^\s+/, '');
-	result = result.replace(/\s+$/, '');
+	result = result.replace(/^\s+/, "");
+	result = result.replace(/\s+$/, "");
 
 	return result;
 };
 
 onmessage = function(e)
 {
-	'use strict';
+	"use strict";
 
 	var	JSON_dataForProfile;
 	var	JSON_companyPosition = [];
@@ -57,51 +57,51 @@ onmessage = function(e)
 			{
 				JSON_companyPosition.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_companyPosition.push({id:item.id, value:ConvertHTMLToText(item.title)});
-			})
+			});
 
 			data.geo_country.forEach(function(item, i, arr)
 			{
 				JSON_geoCountry.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_geoCountry.push({id:item.id, value:ConvertHTMLToText(item.title)});
-			})
+			});
 
 			data.geo_region.forEach(function(item, i, arr)
 			{
 				JSON_geoRegion.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_geoRegion.push({id:item.id, value:ConvertHTMLToText(item.title)});
 				objGeoRegion[item.id] = ConvertHTMLToText(item.title);
-			})
+			});
 
 			data.geo_locality.forEach(function(item, i, arr)
 			{
 				JSON_geoLocality.push(ConvertHTMLToText(item.title) + (item.geo_region_id != "0" ? " (" + objGeoRegion[item.geo_region_id] + ")" : ""));
 				JSONarrWithID_geoLocality.push({id:item.id, label:ConvertHTMLToText(item.title) + (item.geo_region_id != "0" ? " (" + objGeoRegion[item.geo_region_id] + ")" : "")});
-			})
+			});
 
 			data.university.forEach(function(item, i, arr)
 			{
 				JSON_university.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_university.push({id:item.id, value:ConvertHTMLToText(item.title)});
-			})
+			});
 			JSON_university = JSON_university.sort().filter(function(item, i, arr) { return !i || (arr[i] != arr[i-1]); });
 
 			data.school.forEach(function(item, i, arr)
 			{
 				JSON_school.push(ConvertHTMLToText(item.title));
-			})
+			});
 			JSON_school = JSON_school.sort().filter(function(item, i, arr) { return !i || (arr[i] != arr[i-1]); });
 
 			data.language.forEach(function(item, i, arr)
 			{
 				JSON_language.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_language.push({id:item.id, value:ConvertHTMLToText(item.title)});
-			})
+			});
 
 			data.skill.forEach(function(item, i, arr)
 			{
 				JSON_skill.push(ConvertHTMLToText(item.title));
 				JSONarrWithID_skill.push({id:item.id, value:ConvertHTMLToText(item.title)});
-			})
+			});
 			JSON_skill = JSON_skill.sort().filter(function(item, i, arr) { return !i || (arr[i] != arr[i-1]); });
 
 			obj2Send.JSON_dataForProfile = JSON_dataForProfile;
@@ -128,7 +128,7 @@ onmessage = function(e)
 
 		    close();
 		  } else {
-		    console.debug('ParseBulkData: ERROR: XMLHttpRequest returned not 200');
+		    console.debug("ParseBulkData: ERROR: XMLHttpRequest returned not 200");
 		  }
 		}
 
@@ -138,7 +138,7 @@ onmessage = function(e)
 	if(httpRequest)
 	{
 		httpRequest.onreadystatechange = ParseBulkData;
-		httpRequest.open('GET', "/cgi-bin/index.cgi?action=AJAX_getDataForProfile&rand=" + Math.random() * 1234567890);
+		httpRequest.open("GET", "/cgi-bin/index.cgi?action=AJAX_getDataForProfile&rand=" + Math.random() * 1234567890);
 		httpRequest.send();
 	}
 	else
@@ -192,6 +192,6 @@ onmessage = function(e)
 				AddDataForProfileCollapsibleInit();
 			});
 */
-}
+};
 
 

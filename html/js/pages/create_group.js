@@ -3,7 +3,7 @@ var	create_group = create_group || {};
 
 create_group = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		groupProfile = {};
 	var		uploadImg;
@@ -29,10 +29,10 @@ create_group = (function()
 		$(function () 
 		{
 		    // Change this to the location of your server-side upload handler:
-		    $('#fileupload').fileupload({
-		        url: '/cgi-bin/grouplogouploader.cgi?uploadType=groupLogo',
+		    $("#fileupload").fileupload({
+		        url: "/cgi-bin/grouplogouploader.cgi?uploadType=groupLogo",
 		        formData: {groupid:groupProfile.id},
-		        dataType: 'json',
+		        dataType: "json",
 		        maxFileSize: 30 * 1024 * 1024, 
 		        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
@@ -65,17 +65,17 @@ create_group = (function()
 		        },
 		        progressall: function (e, data) {
 		            var progress = parseInt(data.loaded / data.total * 100, 10);
-		            $('#progress .progress-bar').css(
-		                'width',
-		                progress + '%'
+		            $("#progress .progress-bar").css(
+		                "width",
+		                progress + "%"
 		            );
 		        },
 		        fail: function (e, data) {
 		        	alert("ошибка загрузки фаила: " + data.textStatus);
 		        }
 
-		    }).prop('disabled', !$.support.fileInput)
-		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    }).prop("disabled", !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 	};
@@ -84,7 +84,7 @@ create_group = (function()
 	{
 		$("#logo img")	.on("click", function() { $("#fileupload").click(); })
 						.addClass("cursor_pointer");
-	}
+	};
 
 	var	LogoUploadChangeHandler = function(e)
 	{
@@ -99,10 +99,10 @@ create_group = (function()
 			imgLogo.classList.add("max_100percent");
 			$("#logo").empty().append(imgLogo);
 			InitImgUploaderClickHandler();
-		}
+		};
 
 		imgLogo.src = tmpURLObj;
-	}
+	};
 
 	var	CreateNewGroupClickHandler = function()
 	{
@@ -132,7 +132,7 @@ create_group = (function()
 		{
 			$("#submitButton").button("loading");
 
-			$.getJSON('/cgi-bin/group.cgi?action=AJAX_createGroup', {title:title, link:link, description:description})
+			$.getJSON("/cgi-bin/group.cgi?action=AJAX_createGroup", {title:title, link:link, description:description})
 				.done(function(groupData) {
 					if(groupData.result === "success")
 					{
@@ -152,7 +152,7 @@ create_group = (function()
 									processData: false,
 									async: true,
 									data: formData,
-									type: 'post',
+									type: "post",
 									success: function(imageData) {
 										window.location.href = "/group/" + groupData.groups[0].link + "?rand=" + system_calls.GetUUID();
 									},
@@ -160,7 +160,7 @@ create_group = (function()
 										var		jsonObj = JSON.parse(imageData);
 										console.error("AddGeneralCoverUploadChangeHandler:upload:failHandler:ERROR: " + jsonObj.textStatus);
 									}
-								})
+								});
 
 							}
 							else
@@ -309,14 +309,14 @@ create_group = (function()
 		{
 			if(keyPressed == 13) AddGroupIndustry("", currentTag.val());
 		}
-	}
+	};
 
 	var	RenderGroupTitle = function()
 	{
 		$("span#groupTitle").html(groupProfile.title);
 		$("span#groupLink").html(groupProfile.link);
 		$("span#groupFoundationDate").html(system_calls.GetLocalizedDateNoTimeFromSeconds(groupProfile.eventTimestampCreation));
-		$("p#groupDescription").html(groupProfile.description ? groupProfile.description : "(описание отсутствует)")
+		$("p#groupDescription").html(groupProfile.description ? groupProfile.description : "(описание отсутствует)");
 
 		$("div#groupInfo .createableSpan").on("click", createableFuncReplaceSpanToInput);
 		$("div#groupInfo .createableSpan").mouseenter(createableFuncHighlightBgcolor);
@@ -342,8 +342,8 @@ create_group = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		$("#AreYouSure").modal('show');
-	}
+		$("#AreYouSure").modal("show");
+	};
 
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
@@ -353,9 +353,9 @@ create_group = (function()
 		if((typeof(affectedScript) == "undefined") || (affectedScript == ""))
 			affectedScript = "group.cgi";
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -458,16 +458,16 @@ create_group = (function()
 		$(tag).width($(this).width() + 30);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("createable_highlighted_class");
 
 		if($(tag).data("action") == "AJAX_updateGroupLink") 
 		{
-			$(tag).on('blur', createableFuncReplaceInputToSpan);
+			$(tag).on("blur", createableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateGroupEmployeeNumber") 
 		{
-			$(tag).on('blur', createableFuncReplaceInputToSpan);
+			$(tag).on("blur", createableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateGroupFoundationDate") 
 		{
@@ -496,7 +496,7 @@ create_group = (function()
 	{
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -512,7 +512,7 @@ create_group = (function()
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on('click', createableFuncReplaceSpanToInput);
+			$(newTag).on("click", createableFuncReplaceSpanToInput);
 			$(newTag).mouseenter(createableFuncHighlightBgcolor);
 			$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 		}
@@ -593,7 +593,7 @@ create_group = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', createableFuncReplaceParagraphToTextarea);
+		$(newTag).on("click", createableFuncReplaceParagraphToTextarea);
 		$(newTag).mouseenter(createableFuncHighlightBgcolor);
 		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 	};
@@ -622,7 +622,7 @@ create_group = (function()
 
 				groupProfile.description = filteredGroupDescription;
 
-				$.post('/cgi-bin/group.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/group.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						description: filteredGroupDescription,
 						action: "AJAX_updateGroupDescription",
@@ -647,7 +647,7 @@ create_group = (function()
 		} // --- if textarea value changed
 		else
 		{
-			console.error("createableFuncReplaceToParagraphAccept: textarea value hasn't change")
+			console.error("createableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
 		createableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
@@ -719,10 +719,10 @@ create_group = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).removeClass("createable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
@@ -774,7 +774,7 @@ create_group = (function()
 		system_calls.groupTypes.forEach(function(item, i , arr)
 		{
 			$(tag).append($("<option>").append(item));
-		})
+		});
 
 		$(tag).val(currentValue); 
 
@@ -805,15 +805,15 @@ create_group = (function()
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('createable_highlighted_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("createable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
 		}
-	}
+	};
 
 	// --- Replacement Select to Span
 	// --- input: 1) tag
@@ -825,10 +825,10 @@ create_group = (function()
 		var		ajaxValue;
 
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
-		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -837,7 +837,7 @@ create_group = (function()
 		$(newTag).data("action", $(currentTag).data("action"));
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(createableFuncHighlightBgcolor);
 		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
 
