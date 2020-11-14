@@ -295,7 +295,7 @@ view_company_profile = (function()
 				var		divRow = $("<div>").addClass("row")
 											.attr("id", "openVacancy" + item.id);
 				var		divRowControl_xs = $("<div>").addClass("row");
-				var		divSeparatop = $("<div>").addClass("col-xs-12").append($("<p>"));
+				var		divSeparator = $("<div>").addClass("col-xs-12").append($("<p>"));
 				var		divStatus = $("<div>").addClass("col-xs-2 col-md-1");
 				var		divTitle = $("<div>").addClass("col-xs-10 col-md-8");
 				var		divControl1_md = $("<div>").addClass("hidden-xs hidden-sm col-md-1 ");
@@ -386,7 +386,7 @@ view_company_profile = (function()
 				divControl2_xs.append(buttonControl2_xs);
 				// divControl3_xs.append(buttonControl3_xs);
 	
-				divRow	.append(divSeparatop)
+				divRow	.append(divSeparator)
 						.append(divStatus)
 						.append(divTitle)
 						.append(divControl1_md)
@@ -880,7 +880,7 @@ view_company_profile = (function()
 					}
 					catch (e) // --- catch JSON.parse exception
 					{
-						console.log("ApplyToOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON reponse)");
+						console.log("ApplyToOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON response)");
 						system_calls.PopoverError("EditOpenVacancy" + id + "SubmitButton", "Ошибка JSON-ответа севера. Необходимо сообщить в тех. поддержку.");
 					}
 					setTimeout(function() {$("#EditOpenVacancy" + id + "SubmitButton").button("reset"); }, 500); // --- wait for animation
@@ -932,7 +932,7 @@ view_company_profile = (function()
 
 	};
 
-	// --- aditional modals
+	// --- additional modals
 	var DisplaySpecifiedImageModal_Show = function()
 	{
 		var		currTag = $(this);

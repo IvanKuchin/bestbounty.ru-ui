@@ -111,7 +111,7 @@
           <option value=4>+4</option>
           <option value=5>+5</option>
         </select>
-        <span id="kidsPronounciation"></span>
+        <span id="kidsPronunciation"></span>
       </div>
     </div> <!-- /row -->
 

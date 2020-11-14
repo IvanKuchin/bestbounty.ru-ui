@@ -3,7 +3,7 @@
 
 // --- change it in (chat.js, common.js, localy.h)
 var FREQUENCY_ECHO_REQUEST = 60;
-var FREQUENCY_USRENOTIFICATION_REQUEST = 60 * 5;
+var FREQUENCY_USERNOTIFICATION_REQUEST = 60 * 5;
 var FREQUENCY_RANDOM_FACTOR = 10;
 
 
@@ -1020,7 +1020,7 @@ system_calls = (function()
 */
 									if(data.userNotificationsArray.length > 0)
 									{
-										navMenu_userNotification.InitilizeData(data.userNotificationsArray);
+										navMenu_userNotification.InitializeData(data.userNotificationsArray);
 										navMenu_userNotification.BuildUserNotificationList();
 									}
 
@@ -1051,7 +1051,7 @@ system_calls = (function()
 		}
 
 		// --- check system notifications
-		window.setTimeout(system_calls.GetUserRequestNotifications, (FREQUENCY_USRENOTIFICATION_REQUEST + (Math.random() * FREQUENCY_RANDOM_FACTOR - FREQUENCY_RANDOM_FACTOR / 2)) * 1000);
+		window.setTimeout(system_calls.GetUserRequestNotifications, (FREQUENCY_USERNOTIFICATION_REQUEST + (Math.random() * FREQUENCY_RANDOM_FACTOR - FREQUENCY_RANDOM_FACTOR / 2)) * 1000);
 	
 		// console.debug('system_calls.GetUserRequestNotifications: end');
 	};
@@ -1150,7 +1150,7 @@ system_calls = (function()
 
 
 			}
-		); // --- data.notofocationsArray.forEach()
+		); // --- data.notificationsArray.forEach()
 	};
 
 	var	ScrollWindowToElementID = function(elementID)
@@ -1166,7 +1166,7 @@ system_calls = (function()
 
 			// --- scroll only if 
 			// --- 1) scroll length to element > 10
-			// --- 2) scroll from previous to current cycles is successfull (page was scrolled)
+			// --- 2) scroll from previous to current cycles is successful (page was scrolled)
 			// if((Math.abs(elementOffset - windowScrollTop) > 10) && (!globalScrollPrevOffset || (globalScrollPrevOffset > Math.abs(elementOffset - windowScrollTop))))
 			if((Math.abs(elementOffset - windowScrollTop) > 10) && (globalScrollPrevOffset != (elementOffset - windowScrollTop)))
 			{
@@ -1474,7 +1474,7 @@ system_calls = (function()
 		return divContainer;
 	};
 
-	// --- build "frindship" buttons and put them into DOM-model
+	// --- build "friendship" buttons and put them into DOM-model
 	// --- input
 	// ---		friendInfo - info from GetUserListInJSONFormat
 	// ---		housingTag - tag where buttons have to be placed to
@@ -1571,7 +1571,7 @@ system_calls = (function()
 				"/cgi-bin/index.cgi",
 				{action:"AJAX_setFindFriend_FriendshipStatus", friendID:handlerButton.data("id"), status:handlerButton.data("action")})
 				.done(function(data) {
-						console.debug("AJAX_setFindFriend_FriendshipStatus.done(): sucess");
+						console.debug("AJAX_setFindFriend_FriendshipStatus.done(): success");
 
 						if(data.result == "success")
 						{
@@ -2398,7 +2398,7 @@ system_calls = (function()
 var userCache = (function()
 {
 	"use strict";
-	var		cache = []; // --- main sotage
+	var		cache = []; // --- main storage
 	var		userCacheFutureUpdateArr = []; // --- used for update userCache object with new users
 	var		callbackRunAfterUpdateArr = []; 
 	var		runLock = false; // --- semaphore for racing conditions
@@ -2459,7 +2459,7 @@ var userCache = (function()
 		var		updateFlag = true;
 
 		// --- add callback function just in case userscache not empty
-		// --- otherwise there is no value to runn callback without any changes
+		// --- otherwise there is no value to run callback without any changes
 		if(userCacheFutureUpdateArr.length)
 		{
 			callbackRunAfterUpdateArr.forEach(function(item)
@@ -2877,7 +2877,7 @@ navMenu_userNotification = (function()
 
 	var		userNotificationsArray = []; // --- storing all notifications
 
-	var	InitilizeData = function (data)
+	var	InitializeData = function (data)
 	{
 		userNotificationsArray = data;
 
@@ -2908,7 +2908,7 @@ navMenu_userNotification = (function()
 		{		
 			matchArray.forEach(function(item) 
 				{
-					// --- substr'ing: @1030 -> 1030
+					// --- substring: @1030 -> 1030
 					if(userCache.isUserCached(item.substr(1, item.length - 1)))
 					{
 						var 	user = userCache.GetUserByID(item.substr(1, item.length - 1));
@@ -3240,7 +3240,7 @@ navMenu_userNotification = (function()
 
 
 	return {
-		InitilizeData: InitilizeData,
+		InitializeData: InitializeData,
 		BuildUserNotificationList: BuildUserNotificationList,
 		GetAdditionalTitle: GetAdditionalTitle
 	};
@@ -3357,7 +3357,7 @@ gift_list = (function ()
 
 
 	// --- IMPORTANT !!!
-	// --- $("#GiftPath").width() - using in link widhth calculating
+	// --- $("#GiftPath").width() - using in link width calculating
 	// --- 
 	// --- input:
 	// --- 		giftsArray			- array of all gifts to display
@@ -3613,21 +3613,21 @@ system_notifications = (function ()
 
 						if((currTimestamp - notificationShownTimestamp) > 24 * 3600)
 						{
-							var		notify, prononciation;
+							var		notify, pronunciation;
 
 							localStorage.setItem("notificationShownTimestamp", currTimestamp);
 
-							if(numberOfChatMessages == 1) { prononciation = " новое сообщение"; }
-							if(numberOfChatMessages == 2) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages == 3) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages == 4) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages >= 5) { prononciation = " новых сообщений"; }
-							if(((numberOfChatMessages % 10) == 1) && (numberOfChatMessages > 19)) { prononciation = " новое сообщение"; }
-							if(((numberOfChatMessages % 10) == 2) && (numberOfChatMessages > 19)) { prononciation = " новых сообщения"; }
-							if(((numberOfChatMessages % 10) > 2) && (numberOfChatMessages > 19)) { prononciation = " новых сообщений"; }
-							if(((numberOfChatMessages % 10) > 0) && (numberOfChatMessages > 19)) { prononciation = " новых сообщений"; }
+							if(numberOfChatMessages == 1) { pronunciation = " новое сообщение"; }
+							if(numberOfChatMessages == 2) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages == 3) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages == 4) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages >= 5) { pronunciation = " новых сообщений"; }
+							if(((numberOfChatMessages % 10) == 1) && (numberOfChatMessages > 19)) { pronunciation = " новое сообщение"; }
+							if(((numberOfChatMessages % 10) == 2) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщения"; }
+							if(((numberOfChatMessages % 10) > 2) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщений"; }
+							if(((numberOfChatMessages % 10) > 0) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщений"; }
 
-							notify = new Notification("Вам письмо !", { icon: "/images/pages/chat/chat_notification_" + (Math.floor(Math.random() * 18) + 1) + ".png", body: "Вам прислали " + numberOfChatMessages + prononciation } );
+							notify = new Notification("Вам письмо !", { icon: "/images/pages/chat/chat_notification_" + (Math.floor(Math.random() * 18) + 1) + ".png", body: "Вам прислали " + numberOfChatMessages + pronunciation } );
 							notify.onclick = function() {
 								notify.close();
 								window.location.href = "/chat?rand=" + Math.random()*98765432123456;

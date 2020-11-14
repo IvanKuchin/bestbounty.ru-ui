@@ -788,7 +788,7 @@ var LazyImageLoad = function()
 			}
 		});
 
-	// --- !!! It is imprtant to rebuild carousel after downloading carousel-images
+	// --- !!! It is important to rebuild carousel after downloading carousel-images
 	$(".carousel").carousel();
 };
 
@@ -876,7 +876,7 @@ var GetDataFromProvidedURL = function()
 							}
 							else if((typeof(data.mediaType) != "undefined") && (data.mediaType == "youtube_video"))
 							{
-								// --- <iframe width="560" height="315" src="https://www.youtube.com/embed/WNkCqa1LfuI" frameborder="0" allowfullscreen></iframe>
+								// --- <iframe width="560" height="315" src="https://www.youtube.com/embed/__________" frameborder="0" allowfullscreen></iframe>
 								mediaPreview = $("<iframe>").addClass("max_100percents_100px")
 															.attr("src", data.imageURL)
 															.attr("frameborder", "0")
@@ -1617,7 +1617,7 @@ var BuildCommentsList = function(commentsArray, DOMtag)
 
 // --- iOS based devices only
 // --- 1) modal open
-// --- 2) initial content size have to be smoller than screen vertical size
+// --- 2) initial content size have to be smaller than screen vertical size
 // --- 3) after rendering, modal have to become larger (comments added in this case)
 // --- 4) y-scroll disabled because of bug
 // --- https://github.com/twbs/bootstrap/issues/14839
@@ -3048,7 +3048,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- book read
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderBookBody(jsonMessage, tagDivMessage);
@@ -3057,7 +3057,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- create / subscribe group
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderGroupBody(jsonMessage, tagDivMessage);
@@ -3066,7 +3066,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- create / subscribe group
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderCompanySubscriptionBody(jsonMessage, tagDivMessage);
@@ -3075,7 +3075,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- became certified
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderCertificationBody(jsonMessage, tagDivMessage);
@@ -3084,7 +3084,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- course attending
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderCourseBody(jsonMessage, tagDivMessage);
@@ -3093,7 +3093,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- got science degree
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderScienceDegreeBody(jsonMessage, tagDivMessage);
@@ -3102,7 +3102,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- language improved
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderLanguageBody(jsonMessage, tagDivMessage);
@@ -3111,7 +3111,7 @@ var BuildNewsFeedSingleBlock = function(item, i, arr)
 	{
 		// --- change employment
 
-		// --- hide subtitile to save some space
+		// --- hide subtitle to save some space
 		// tagDivMsgInfo.append(jsonMessage.actionTypesTitle);
 		divRow.append(tagDivMessage);
 		RenderCompanyBody(jsonMessage, tagDivMessage);
@@ -3455,7 +3455,7 @@ var NewMessageNewsFeedModalShownHandler = function()
 				console.error("NewMessageNewsFeedModalShownHandler:ERROR: parsing JSON response from server");
 			});
 
-	// --- enable all field for safelty reason, just in case they were disabled earlier
+	// --- enable all field for safety reason, just in case they were disabled earlier
 	NewMessageModalResetLayout();
 };
 
@@ -3482,7 +3482,7 @@ var NewMessageNewsFeedModalHiddenHandler = function()
 	// --- set progress bar to 0 length
 	$("#progress .progress-bar").css("width", "0%");
 
-	// --- clean-up error mesage div
+	// --- clean-up error message div
 	$("#newsFeedNewMessageError").empty().removeClass();
 
 	// --- cleanup picture list from the posted message

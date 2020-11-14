@@ -121,8 +121,8 @@ var	groups_i_own_list = (function()
 		var	selectedID = ui.item.id;
 		var selectedLabel = ui.item.label;
 
-		console.debug("AJAX_getFindGroupByID autocomplete.select: selet event handler");
-		console.debug("AJAX_getFindGroupByID autocomplete.select: seletedID=" + selectedID + " selectedLabel=" + selectedLabel);
+		console.debug("AJAX_getFindGroupByID autocomplete.select: select event handler");
+		console.debug("AJAX_getFindGroupByID autocomplete.select: selectedID=" + selectedID + " selectedLabel=" + selectedLabel);
 
 		$.getJSON(
 			"/cgi-bin/group.cgi",
@@ -198,7 +198,7 @@ var	groups_i_own_list = (function()
 								create: function () {
 									console.debug ("FindGroupsOnInputHandler autocomplete.create: _create event handler"); 
 								},
-								_renderMenu: function (ul, items)  // --- requres plugin only
+								_renderMenu: function (ul, items)  // --- requires plugin only
 								{
 									var	that = this;
 									currentCategory = "";

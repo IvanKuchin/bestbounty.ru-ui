@@ -287,7 +287,7 @@
 	  </div>
 	  <div class="modal-body">
 		  Изображение будет удалено ?
-		<input type=hidden id="DeteledAvatarID_InBSForm">
+		<input type=hidden id="DeletedAvatarID_InBSForm">
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

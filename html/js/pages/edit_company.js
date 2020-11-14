@@ -280,7 +280,7 @@ edit_company = (function()
 				create: function () {
 					// console.debug ("CreateAutocompleteWithChangeCallback: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -717,7 +717,7 @@ edit_company = (function()
 							create: function () {
 								console.debug ("edit_company.OnInputHandler autocomplete.create: _create event handler"); 
 							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
+							_renderMenu: function (ul, items)  // --- requires plugin only
 							{
 								var	that = this;
 								var currentCategory = "";
@@ -807,7 +807,7 @@ edit_company = (function()
 								create: function () {
 									console.debug ("edit_company.OnInputHandler autocomplete.create: _create event handler"); 
 								},
-								_renderMenu: function (ul, items)  // --- requres plugin only
+								_renderMenu: function (ul, items)  // --- requires plugin only
 								{
 									var	that = this;
 									var currentCategory = "";
@@ -1577,7 +1577,7 @@ edit_company = (function()
 			var		divRow = $("<div>").addClass("row")
 										.attr("id", "openVacancy" + item.id);
 			var		divRowControl_xs = $("<div>").addClass("row");
-			var		divSeparatop = $("<div>").addClass("col-xs-12").append($("<p>"));
+			var		divSeparator = $("<div>").addClass("col-xs-12").append($("<p>"));
 			var		divStatus = $("<div>").addClass("col-xs-2 col-md-1");
 			var		divTitle = $("<div>").addClass("col-xs-8 col-md-7");
 			var		divMonth = $("<div>").addClass("col-xs-2 col-md-1");
@@ -1636,14 +1636,14 @@ edit_company = (function()
 
 			if((currentTS <= publishFinishTS))
 			{
-				var		publisDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
+				var		publissDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
 
 				spanStatus = $("<span>").addClass("fa-stack")
 										.append($("<i>").addClass("fa fa-circle-o fa-stack-2x color_green"))
 										.append($("<i>").addClass("fa fa-check fa-stack-1x color_green"))
 										.attr("data-toggle", "tooltip")
 										.attr("data-placement", "top")
-										.attr("title", "Опубликована (еще " + publisDaysRemains + " " + system_calls.GetDaysSpelling(publisDaysRemains) + ")");
+										.attr("title", "Опубликована (еще " + publissDaysRemains + " " + system_calls.GetDaysSpelling(publissDaysRemains) + ")");
 			}
 			else
 			{
@@ -1665,7 +1665,7 @@ edit_company = (function()
 			divControl2_xs.append(buttonControl2_xs);
 			divControl3_xs.append(buttonControl3_xs);
 
-			divRow	.append(divSeparatop)
+			divRow	.append(divSeparator)
 					.append(divStatus)
 					.append(divTitle)
 					.append(divMonth)
@@ -1789,7 +1789,7 @@ edit_company = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Experience (react on user actions immediately, inspite on potential server error's) 
+		// --- To improve User Experience (react on user actions immediately, in-spite on potential server error's) 
 		if(affectedAction == "AJAX_removeCompanyFounder")
 		{
 			var		removeItemIndex = -1;
@@ -2477,7 +2477,7 @@ edit_company = (function()
 					}
 					catch (e) // --- catch JSON.parse exception
 					{
-						console.log("AddNewOpenVacancySubmitButton:exception handler: ERROR: " + e.name + " (most probably wrong JSON reponse)");
+						console.log("AddNewOpenVacancySubmitButton:exception handler: ERROR: " + e.name + " (most probably wrong JSON response)");
 						system_calls.PopoverError("EditOpenVacancy" + id + "SubmitButton", "Ошибка JSON-ответа севера. Необходимо сообщить в тех. поддержку.");
 					}
 				setTimeout(function() {$("#AddNewOpenVacancySubmitButton").button("reset"); }, 500); // --- wait for animation
@@ -2657,7 +2657,7 @@ edit_company = (function()
 					}
 					catch (e) // --- catch JSON.parse exception
 					{
-						console.log("UpdateOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON reponse)");
+						console.log("UpdateOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON response)");
 						system_calls.PopoverError("EditOpenVacancy" + id + "SubmitButton", "Ошибка JSON-ответа севера. Необходимо сообщить в тех. поддержку.");
 					}
 					setTimeout(function() {$("#EditOpenVacancy" + id + "SubmitButton").button("reset"); }, 500); // --- wait for animation

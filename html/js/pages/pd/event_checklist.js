@@ -49,7 +49,7 @@ EventChecklist = function()
 											.attr("data-script", "event.cgi")
 											.attr("data-action", "AJAX_switchChecklistItem")
 											.on("change", system_calls.UpdateInputFieldOnServer)
-											.on("change", UpdateCategoryCost_ClickHalndler)
+											.on("change", UpdateCategoryCost_ClickHandler)
 										)
 										.append($("<label>")
 											.addClass("switcher")
@@ -93,7 +93,7 @@ EventChecklist = function()
 
 					if(item.category == category)
 					{
-						var	div_wrappaer	= $("<div>").addClass("__checklist_item_wrapper  highlight_onhover zebra_painting");
+						var	div_wrapper		= $("<div>").addClass("__checklist_item_wrapper  highlight_onhover zebra_painting");
 						var	row				= $("<div>").addClass("row");
 						var	trigger_button	= GetSwitch(item);
 						var	remove_button	= $("<span>")
@@ -113,7 +113,7 @@ EventChecklist = function()
 														.attr("data-script", "event.cgi")
 														.attr("data-action", "AJAX_updateChecklistItemPrice")
 														.on("change", system_calls.UpdateInputFieldOnServer)
-														.on("change", UpdateCategoryCost_ClickHalndler);
+														.on("change", UpdateCategoryCost_ClickHandler);
 						var	comment			= $("<input>")
 														.val(item.comment)
 														.addClass("transparent comment")
@@ -123,7 +123,7 @@ EventChecklist = function()
 														.attr("data-script", "event.cgi")
 														.attr("data-action", "AJAX_updateChecklistItemComment")
 														.on("change", system_calls.UpdateInputFieldOnServer)
-														.on("change", UpdateCategoryCost_ClickHalndler);
+														.on("change", UpdateCategoryCost_ClickHandler);
 
 						var	col_title		= $("<div>").addClass("col-xs-4 col-md-3").append(item.title);
 						var	col_price		= $("<div>").addClass("col-xs-4 col-md-1").append(price).append($("<label>"));
@@ -132,7 +132,7 @@ EventChecklist = function()
 						var	col_remove		= $("<div>").addClass("col-xs-2 col-md-1").append(remove_button);
 
 						category_wrapper.append(
-								div_wrappaer.append(
+								div_wrapper.append(
 									row
 										.append(col_title)
 										.append(col_price)
@@ -188,7 +188,7 @@ EventChecklist = function()
 		span_remaining_cost	.empty().append(cost_obj.total_cost - cost_obj.completed_cost);
 	};
 
-	var	UpdateCategoryCost_ClickHalndler = function(e)
+	var	UpdateCategoryCost_ClickHandler = function(e)
 	{
 		var	curr_tag			= $(this);
 

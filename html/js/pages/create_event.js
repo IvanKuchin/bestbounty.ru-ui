@@ -307,7 +307,7 @@ create_event = (function()
 				create: function () {
 					// console.error ("CreateAutocompleteWithChangeCallback: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -384,17 +384,17 @@ create_event = (function()
 		$("span#eventFoundationDate").html(system_calls.GetLocalizedDateNoTimeFromSeconds(eventProfile.eventTimestampCreation));
 		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)");
 
-		$("div#eventInfo .createableSpan").on("click", createableFuncReplaceSpanToInput);
-		$("div#eventInfo .createableSpan").mouseenter(createableFuncHighlightBgcolor);
-		$("div#eventInfo .createableSpan").mouseleave(createableFuncNormalizeBgcolor);
+		$("div#eventInfo .creatableSpan").on("click", creatableFuncReplaceSpanToInput);
+		$("div#eventInfo .creatableSpan").mouseenter(creatableFuncHighlightBgcolor);
+		$("div#eventInfo .creatableSpan").mouseleave(creatableFuncNormalizeBgcolor);
 
-		$("div#eventInfo .createableParagraph").on("click", createableFuncReplaceParagraphToTextarea);
-		$("div#eventInfo .createableParagraph").mouseenter(createableFuncHighlightBgcolor);
-		$("div#eventInfo .createableParagraph").mouseleave(createableFuncNormalizeBgcolor);
+		$("div#eventInfo .creatableParagraph").on("click", creatableFuncReplaceParagraphToTextarea);
+		$("div#eventInfo .creatableParagraph").mouseenter(creatableFuncHighlightBgcolor);
+		$("div#eventInfo .creatableParagraph").mouseleave(creatableFuncNormalizeBgcolor);
 
-		$("div#eventInfo .createableSelectEventType").on("click", createableFuncReplaceSpanToSelectEventType);
-		$("div#eventInfo .createableSelectEventType").mouseenter(createableFuncHighlightBgcolor);
-		$("div#eventInfo .createableSelectEventType").mouseleave(createableFuncNormalizeBgcolor);
+		$("div#eventInfo .creatableSelectEventType").on("click", creatableFuncReplaceSpanToSelectEventType);
+		$("div#eventInfo .creatableSelectEventType").mouseenter(creatableFuncHighlightBgcolor);
+		$("div#eventInfo .creatableSelectEventType").mouseleave(creatableFuncNormalizeBgcolor);
 	};
 
 
@@ -433,7 +433,7 @@ create_event = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Experience (react on user actions immediately, inspite on potential server error's) 
+		// --- To improve User Experience (react on user actions immediately, in-spite on potential server error's) 
 		if(affectedAction == "AJAX_removeEventFounder")
 		{
 			var		removeItemIndex = -1;
@@ -490,7 +490,7 @@ create_event = (function()
 		}
 	};
 
-	var	createableFuncReplaceSpanToInput = function () 
+	var	creatableFuncReplaceSpanToInput = function () 
 	{
 		var	tag = $("<input>", {
 			val: $(this).text(),
@@ -507,13 +507,13 @@ create_event = (function()
 			if(keyPressed == 13) 
 			{
 				/*Enter pressed*/
-				createableFuncReplaceInputToSpan($(this));
+				creatableFuncReplaceInputToSpan($(this));
 			}
 			if(keyPressed == 27) 
 			{
 				/*Escape pressed*/
 				$(this).val($(this).attr("initValue"));
-				createableFuncReplaceInputToSpan($(this));
+				creatableFuncReplaceInputToSpan($(this));
 			}
 
 		};
@@ -525,15 +525,15 @@ create_event = (function()
 
 		$(this).replaceWith(tag);
 		$(tag).on("keyup", keyupEventHandler);
-		$(tag).removeClass("createable_highlighted_class");
+		$(tag).removeClass("creatable_highlighted_class");
 
 		if($(tag).data("action") == "AJAX_updateEventLink") 
 		{
-			$(tag).on("blur", createableFuncReplaceInputToSpan);
+			$(tag).on("blur", creatableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateEventEmployeeNumber") 
 		{
-			$(tag).on("blur", createableFuncReplaceInputToSpan);
+			$(tag).on("blur", creatableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateEventFoundationDate") 
 		{
@@ -558,7 +558,7 @@ create_event = (function()
 		$(tag).select();
 	};
 
-	var	createableFuncReplaceInputToSpan = function (param) 
+	var	creatableFuncReplaceInputToSpan = function (param) 
 	{
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
 		var	newTag = $("<span>", {
@@ -578,16 +578,16 @@ create_event = (function()
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on("click", createableFuncReplaceSpanToInput);
-			$(newTag).mouseenter(createableFuncHighlightBgcolor);
-			$(newTag).mouseleave(createableFuncNormalizeBgcolor);
+			$(newTag).on("click", creatableFuncReplaceSpanToInput);
+			$(newTag).mouseenter(creatableFuncHighlightBgcolor);
+			$(newTag).mouseleave(creatableFuncNormalizeBgcolor);
 		}
 
 		if(system_calls.ConvertTextToHTML($(currentTag).val()) == system_calls.ConvertTextToHTML($(currentTag).attr("initValue")))
 		{
 			// --- value hasn't been changed
 			// --- no need to update server part
-			console.error("createableFuncReplaceInputToSpan: value hasn't been changed");
+			console.error("creatableFuncReplaceInputToSpan: value hasn't been changed");
 		}
 		else
 		{
@@ -620,7 +620,7 @@ create_event = (function()
 						}
 						else
 						{
-							console.error("createableFuncReplaceInputToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + eventProfile.id + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
+							console.error("creatableFuncReplaceInputToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + eventProfile.id + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
 
 							if(ajaxAction == "AJAX_updateEventLink")
 							{
@@ -631,7 +631,7 @@ create_event = (function()
 					}
 					catch(e)
 					{
-						console.error("createableFuncReplaceInputToSpan:ERROR: can't parse JSON form server");
+						console.error("creatableFuncReplaceInputToSpan:ERROR: can't parse JSON form server");
 					}
 
 				});
@@ -645,7 +645,7 @@ create_event = (function()
 
 
 
-	var	createableFuncReplaceToParagraphRenderHTML = function (currentTag, content) {
+	var	creatableFuncReplaceToParagraphRenderHTML = function (currentTag, content) {
 		/*Escape pressed*/
 		var currentID = currentTag.attr("id");
 		var	newTag = $("<p>", {
@@ -659,12 +659,12 @@ create_event = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on("click", createableFuncReplaceParagraphToTextarea);
-		$(newTag).mouseenter(createableFuncHighlightBgcolor);
-		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
+		$(newTag).on("click", creatableFuncReplaceParagraphToTextarea);
+		$(newTag).mouseenter(creatableFuncHighlightBgcolor);
+		$(newTag).mouseleave(creatableFuncNormalizeBgcolor);
 	};
 
-	var	createableFuncReplaceToParagraphAccept = function (currentTag) {
+	var	creatableFuncReplaceToParagraphAccept = function (currentTag) {
 		var currentContent = $(currentTag).val();
 
 		if(system_calls.ConvertTextToHTML($(currentTag).val()) != system_calls.FilterUnsupportedUTF8Symbols($(currentTag).attr("initValue")))
@@ -683,7 +683,7 @@ create_event = (function()
 				if(filteredEventDescription.length > 16384)
 				{
 					filteredEventDescription = filteredEventDescription.substr(0, 16384);
-					console.error("createableFuncReplaceToParagraphAccept:ERROR: description bigger than 16384 symbols");
+					console.error("creatableFuncReplaceToParagraphAccept:ERROR: description bigger than 16384 symbols");
 				}
 
 				eventProfile.description = filteredEventDescription;
@@ -706,35 +706,35 @@ create_event = (function()
 						}
 						else
 						{
-							console.error("createableFuncReplaceToParagraphAccept: ERROR: " + resultJSON.description);
+							console.error("creatableFuncReplaceToParagraphAccept: ERROR: " + resultJSON.description);
 						}
 					});
 			} // --- if action == updateEventDescription
 		} // --- if textarea value changed
 		else
 		{
-			console.error("createableFuncReplaceToParagraphAccept: textarea value hasn't change");
+			console.error("creatableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
-		createableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
+		creatableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
 
 	};
 
-	var	createableFuncReplaceToParagraphReject = function (currentTag) {
+	var	creatableFuncReplaceToParagraphReject = function (currentTag) {
 		/*Escape pressed*/
-		createableFuncReplaceToParagraphRenderHTML(currentTag, currentTag.attr("initValue"));
+		creatableFuncReplaceToParagraphRenderHTML(currentTag, currentTag.attr("initValue"));
 	};
 
-	var	createableFuncReplaceParagraphToTextarea = function (e) 
+	var	creatableFuncReplaceParagraphToTextarea = function (e) 
 	{
 		var	ButtonAcceptHandler = function() {
 			var		associatedTextareaID = $(this).data("associatedTagID");
-			createableFuncReplaceToParagraphAccept($("#" + associatedTextareaID));
+			creatableFuncReplaceToParagraphAccept($("#" + associatedTextareaID));
 		};
 
 		var	ButtonRejectHandler = function(e) {
 			var		associatedTextareaID = $(this).data("associatedTagID");
-			createableFuncReplaceToParagraphReject($("#" + associatedTextareaID));
+			creatableFuncReplaceToParagraphReject($("#" + associatedTextareaID));
 		};
 
 		var	currentTag = $(this);
@@ -769,11 +769,11 @@ create_event = (function()
 			if((event.ctrlKey && event.keyCode == 10) || (event.ctrlKey && event.keyCode == 13))
 			{
 				/*Ctrl+Enter pressed*/
-				createableFuncReplaceToParagraphAccept($(this));
+				creatableFuncReplaceToParagraphAccept($(this));
 			}
 			if(keyPressed == 27) {
 				/* Esc pressed */
-				createableFuncReplaceToParagraphReject($(this));
+				creatableFuncReplaceToParagraphReject($(this));
 			}
 		};
 
@@ -785,7 +785,7 @@ create_event = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass("createable_highlighted_class");
+		$(tag).removeClass("creatable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
 		$(tag).on("keyup", keyupEventHandler);
@@ -829,7 +829,7 @@ create_event = (function()
 		}
 	};
 
-	var	createableFuncReplaceSpanToSelectEventType = function () 
+	var	creatableFuncReplaceSpanToSelectEventType = function () 
 	{
 		var	currentValue = $(this).text();
 		var	tag = $("<select>", {
@@ -846,7 +846,7 @@ create_event = (function()
 
 		var	selectChangeHandler = function(event) 
 		{
-			createableFuncReplaceSelectToSpan($(this), createableFuncReplaceSpanToSelectEventType);
+			creatableFuncReplaceSelectToSpan($(this), creatableFuncReplaceSpanToSelectEventType);
 		};
 
 		var keyupEventHandler = function(event) 
@@ -861,7 +861,7 @@ create_event = (function()
 			if(keyPressed == 27) {
 				/*Escape pressed*/
 				$(this).val($(this).attr("initValue"));
-				createableFuncReplaceSelectToSpan($(this), createableFuncReplaceSpanToSelectEventType);
+				creatableFuncReplaceSelectToSpan($(this), creatableFuncReplaceSpanToSelectEventType);
 			}
 		};
 
@@ -874,7 +874,7 @@ create_event = (function()
 		$(tag).on("keyup", keyupEventHandler);
 		$(tag).on("change", selectChangeHandler);
 		$(tag).on("blur", selectChangeHandler);
-		$(tag).removeClass("createable_highlighted_class");
+		$(tag).removeClass("creatable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -884,7 +884,7 @@ create_event = (function()
 	// --- Replacement Select to Span
 	// --- input: 1) tag
 	// ---        2) function to call to convert Span->Select
-	var	createableFuncReplaceSelectToSpan = function (param, funcFromSelectToSpan) 
+	var	creatableFuncReplaceSelectToSpan = function (param, funcFromSelectToSpan) 
 	{
 		var		ajaxAction;
 		var		ajaxActionID;
@@ -904,8 +904,8 @@ create_event = (function()
 
 		$(currentTag).replaceWith(newTag);
 		$(newTag).on("click", funcFromSelectToSpan);
-		$(newTag).mouseenter(createableFuncHighlightBgcolor);
-		$(newTag).mouseleave(createableFuncNormalizeBgcolor);
+		$(newTag).mouseenter(creatableFuncHighlightBgcolor);
+		$(newTag).mouseleave(creatableFuncNormalizeBgcolor);
 
 		ajaxAction = $(newTag).data("action");
 		ajaxActionID = $(newTag).data("id");
@@ -913,7 +913,7 @@ create_event = (function()
 
 		if(ajaxValue == initValue)
 		{
-			console.error("createableFuncReplaceSelectToSpan: value hasn't been changed");
+			console.error("creatableFuncReplaceSelectToSpan: value hasn't been changed");
 		}
 		else
 		{
@@ -932,7 +932,7 @@ create_event = (function()
 					}
 					else
 					{
-						console.error("createableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + actionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
+						console.error("creatableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + actionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
 					}
 
 				});
@@ -952,12 +952,12 @@ create_event = (function()
 		system_calls.RenderCompanyLogo(tagCanvas[0].getContext("2d"), logoPath, eventProfile.title, " ");
 	};
 
-	var createableFuncHighlightBgcolor = function () {
-		$(this).addClass("createable_highlighted_class", 400);
+	var creatableFuncHighlightBgcolor = function () {
+		$(this).addClass("creatable_highlighted_class", 400);
 	};
 
-	var createableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("createable_highlighted_class", 200, "easeInOutCirc");
+	var creatableFuncNormalizeBgcolor = function () {
+		$(this).removeClass("creatable_highlighted_class", 200, "easeInOutCirc");
 	};
 
 	return {

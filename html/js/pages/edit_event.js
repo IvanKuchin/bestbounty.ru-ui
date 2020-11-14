@@ -1,24 +1,14 @@
-var	edit_event = edit_event || {};
+/*global common_bestbounty*/
+/*global EventChecklist*/
+/*exported edit_event*/
 
-edit_event = (function()
+var edit_event = (function()
 {
 	"use strict";
 
 	var		eventProfile = {};
-	var		AutocompleteList = [];
-	var		datepickerDateFormat;
-
 	var		eventChecklist_global;
 
-	var 	JSON_eventPosition = [];
-	var		JSON_geoCountry = [];
-	var		JSON_geoRegion = [];
-	var		JSON_geoLocality = [];
-	var		JSON_university = [];
-	var		JSON_school = [];
-	var		JSON_language = [];
-	var		JSON_skill = [];
-	var		JSON_dataForProfile = {};
 
 	var	Init = function()
 	{
@@ -31,14 +21,14 @@ edit_event = (function()
 		$("#ButtonAddEventHost").on("click", AddHost_ClickHandler);
 		$("#ButtonAddEventGuest").on("click", AddGuest_ClickHandler);
 		$("#ButtonAddEventGuestFromList").on("click", AddGuestFromList_ClickHandler);
-		$("#canvasForEventLogo").on("click", function(e) { $("#fileupload").click(); });
+		$("#canvasForEventLogo").on("click", function() { $("#fileupload").click(); });
 		$("#ButtonRemoveEvent").on("click", AreYouSure_ClickHandler);
 		$("#GuestListModal .submit").on("click", GuestListModal_Submit_ClickHandler);
 		$("#switcherLabelNoGift").on("click", NoGift_ClickHeader);
 
 		// --- if autocomplete functionality is not initialized from the beginning 
 		// --- it will not pop-up after configure threshold, it will wait one symbol more 
-		// --- to overcome this fake autocomplete initializtion applied
+		// --- to overcome this fake autocomplete initialization applied
 		CreateAutocompleteWithSelectCallback("#eventHost", [{0:"0"}], AddHost_SelectHandler);
 		$("#eventHost").on("input", AddHost_InputHandler);
 		$("#eventHost").on("keyup", AddHost_KeyupHandler);
@@ -67,61 +57,61 @@ edit_event = (function()
 											// select: AviaBonus_Autocomplete_SelectHandler,
 										});
 
-		$("#ButtonAddItemToChecklist").on("click", AddCheckListitem_ClickHandler);
+		$("#ButtonAddItemToChecklist").on("click", AddCheckListItem_ClickHandler);
 
 		RenderEventProfileFromServer();
 
 		// --- Image uploader
 		$(function () 
 		{
-		    // Change this to the location of your server-side upload handler:
-		    $("#fileupload").fileupload({
-		        url: "/cgi-bin/generalimageuploader.cgi",
-		        formData: {type:"event", id:eventProfile.id, rand:system_calls.GetUUID()},
-		        dataType: "json",
-		        maxFileSize: 30 * 1024 * 1024, 
-		        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+			// Change this to the location of your server-side upload handler:
+			$("#fileupload").fileupload({
+				url: "/cgi-bin/generalimageuploader.cgi",
+				formData: {type:"event", id:eventProfile.id, rand:system_calls.GetUUID()},
+				dataType: "json",
+				maxFileSize: 30 * 1024 * 1024, 
+				acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
 
-		        done: function (e, data) {
+				done: function (e, data) {
 
-		        	$.each(data.result, function(index, value) 
-		        		{
-			            	if(value.result == "error")
-			            	{
-			            		console.debug("fileupload: done handler: ERROR uploading file [" + value.fileName + "] error code [" + value.textStatus + "]");
-			            		if(value.textStatus == "wrong format")
-			            		{
-				            		$("#UploadAvatarErrorBS_ImageName").text(value.fileName);
-				            		$("#UploadAvatarErrorBS").modal("show");
-				            	}
-			            	}
+					$.each(data.result, function(index, value) 
+						{
+							if(value.result == "error")
+							{
+								console.debug("fileupload: done handler: ERROR uploading file [" + value.fileName + "] error code [" + value.textStatus + "]");
+								if(value.textStatus == "wrong format")
+								{
+									$("#UploadAvatarErrorBS_ImageName").text(value.fileName);
+									$("#UploadAvatarErrorBS").modal("show");
+								}
+							}
 
-			            	if(value.result == "success")
-			            	{
-			            		eventProfile.logo_folder = value.logo_folder;
-			            		eventProfile.logo_filename = value.logo_filename;
+							if(value.result == "success")
+							{
+								eventProfile.logo_folder = value.logo_folder;
+								eventProfile.logo_filename = value.logo_filename;
 
-			            		console.debug("fileupload: done handler: uploading success original file[" + value.fileName + "], destination file[folder:" + eventProfile.logo_folder + ", filename:" + eventProfile.logo_filename + "]");
+								console.debug("fileupload: done handler: uploading success original file[" + value.fileName + "], destination file[folder:" + eventProfile.logo_folder + ", filename:" + eventProfile.logo_filename + "]");
 
-			            		RenderEventLogo();
-			            	}
-		            	});
+								RenderEventLogo();
+							}
+						});
 
-		        },
-		        progressall: function (e, data) {
-		            var progress = parseInt(data.loaded / data.total * 100, 10);
-		            $("#progress .progress-bar").css(
-		                "width",
-		                progress + "%"
-		            );
-		        },
-		        fail: function (e, data) {
-		        	alert("ошибка загрузки фаила: " + data.textStatus);
-		        }
+				},
+				progressall: function (e, data) {
+					var progress = parseInt(data.loaded / data.total * 100, 10);
+					$("#progress .progress-bar").css(
+						"width",
+						progress + "%"
+					);
+				},
+				fail: function (e, data) {
+					alert("ошибка загрузки фаила: " + data.textStatus);
+				}
 
-		    }).prop("disabled", !$.support.fileInput)
-		        .parent().addClass($.support.fileInput ? undefined : "disabled");
+			}).prop("disabled", !$.support.fileInput)
+				.parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 	};
@@ -167,7 +157,7 @@ edit_event = (function()
 					}
 					else
 					{
-						$("#NotMyEvent .mailme").on("click", function(){ return CraftEventChangeMail(data.events[0]); });
+						// $("#NotMyEvent .mailme").on("click", function(){ return CraftEventChangeMail(data.events[0]); });
 						$("#NotMyEvent").modal("show");
 					}
 				}
@@ -192,7 +182,7 @@ edit_event = (function()
 				.done(function(data) {
 						var	AutocompleteList = [];
 
-						data.forEach(function(item, i, arr)
+						data.forEach(function(item)
 							{
 								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
 							});
@@ -219,7 +209,7 @@ edit_event = (function()
 		else
 		{
 			// --- check duplicates
-			eventProfile.hosts.forEach(function(item, i, arr)
+			eventProfile.hosts.forEach(function(item)
 				{
 					if(item.user_id == userID) isDuplicate = true;
 				});
@@ -270,32 +260,11 @@ edit_event = (function()
 		}
 	};
 
-	var	AutocompleteCallbackChange = function (event, ui) 
-	{
-		var		currTag = $(this);
-
-		console.debug ("AutocompleteCallbackChange: change event handler"); 
-
-		if(currTag.val() === "")
-		{
-			currTag.parent().removeClass("has-success").addClass("has-feedback has-error");
-		}
-		else
-		{
-			currTag.parent().removeClass("has-error").addClass("has-feedback has-success");
-			currTag.data("id", (ui.item ? ui.item.id : "0"));
-		}
-
-		setTimeout(function() { 
-			currTag.parent().removeClass("has-feedback has-success has-error"); 
-		}, 3000);
-	};
-
 	// --- create autocomplete
 	// --- input:
-	// ---       elem - for ex ("input#ID")
+	// ---	   elem - for ex ("input#ID")
 	// --- 		 srcData - array of {id:"id", label:"label"}
-	// ---       selectCallback - function(event, ui)
+	// ---	   selectCallback - function(event, ui)
 	var	CreateAutocompleteWithSelectCallback = function(elem, srcData, selectCallback)
 	{
 		if($(elem).length && srcData.length)
@@ -305,17 +274,17 @@ edit_event = (function()
 				source: srcData,
 				minLength: 3,
 				select: selectCallback,
-				close: function (event, ui) 
+				close: function () 
 				{ 
 					// console.debug ("CreateAutocompleteWithSelectCallback: close event handler"); 
 				},
 				create: function () {
 					// console.debug ("CreateAutocompleteWithSelectCallback: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
-					currentCategory = "";
+					var currentCategory = "";
 					$.each( items, function( index, item ) {
 						var li;
 						if ( item.category != currentCategory ) {
@@ -336,52 +305,6 @@ edit_event = (function()
 		}
 	};
 
-	var AddDataForProfileCollapsibleInit = function()
-	{
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyTitle", JSON_eventPosition, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyCity", JSON_geoLocality, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage1", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage2", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage3", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill1", JSON_skill, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill2", JSON_skill, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill3", JSON_skill, AutocompleteCallbackChange);
-
-		// --- Initialize autocomplete after initial loading data
-		if(typeof(eventProfile.open_vacancies) != "undefined")
-			eventProfile.open_vacancies.forEach(function(item, i, arr)
-			{
-				if($("input#OpenVacancy" + item.id + "Edit_Title").length)		CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Title", JSON_eventPosition, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_City").length) 		CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_City", JSON_geoLocality, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language1").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language1", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language2").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language2", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language3").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language3", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill1").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill1", JSON_skill, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill2").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill2", JSON_skill, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill3").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill3", JSON_skill, AutocompleteCallbackChange);
-			});
-
-	};
-
-	var	InputKeyupHandler = function(e)
-	{
-		var		keyPressed = e.keyCode;
-		var		currentTag = $(this);
-
-		if(currentTag.data("action") == "AJAX_addEventHost")
-		{
-			if(keyPressed == 13) AddEventFounder("", currentTag.val());
-		}
-		if(currentTag.data("action") == "AJAX_addEventGuest")
-		{
-			if(keyPressed == 13) AddEventOwner("", currentTag.val());
-		}
-		if(currentTag.data("action") == "AJAX_addEditEventAddEventIndustry")
-		{
-			if(keyPressed == 13) AddEventIndustry("", currentTag.val());
-		}
-	};
-
 	var	BlockButton_ClickHandler = function()
 	{
 		var		currTag = $(this);
@@ -390,10 +313,12 @@ edit_event = (function()
 
 		if(currTag.data("action") == "AJAX_unblockEvent")
 		{
+			// --- good2go
 
 		}
 		else if(currTag.data("action") == "AJAX_blockEvent")
 		{
+			// --- good2go
 
 		}
 
@@ -482,13 +407,11 @@ edit_event = (function()
 
 	var	RenderEventStart = function()
 	{
-		var		result = $();
 		var		spanTimestamp = $("<span>").addClass("eventStartTimestamp  formatDate")
 											.data("id", "not used")
 											.data("action", "AJAX_updateStartDate")
 											.data("script", "event.cgi");
 
-		var		startTime;
 
 		if(typeof(eventProfile) == "undefined")
 		{
@@ -529,7 +452,7 @@ edit_event = (function()
 	var	RenderEventHosts = function()
 	{
 		$("#eventHostList").empty();
-		eventProfile.hosts.forEach(function(item, i, arr)
+		eventProfile.hosts.forEach(function(item)
 			{
 				var		removeSign = $("<span>").addClass("glyphicon glyphicon-remove cursor_pointer")
 												.attr("data-action", "AJAX_removeEventHost")
@@ -589,7 +512,7 @@ edit_event = (function()
 				return result;
 			});
 
-		eventProfile.guests.forEach(function(item, i, arr)
+		eventProfile.guests.forEach(function(item)
 			{
 				var		divRow = $("<div>").addClass("row")
 											.attr("id", "GuestRow" + item.id);
@@ -719,12 +642,12 @@ edit_event = (function()
 		}	
 	};
 
-	var	FriendModal_SelectAll_ChangeHandler = function(e)
+	var	FriendModal_SelectAll_ChangeHandler = function()
 	{
 		var	allIngridients = $("input.friend_checkbox");
 		var	checkedIngridientCounter = 0;
 
-		allIngridients.each(function(idx) 
+		allIngridients.each(function() 
 			{
 				if($(this).is(":checked")) ++checkedIngridientCounter;
 			});
@@ -739,18 +662,15 @@ edit_event = (function()
 		}
 	};
 
-	var	FriendModal_SelectAll_ClickHandler = function(e)
+	var	FriendModal_SelectAll_ClickHandler = function()
 	{
-		var	currTag = $(this);
 		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
 		var	switchPace = 100;
 		var	actionToDo = $("#checkboxSelectAll").is(":checked");
 
 		allIngridients.each(function(idx) 
 			{
 				var		currCheckBox = $(this);
-				if($(this).is(":checked")) ++checkedIngridientCounter;
 				setTimeout(function() 
 					{
 						currCheckBox.prop("checked", actionToDo ? "checked" : "");
@@ -778,7 +698,7 @@ edit_event = (function()
 			result = result.add(selectAll).add(selectAllTitle);
 		}
 
-		guestsList.forEach(function(item, i)
+		guestsList.forEach(function(item)
 		{
 			var		friendDiv = $("<div>")		.attr("id", "ModalFriendID" + item.id)
 												.addClass("modalFriend");
@@ -813,15 +733,13 @@ edit_event = (function()
 		return result;
 	};
 
-	var	GuestListModal_Submit_ClickHandler = function(e)
+	var	GuestListModal_Submit_ClickHandler = function()
 	{
-		var		currTag = $(this);
 		var		usersListToInvite = [];
 
 		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
 
-		allIngridients.each(function(idx) 
+		allIngridients.each(function() 
 			{
 				if($(this).is(":checked")) usersListToInvite.push($(this).val());
 			});
@@ -871,7 +789,7 @@ edit_event = (function()
 				.done(function(data) {
 						var	AutocompleteList = [];
 
-						data.forEach(function(item, i, arr)
+						data.forEach(function(item)
 							{
 								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
 							});
@@ -899,7 +817,7 @@ edit_event = (function()
 		else
 		{
 			// --- check duplicates
-			eventProfile.guests.forEach(function(item, i, arr)
+			eventProfile.guests.forEach(function(item)
 				{
 					if(item.user_id == userID) isDuplicate = true;
 				});
@@ -945,7 +863,7 @@ edit_event = (function()
 					console.debug("AddGuest_InputHandler: ERROR: " + data.description);
 				}
 
-				setTimeout(function(e) 
+				setTimeout(function() 
 					{
 						$("button#ButtonAddEventGuest").button("reset");
 						$("input#eventGuest").removeAttr("disabled");
@@ -956,7 +874,7 @@ edit_event = (function()
 					console.error("ERROR: parsing JSON response from server");
 					system_calls.PopoverError("eventGuest", "Ошибка ответа сервера");
 
-					setTimeout(function(e) 
+					setTimeout(function() 
 						{
 							$("button#ButtonAddEventGuest").button("reset");
 							$("input#eventGuest").removeAttr("disabled");
@@ -974,19 +892,6 @@ edit_event = (function()
 		return d1.getHours() + ":" + (d1.getMinutes() < 10 ? "0" : "") + d1.getMinutes();
 	};
 
-	var removeGeneralPreparation = function()
-	{
-		var		currTag = $(this);
-
-		$("#AreYouSure #Remove").removeData(); 
-
-		Object.keys(currTag.data()).forEach(function(item) { 
-			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
-		});
-
-		$("#AreYouSure").modal("show");
-	};
-
 	var	AreYouSure_ClickHandler = function()
 	{
 		var		currTag = $(this);
@@ -996,20 +901,8 @@ edit_event = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_dropCompanyPossession")
-		{
-			$("#AreYouSure #Remove").data("id", companyProfile.id);
-			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPossession");
-			$("#AreYouSure #Remove").data("script", "company.cgi");
-
-			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
-			$("#AreYouSure #Remove").empty().append("Уверен");
-		}
-		else
-		{
-			$("#AreYouSure .description").empty();
-			$("#AreYouSure #Remove").empty().append("Удалить");
-		}
+		$("#AreYouSure .description").empty();
+		$("#AreYouSure #Remove").empty().append("Удалить");
 
 		$("#AreYouSure").modal("show");
 	};
@@ -1041,7 +934,7 @@ edit_event = (function()
 
 						removeItemIndex = -1;
 
-						eventProfile.hosts.forEach(function(item, i, arr)
+						eventProfile.hosts.forEach(function(item, i)
 						{
 							if(item.id == affectedID) removeItemIndex = i;
 						});
@@ -1060,7 +953,7 @@ edit_event = (function()
 					{
 						removeItemIndex = -1;
 
-						eventProfile.guests.forEach(function(item, i, arr)
+						eventProfile.guests.forEach(function(item, i)
 						{
 							if(item.id == affectedID) removeItemIndex = i;
 						});
@@ -1086,7 +979,7 @@ edit_event = (function()
 				}
 				else if(data.result === "success")
 				{
-
+					// --- good2go
 				}
 				else
 				{
@@ -1157,9 +1050,9 @@ edit_event = (function()
 				monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек" ],
 				dateFormat: "dd/mm/yy",
 				changeMonth: true,
-	  			changeYear: true,
-	  			showOtherMonths: true
-	  			// maxDate: system_calls.ConvertMonthNameToNumber($(tag).next().val()) || system_calls.ConvertMonthNameToNumber($(tag).next().text())
+				changeYear: true,
+				showOtherMonths: true
+				// maxDate: system_calls.ConvertMonthNameToNumber($(tag).next().val()) || system_calls.ConvertMonthNameToNumber($(tag).next().text())
 			});
 		}
 
@@ -1363,7 +1256,7 @@ edit_event = (function()
 							console.error("ERROR: parse JSON in server response (" + e.message + ")");
 						}
 					})
-					.fail(function(data) {
+					.fail(function() {
 						console.error("ERROR: getting server response");
 					});
 			} // --- if action == updateEventDescription
@@ -1382,14 +1275,14 @@ edit_event = (function()
 		editableFuncReplaceToParagraphRenderHTML(currentTag, currentTag.attr("initValue"));
 	};
 
-	var	editableFuncReplaceParagraphToTextarea = function (e) 
+	var	editableFuncReplaceParagraphToTextarea = function () 
 	{
 		var	ButtonAcceptHandler = function() {
 			var		associatedTextareaID = $(this).data("associatedTagID");
 			editableFuncReplaceToParagraphAccept($("#" + associatedTextareaID));
 		};
 
-		var	ButtonRejectHandler = function(e) {
+		var	ButtonRejectHandler = function() {
 			var		associatedTextareaID = $(this).data("associatedTagID");
 			editableFuncReplaceToParagraphReject($("#" + associatedTextareaID));
 		};
@@ -1450,7 +1343,7 @@ edit_event = (function()
 	};
 
 
-	var UpdateEventStartDatePickerOnChangeHandler = function(event) {
+	var UpdateEventStartDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue;
@@ -1510,7 +1403,7 @@ edit_event = (function()
 
 		if($(this).data("action") == "AJAX_updateAccessType")
 		{
-			Object.keys(system_calls.eventTypes).forEach(function(item, i , arr)
+			Object.keys(system_calls.eventTypes).forEach(function(item)
 			{
 				$(tag).append($("<option>")	.append(system_calls.eventTypes[item])
 											.attr("value", item));
@@ -1518,7 +1411,7 @@ edit_event = (function()
 		}
 		if($(this).data("action") == "AJAX_updateStartTime")
 		{
-			Object.keys(system_calls.startTime).forEach(function(item, i , arr)
+			Object.keys(system_calls.startTime).forEach(function(item)
 			{
 				$(tag).append($("<option>")	.append(system_calls.startTime[item])
 											.attr("value", item));
@@ -1527,7 +1420,7 @@ edit_event = (function()
 
 		$(tag).val(currentValue); 
 
-		var	selectChangeHandler = function(event) 
+		var	selectChangeHandler = function() 
 		{
 			editableFuncReplaceSelectToSpan($(this), editableFuncReplaceSpanToSelect);
 		};
@@ -1561,6 +1454,7 @@ edit_event = (function()
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
+			// --- stub part
 		}
 
 		$(tag).select();
@@ -1570,7 +1464,7 @@ edit_event = (function()
 
 	// --- Replacement Select to Span
 	// --- input: 1) tag
-	// ---        2) function to call to convert Span->Select
+	// ---		2) function to call to convert Span->Select
 	var	editableFuncReplaceSelectToSpan = function (param, funcFromSelectToSpan) 
 	{
 		var		ajaxAction;
@@ -1629,7 +1523,7 @@ edit_event = (function()
 						}
 						else
 						{
-							console.debug("editableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + actionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
+							console.debug("editableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + ajaxActionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
 						}
 					}
 					catch(e)
@@ -1661,7 +1555,7 @@ edit_event = (function()
 		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 	};
 
-	var NoGift_ClickHeader = function(e)
+	var NoGift_ClickHeader = function()
 	{
 		var   currentTag = $(this);
 		var   state = currentTag.data("state");
@@ -1680,11 +1574,11 @@ edit_event = (function()
 			}
 			else
 			{
-			  console.debug("ERROR: " + data.description);
+				console.debug("ERROR: " + data.description);
 			}
 		})
-		.fail(function(data){
-			console.debug("ERROR: fail parse server responce");
+		.fail(function(){
+			console.debug("ERROR: fail parse server response");
 		});
 	};
 
@@ -1710,16 +1604,19 @@ edit_event = (function()
 
 	var	RenderFavoriteChecklistTabs = function(checklists)
 	{
-		$("#favorite_checklists_placeholder").empty().append(common_bestbounty.GetCheckListFavoritTabs_DOM(checklists, "_favorite", Tab_ClickHandler));
+		$("#favorite_checklists_placeholder").empty().append(common_bestbounty.GetCheckListFavoriteTabs_DOM(checklists, "_favorite", Tab_ClickHandler));
 	};
 
-	var	Tab_ClickHandler = function(e)
+	var	Tab_ClickHandler = function()
 	{
 		var	curr_tag = $(this);
 		var	curr_id = curr_tag.attr("data-id");
 		var	pane_tag = $(".__tab_pane_favorite[data-id=\"" + curr_id + "\"]");
 
-		if(pane_tag.html().length) {}
+		if(pane_tag.html().length) 
+		{
+			// --- no need to update content
+		}
 		else
 		{
 			GetFavoriteChecklistItemsFromTheServer(curr_id);
@@ -1756,7 +1653,7 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
@@ -1765,12 +1662,12 @@ edit_event = (function()
 		}
 	};
 
-	var	RenderFavoriteChecklist = function(favorite_checklist_id, chacklists)
+	var	RenderFavoriteChecklist = function(favorite_checklist_id, checklists)
 	{
-		$(".__tab_pane_favorite[data-id=\"" + favorite_checklist_id + "\"]").empty().append(eventChecklist_global.FavoriteChecklist_GetDOM(favorite_checklist_id, chacklists, AddItemsFromFavoriteChecklist_ClickHandler));
+		$(".__tab_pane_favorite[data-id=\"" + favorite_checklist_id + "\"]").empty().append(eventChecklist_global.FavoriteChecklist_GetDOM(favorite_checklist_id, checklists, AddItemsFromFavoriteChecklist_ClickHandler));
 	};
 
-	var	AddItemsFromFavoriteChecklist_ClickHandler = function(e)
+	var	AddItemsFromFavoriteChecklist_ClickHandler = function()
 	{
 		var	curr_tag			= $(this);
 		var	checklist_id		= curr_tag.attr("data-checklist_id");
@@ -1795,7 +1692,7 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
@@ -1804,7 +1701,7 @@ edit_event = (function()
 		}
 	};
 
-	var	AddCheckListitem_ClickHandler = function(e)
+	var	AddCheckListItem_ClickHandler = function()
 	{
 		var	curr_tag		= $(this);
 		var	category_tag	= $("#custom_checklist_item_category");
@@ -1840,7 +1737,7 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");

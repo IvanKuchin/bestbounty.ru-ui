@@ -211,7 +211,7 @@ view_event_profile = (function()
 		{
 			$("#adultsCounter")			.val(0);
 			$("#kidsCounter")			.val(0);
-			$("#kidsPronounciation")	.empty()
+			$("#kidsPronunciation")		.empty()
 										.append(system_calls.GetSpelledKidsNumber(memberObj.extraKids) || " детей");
 
 			$("#eventAccept")			.attr("disabled", "disabled");
@@ -229,7 +229,7 @@ view_event_profile = (function()
 										.val(memberObj.extraAdults);
 			$("#kidsCounter")			.removeAttr("disabled")
 										.val(memberObj.extraKids);
-			$("#kidsPronounciation")	.empty()
+			$("#kidsPronunciation")		.empty()
 										.append(system_calls.GetSpelledKidsNumber(memberObj.extraKids) || " детей");
 
 			if(memberObj.acceptStatus == "accepted") $("#eventAccept").removeClass("opacity_03");
@@ -282,7 +282,7 @@ view_event_profile = (function()
 
 	};
 
-	// --- aditional modals
+	// --- additional modals
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
 		var		affectedAction = $("#AreYouSure #Remove").data("action");
