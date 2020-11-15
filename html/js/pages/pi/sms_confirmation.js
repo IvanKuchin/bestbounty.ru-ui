@@ -1,16 +1,4 @@
-/*jslint devel: true, indent: 4, maxerr: 50*/
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
+/* exported sms_confirmation */
 
 sms_confirmation = (function ()
 {
@@ -50,7 +38,7 @@ sms_confirmation = (function ()
 		return param.replace(/\D/g, "");
 	};
 
-	var PhoneConfirmation_ClickHandler = function(event)
+	var PhoneConfirmation_ClickHandler = function()
 	{
 		var		curr_tag = $(this);
 		var		country_code = GetOnlyDigits($(country_code_selector_global + " option:selected").val());
@@ -103,7 +91,7 @@ sms_confirmation = (function ()
 					} // --- if(data.status == "success")
 				})
 			.fail(
-				function(data) 
+				function() 
 				{
 					PhoneConfirmationCode_Status("ошибка доставки SMS.", "color_red");
 				});
@@ -134,7 +122,7 @@ sms_confirmation = (function ()
 			.append(message);
 	};
 
-	var	PhoneConfirmationCode_InputHandler = function(e)
+	var	PhoneConfirmationCode_InputHandler = function()
 	{
 		var	curr_tag = $(this);
 		var	curr_value = curr_tag.val();
@@ -209,7 +197,7 @@ sms_confirmation = (function ()
 						} // --- if(data.status == "success")
 					})
 				.fail(
-					function(data) 
+					function() 
 					{
 						PhoneConfirmationCode_Status("Ошибка ответа сервера", "color_red");
 						system_calls.PopoverError("Ошибка ответа сервера");
@@ -227,7 +215,7 @@ sms_confirmation = (function ()
 		}
 	};
 
-	var	PhoneConfirmationCode_Final = function(message)
+	var	PhoneConfirmationCode_Final = function()
 	{
 		$("#DialogPhoneConfirmation").modal("hide");
 	};

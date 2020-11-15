@@ -1,8 +1,8 @@
+/* exported faq_obj */
+
 var	faq_obj = (function()
 {
-	'use strict';
-
-	var	data_global;
+	"use strict";
 
 	var	Init = function()
 	{
@@ -15,7 +15,7 @@ var	faq_obj = (function()
 
 
 		$.getJSON(
-			'/cgi-bin/account.cgi',
+			"/cgi-bin/account.cgi",
 			{
 				"action":"AJAX_getFaq",
 			})
@@ -23,8 +23,6 @@ var	faq_obj = (function()
 			{
 				if(data.result == "success")
 				{
-					data_global = data;
-
 					RenderFaq(data.faq);
 				}
 				else
@@ -33,7 +31,7 @@ var	faq_obj = (function()
 					system_calls.PopoverError(currTag, "Ошибка: " + data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				setTimeout(function() {
 					system_calls.PopoverError(currTag, "Ошибка ответа сервера");
@@ -89,7 +87,7 @@ var	faq_obj = (function()
 	var	RenderFaq = function(faq_list)
 	{
 		$("#faq").empty().append(FAQ_GetDOM(faq_list));
-	}
+	};
 
 	return {
 		Init: Init

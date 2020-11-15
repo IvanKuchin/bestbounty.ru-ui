@@ -1,8 +1,8 @@
-var	email_change = email_change || {};
+/* exported email_change */
 
-email_change = (function()
+var email_change = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	Init = function()
 	{
@@ -13,7 +13,7 @@ email_change = (function()
 	{
 		let 	curr_tag = $("#result");
 
-		$.getJSON('/cgi-bin/account.cgi?action=AJAX_activateEmailChangeToken', {token: $.urlParam("token")})
+		$.getJSON("/cgi-bin/account.cgi?action=AJAX_activateEmailChangeToken", {token: $.urlParam("token")})
 			.done(function(data)
 			{
 				if(data.result == "success")

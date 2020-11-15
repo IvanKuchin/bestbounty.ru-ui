@@ -1,16 +1,4 @@
-/*jslint devel: true, indent: 4, maxerr: 50*/
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
+/* exported session_pi */
 
 session_pi = (function()
 {
@@ -49,7 +37,7 @@ session_pi = (function()
 						system_calls.PopoverError(curr_tag, data.description);
 					}
 				})
-				.fail(function(e)
+				.fail(function()
 				{
 					system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 				});
