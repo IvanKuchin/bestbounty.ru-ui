@@ -29,6 +29,16 @@ RewriteRule ^privacy_policy(.*)$ /cgi-bin/index.cgi?action=privacy_policy_wrappe
 RewriteRule ^cookie_policy(.*)$ /cgi-bin/index.cgi?action=cookie_policy_wrapper_template&$1 [QSA]
 
 #
+# Initial actions
+#
+RewriteRule ^helpdesk_dashboard$ /cgi-bin/helpdesk.cgi?action=helpdesk_dashboard_template [QSA]
+
+#
+# Helpdesk actions
+#
+RewriteRule ^helpdesk_edit_profile$ /edit_profile [QSA]
+
+#
 # profile by id (number)
 #
 RewriteRule ^userprofile/(.*)$ /cgi-bin/index.cgi?action=view_profile&userid=$1
@@ -41,11 +51,6 @@ RewriteRule ^user$			/cgi-bin/index.cgi?action=getUserWall [QSA]
 RewriteRule ^user/(.*)$		/cgi-bin/index.cgi?action=getUserWall&login=$1 [QSA]
 RewriteRule ^event/(.*)$	/cgi-bin/index.cgi?action=getEventWall&link=$1 [QSA]
 RewriteRule ^invite/(.*)$	/cgi-bin/index.cgi?action=check_initial_action&id=$1 [QSA]
-
-#
-# Initial actions
-#
-RewriteRule ^helpdesk_dashboard$ /cgi-bin/helpdesk.cgi?action=helpdesk_dashboard_template [QSA]
 
 #
 # redirect images/videos to unencrypted site to reduce https load
