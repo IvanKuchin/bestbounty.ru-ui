@@ -43,6 +43,11 @@ RewriteRule ^event/(.*)$	/cgi-bin/index.cgi?action=getEventWall&link=$1 [QSA]
 RewriteRule ^invite/(.*)$	/cgi-bin/index.cgi?action=check_initial_action&id=$1 [QSA]
 
 #
+# Initial actions
+#
+RewriteRule ^helpdesk_dashboard$ /cgi-bin/helpdesk.cgi?action=helpdesk_dashboard_template [QSA]
+
+#
 # redirect images/videos to unencrypted site to reduce https load
 #
 RewriteRule ^images/temp/(.*)$  https://devimages.bestbounty.ru/images/temp/$1 [P]
