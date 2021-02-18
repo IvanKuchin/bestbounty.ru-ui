@@ -8,8 +8,6 @@ env:
 globals:
     helpdesk_ticket_list_obj: writable
     document: writable
-    DrawCompanyAvatar: writable
-    DrawUserAvatar: writable
     Image: writable
     isMobile: writable
     jQuery: writable
@@ -25,7 +23,6 @@ globals:
     StackTrace: writable
     troubleshooting: writable
     Uint8Array: writable
-    userCache: writable
     window: writable
 
 # --- rules turn on/off
