@@ -48,12 +48,13 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: github/super-linter@v3.13.5
+        uses: github/super-linter@latest
         env:
           # --- LOG_LEVEL: DEBUG
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JAVASCRIPT_ES: true
           DEFAULT_BRANCH: master
           FILTER_REGEX_INCLUDE: html/js/pages/.*\.js
+          LINTER_RULES_PATH: .github/actions/linters
           TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.yaml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
