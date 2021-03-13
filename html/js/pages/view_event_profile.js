@@ -2,7 +2,7 @@ var		view_event_profile = view_event_profile || {};
 
 view_event_profile = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		eventProfile;
 	var		myUserProfile;
@@ -33,7 +33,7 @@ view_event_profile = (function()
 
 	var FillinEventProfile = function()
 	{
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_getEventProfileAndUser', {id: eventID})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_getEventProfileAndUser", {id: eventID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -91,7 +91,8 @@ view_event_profile = (function()
 
 	// --- not in system_class because of 
 	// --- 1) user id not in ".id", rather in ".user_id"
-	// --- 2) hint having additional field "(extra persons)"
+	// --- 2) user status must be accepted instead of all users
+	// --- 3) hint having additional field "(extra persons)"
 	var	GetAvatarsList = function(usersArray)
 	{
 		var		guestAvatarsList = $();
@@ -210,7 +211,7 @@ view_event_profile = (function()
 		{
 			$("#adultsCounter")			.val(0);
 			$("#kidsCounter")			.val(0);
-			$("#kidsPronounciation")	.empty()
+			$("#kidsPronunciation")		.empty()
 										.append(system_calls.GetSpelledKidsNumber(memberObj.extraKids) || " детей");
 
 			$("#eventAccept")			.attr("disabled", "disabled");
@@ -228,7 +229,7 @@ view_event_profile = (function()
 										.val(memberObj.extraAdults);
 			$("#kidsCounter")			.removeAttr("disabled")
 										.val(memberObj.extraKids);
-			$("#kidsPronounciation")	.empty()
+			$("#kidsPronunciation")		.empty()
 										.append(system_calls.GetSpelledKidsNumber(memberObj.extraKids) || " детей");
 
 			if(memberObj.acceptStatus == "accepted") $("#eventAccept").removeClass("opacity_03");
@@ -251,7 +252,7 @@ view_event_profile = (function()
 		{
 			currTag.button("loading");
 
-			$.getJSON('/cgi-bin/' + script + '?action=' + action, {event_id: eventID, kidsCounter: kidsCounter, adultsCounter: adultsCounter})
+			$.getJSON("/cgi-bin/" + script + "?action=" + action, {event_id: eventID, kidsCounter: kidsCounter, adultsCounter: adultsCounter})
 				.done(function(data) 
 				{
 					if(data.result === "success")
@@ -281,14 +282,14 @@ view_event_profile = (function()
 
 	};
 
-	// --- aditional modals
+	// --- additional modals
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
 		var		affectedAction = $("#AreYouSure #Remove").data("action");
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/index.cgi?action=' + affectedAction, {id: affectedID})
+		$.getJSON("/cgi-bin/index.cgi?action=" + affectedAction, {id: affectedID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -300,7 +301,7 @@ view_event_profile = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately) 
+		// --- To improve User Experience (react on user actions immediately) 
 		// ---     I'm updating GUI immediately after click, not waiting server response
 		if(affectedAction == "AJAX_removeRecommendationEntry")
 		{
@@ -316,11 +317,11 @@ view_event_profile = (function()
 
 	// --- Editable function
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 
 	};
 
@@ -356,7 +357,7 @@ view_event_profile = (function()
 				{
 					if(currentContent === "") {	currentContent = "Опишите круг своих обязанностей работы в компании.";	}
 
-					$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+					$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							id: $(currentTag).data("id"), content: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
 							action: "AJAX_updateRecommendationTitle",
@@ -400,7 +401,7 @@ view_event_profile = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceToTextarea);
+		$(newTag).on("click", editableFuncReplaceToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -464,10 +465,10 @@ view_event_profile = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 

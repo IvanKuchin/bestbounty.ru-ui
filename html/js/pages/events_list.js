@@ -3,7 +3,7 @@ var	events_list = events_list || {};
 
 var	events_list = (function()
 {
-    'use strict';
+    "use strict";
 
 	var	JSON_FindEventsList_Autocomplete = [];
 	var JSON_MyEventsList;
@@ -24,9 +24,9 @@ var	events_list = (function()
 			window.location.href="/createnewevent?rand=" + system_calls.GetUUID();
 		});
 
-		// $("#PosessionAlertModal_Submit").on("click", SendPosessionAlert);
-		// $("#PosessionRequestModal_Submit").on("click", SendPosessionRequest);
-		// $("#PosessionRequestModal").on("hidden.bs.modal", function() { setTimeout(SendPosessionRequestResult, 100); });
+		// $("#PossessionAlertModal_Submit").on("click", SendPossessionAlert);
+		// $("#PossessionRequestModal_Submit").on("click", SendPossessionRequest);
+		// $("#PossessionRequestModal").on("hidden.bs.modal", function() { setTimeout(SendPossessionRequestResult, 100); });
 	};
 
 	// --- event button callback function 
@@ -83,7 +83,7 @@ var	events_list = (function()
 	var	GetEventsList = function () 
 	{
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{ action:"AJAX_getMyEventsList" })
 			.done(function(data) {
 						if(data.status == "success")
@@ -110,10 +110,10 @@ var	events_list = (function()
 		var	selectedID = ui.item.id;
 		var selectedLabel = ui.item.label;
 
-		console.debug("AJAX_findEventByID autocomplete.select: seletedID=" + selectedID + " selectedLabel=" + selectedLabel);
+		console.debug("AJAX_findEventByID autocomplete.select: selectedID=" + selectedID + " selectedLabel=" + selectedLabel);
 
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{action:"AJAX_findEventByID", lookForKey:selectedID})
 			.done(function(data) {
 						if(data.status == "success")
@@ -145,7 +145,7 @@ var	events_list = (function()
 		if(inputValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{action:"AJAX_getFindEventsListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -161,7 +161,7 @@ var	events_list = (function()
 
 									if((item.title.length > 0))
 									{
-										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; };
+										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; }
 										autocompleteLabel += item.title;
 									}
 
@@ -186,7 +186,7 @@ var	events_list = (function()
 								create: function () {
 									console.debug ("FindEventsOnInputHandler autocomplete.create: _create event handler"); 
 								},
-								_renderMenu: function (ul, items)  // --- requres plugin only
+								_renderMenu: function (ul, items)  // --- requires plugin only
 								{
 									var	that = this;
 									currentCategory = "";
@@ -230,7 +230,7 @@ var	events_list = (function()
 		if(inputValue.length >= 3)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{action:"AJAX_getFindEventsList", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -251,10 +251,10 @@ var	events_list = (function()
 			// --- tooltip alert
 			$("#eventSearchText").attr("title", "Напишите более 2 букв")
 									.attr("data-placement", "top")
-									.tooltip('show');
+									.tooltip("show");
 			window.setTimeout(function()
 				{
-					$("#eventSearchText").tooltip('destroy');
+					$("#eventSearchText").tooltip("destroy");
 				}
 				, 3000);
 									// .tooltip('hide');

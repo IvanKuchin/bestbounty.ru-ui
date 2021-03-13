@@ -1,24 +1,14 @@
-var	edit_event = edit_event || {};
+/*global common_bestbounty*/
+/*global EventChecklist*/
+/*exported edit_event*/
 
-edit_event = (function()
+var edit_event = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		eventProfile = {};
-	var		AutocompleteList = [];
-	var		datepickerDateFormat;
-
 	var		eventChecklist_global;
 
-	var 	JSON_eventPosition = [];
-	var		JSON_geoCountry = [];
-	var		JSON_geoRegion = [];
-	var		JSON_geoLocality = [];
-	var		JSON_university = [];
-	var		JSON_school = [];
-	var		JSON_language = [];
-	var		JSON_skill = [];
-	var		JSON_dataForProfile = {};
 
 	var	Init = function()
 	{
@@ -31,29 +21,29 @@ edit_event = (function()
 		$("#ButtonAddEventHost").on("click", AddHost_ClickHandler);
 		$("#ButtonAddEventGuest").on("click", AddGuest_ClickHandler);
 		$("#ButtonAddEventGuestFromList").on("click", AddGuestFromList_ClickHandler);
-		$("#canvasForEventLogo").on("click", function(e) { $("#fileupload").click(); });
+		$("#canvasForEventLogo").on("click", function() { $("#fileupload").click(); });
 		$("#ButtonRemoveEvent").on("click", AreYouSure_ClickHandler);
 		$("#GuestListModal .submit").on("click", GuestListModal_Submit_ClickHandler);
 		$("#switcherLabelNoGift").on("click", NoGift_ClickHeader);
 
 		// --- if autocomplete functionality is not initialized from the beginning 
 		// --- it will not pop-up after configure threshold, it will wait one symbol more 
-		// --- to overcome this fake autocomplete initializtion applied
+		// --- to overcome this fake autocomplete initialization applied
 		CreateAutocompleteWithSelectCallback("#eventHost", [{0:"0"}], AddHost_SelectHandler);
 		$("#eventHost").on("input", AddHost_InputHandler);
 		$("#eventHost").on("keyup", AddHost_KeyupHandler);
 		// --- use timeout to wait until input will be updated, otherwise handler will be called before new value pasted to input
 		// --- bind(this) is reference to event source rather than regular object in setTimeout
-		$("#eventHost").on("paste", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0) });
-		$("#eventHost").on("cut", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0) });
+		$("#eventHost").on("paste", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0); });
+		$("#eventHost").on("cut", function() { setTimeout(function() { AddHost_KeyupHandler(); }.bind(this), 0); });
 
 		CreateAutocompleteWithSelectCallback("#eventGuest", [{0:"0"}], AddGuest_SelectHandler);
 		$("#eventGuest").on("input", AddGuest_InputHandler);
 		$("#eventGuest").on("keyup", AddGuest_KeyupHandler);
 		// --- use timeout to wait until input will be updated, otherwise handler will be called before new value pasted to input
 		// --- bind(this) is reference to event source rather than regular object in setTimeout
-		$("#eventGuest").on("paste", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0) });
-		$("#eventGuest").on("cut", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0) });
+		$("#eventGuest").on("paste", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0); });
+		$("#eventGuest").on("cut", function() { setTimeout(function() { AddGuest_KeyupHandler(); AddGuest_InputHandler(); }.bind(this), 0); });
 
 
 		$("#custom_checklist_item_category")
@@ -67,61 +57,61 @@ edit_event = (function()
 											// select: AviaBonus_Autocomplete_SelectHandler,
 										});
 
-		$("#ButtonAddItemToChecklist").on("click", AddCheckListitem_ClickHandler);
+		$("#ButtonAddItemToChecklist").on("click", AddCheckListItem_ClickHandler);
 
 		RenderEventProfileFromServer();
 
 		// --- Image uploader
 		$(function () 
 		{
-		    // Change this to the location of your server-side upload handler:
-		    $('#fileupload').fileupload({
-		        url: '/cgi-bin/generalimageuploader.cgi',
-		        formData: {type:"event", id:eventProfile.id, rand:system_calls.GetUUID()},
-		        dataType: 'json',
-		        maxFileSize: 30 * 1024 * 1024, 
-		        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+			// Change this to the location of your server-side upload handler:
+			$("#fileupload").fileupload({
+				url: "/cgi-bin/generalimageuploader.cgi",
+				formData: {type:"event", id:eventProfile.id, rand:system_calls.GetUUID()},
+				dataType: "json",
+				maxFileSize: 30 * 1024 * 1024, 
+				acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
 
-		        done: function (e, data) {
+				done: function (e, data) {
 
-		        	$.each(data.result, function(index, value) 
-		        		{
-			            	if(value.result == "error")
-			            	{
-			            		console.debug("fileupload: done handler: ERROR uploading file [" + value.fileName + "] error code [" + value.textStatus + "]");
-			            		if(value.textStatus == "wrong format")
-			            		{
-				            		$("#UploadAvatarErrorBS_ImageName").text(value.fileName);
-				            		$("#UploadAvatarErrorBS").modal("show");
-				            	}
-			            	}
+					$.each(data.result, function(index, value) 
+						{
+							if(value.result == "error")
+							{
+								console.debug("fileupload: done handler: ERROR uploading file [" + value.fileName + "] error code [" + value.textStatus + "]");
+								if(value.textStatus == "wrong format")
+								{
+									$("#UploadAvatarErrorBS_ImageName").text(value.fileName);
+									$("#UploadAvatarErrorBS").modal("show");
+								}
+							}
 
-			            	if(value.result == "success")
-			            	{
-			            		eventProfile.logo_folder = value.logo_folder;
-			            		eventProfile.logo_filename = value.logo_filename;
+							if(value.result == "success")
+							{
+								eventProfile.logo_folder = value.logo_folder;
+								eventProfile.logo_filename = value.logo_filename;
 
-			            		console.debug("fileupload: done handler: uploading success original file[" + value.fileName + "], destination file[folder:" + eventProfile.logo_folder + ", filename:" + eventProfile.logo_filename + "]");
+								console.debug("fileupload: done handler: uploading success original file[" + value.fileName + "], destination file[folder:" + eventProfile.logo_folder + ", filename:" + eventProfile.logo_filename + "]");
 
-			            		RenderEventLogo();
-			            	}
-		            	});
+								RenderEventLogo();
+							}
+						});
 
-		        },
-		        progressall: function (e, data) {
-		            var progress = parseInt(data.loaded / data.total * 100, 10);
-		            $('#progress .progress-bar').css(
-		                'width',
-		                progress + '%'
-		            );
-		        },
-		        fail: function (e, data) {
-		        	alert("ошибка загрузки фаила: " + data.textStatus);
-		        }
+				},
+				progressall: function (e, data) {
+					var progress = parseInt(data.loaded / data.total * 100, 10);
+					$("#progress .progress-bar").css(
+						"width",
+						progress + "%"
+					);
+				},
+				fail: function (e, data) {
+					alert("ошибка загрузки фаила: " + data.textStatus);
+				}
 
-		    }).prop('disabled', !$.support.fileInput)
-		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+			}).prop("disabled", !$.support.fileInput)
+				.parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 	};
@@ -129,7 +119,7 @@ edit_event = (function()
 
 	var RenderEventProfileFromServer = function()
 	{
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_getEventProfile', {id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_getEventProfile", {id: eventProfile.id})
 			.done(function(data) 
 			{
 				if((data.result === "success") && (data.events.length))
@@ -149,10 +139,10 @@ edit_event = (function()
 						RenderEventGuests();
 						InitNoGiftLabel();
 
-						eventChecklist_global.SetData(eventProfile.checklists[0])
+						eventChecklist_global.SetData(eventProfile.checklists[0]);
 						RenderChecklist();
 
-						$.getJSON('/cgi-bin/event.cgi?action=AJAX_getFavoriteChecklistsCategories')
+						$.getJSON("/cgi-bin/event.cgi?action=AJAX_getFavoriteChecklistsCategories")
 							.done(function(data) 
 							{
 								if(data.result === "success")
@@ -167,7 +157,7 @@ edit_event = (function()
 					}
 					else
 					{
-						$("#NotMyEvent .mailme").on("click", function(){ return CraftEventChangeMail(data.events[0]); });
+						// $("#NotMyEvent .mailme").on("click", function(){ return CraftEventChangeMail(data.events[0]); });
 						$("#NotMyEvent").modal("show");
 					}
 				}
@@ -187,12 +177,12 @@ edit_event = (function()
 		if(currentValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:currentValue})
 				.done(function(data) {
 						var	AutocompleteList = [];
 
-						data.forEach(function(item, i, arr)
+						data.forEach(function(item)
 							{
 								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
 							});
@@ -203,7 +193,7 @@ edit_event = (function()
 					console.error("ERROR parsing JSON response from server");
 				});
 		}
-	}
+	};
 
 	var	AddHost_SelectHandler = function(event, ui)
 	{
@@ -219,7 +209,7 @@ edit_event = (function()
 		else
 		{
 			// --- check duplicates
-			eventProfile.hosts.forEach(function(item, i, arr)
+			eventProfile.hosts.forEach(function(item)
 				{
 					if(item.user_id == userID) isDuplicate = true;
 				});
@@ -239,7 +229,7 @@ edit_event = (function()
 					$("button#ButtonAddEventHost").button("loading");
 					$("input#eventHost").attr("disabled", "");
 
-					$.getJSON('/cgi-bin/event.cgi?action=AJAX_addEventHost', {user_id: userID, event_id: eventProfile.id})
+					$.getJSON("/cgi-bin/event.cgi?action=AJAX_addEventHost", {user_id: userID, event_id: eventProfile.id})
 						.done(function(data) {
 							if(data.result === "success")
 							{
@@ -270,32 +260,11 @@ edit_event = (function()
 		}
 	};
 
-	var	AutocompleteCallbackChange = function (event, ui) 
-	{
-		var		currTag = $(this);
-
-		console.debug ("AutocompleteCallbackChange: change event handler"); 
-
-		if(currTag.val() === "")
-		{
-			currTag.parent().removeClass("has-success").addClass("has-feedback has-error");
-		}
-		else
-		{
-			currTag.parent().removeClass("has-error").addClass("has-feedback has-success");
-			currTag.data("id", (ui.item ? ui.item.id : "0"));
-		}
-
-		setTimeout(function() { 
-			currTag.parent().removeClass("has-feedback has-success has-error"); 
-		}, 3000);
-	};
-
 	// --- create autocomplete
 	// --- input:
-	// ---       elem - for ex ("input#ID")
+	// ---	   elem - for ex ("input#ID")
 	// --- 		 srcData - array of {id:"id", label:"label"}
-	// ---       selectCallback - function(event, ui)
+	// ---	   selectCallback - function(event, ui)
 	var	CreateAutocompleteWithSelectCallback = function(elem, srcData, selectCallback)
 	{
 		if($(elem).length && srcData.length)
@@ -305,17 +274,17 @@ edit_event = (function()
 				source: srcData,
 				minLength: 3,
 				select: selectCallback,
-				close: function (event, ui) 
+				close: function () 
 				{ 
 					// console.debug ("CreateAutocompleteWithSelectCallback: close event handler"); 
 				},
 				create: function () {
 					// console.debug ("CreateAutocompleteWithSelectCallback: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
-					currentCategory = "";
+					var currentCategory = "";
 					$.each( items, function( index, item ) {
 						var li;
 						if ( item.category != currentCategory ) {
@@ -336,52 +305,6 @@ edit_event = (function()
 		}
 	};
 
-	var AddDataForProfileCollapsibleInit = function()
-	{
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyTitle", JSON_eventPosition, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyCity", JSON_geoLocality, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage1", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage2", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancyLanguage3", JSON_language, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill1", JSON_skill, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill2", JSON_skill, AutocompleteCallbackChange);
-		CreateAutocompleteWithSelectCallback("input#CreateOpenVacancySkill3", JSON_skill, AutocompleteCallbackChange);
-
-		// --- Initialize autocomplete after initial loading data
-		if(typeof(eventProfile.open_vacancies) != "undefined")
-			eventProfile.open_vacancies.forEach(function(item, i, arr)
-			{
-				if($("input#OpenVacancy" + item.id + "Edit_Title").length)		CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Title", JSON_eventPosition, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_City").length) 		CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_City", JSON_geoLocality, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language1").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language1", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language2").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language2", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Language3").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Language3", JSON_language, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill1").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill1", JSON_skill, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill2").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill2", JSON_skill, AutocompleteCallbackChange);
-				if($("input#OpenVacancy" + item.id + "Edit_Skill3").length) 	CreateAutocompleteWithSelectCallback("input#OpenVacancy" + item.id + "Edit_Skill3", JSON_skill, AutocompleteCallbackChange);
-			});
-
-	};
-
-	var	InputKeyupHandler = function(e)
-	{
-		var		keyPressed = e.keyCode;
-		var		currentTag = $(this);
-
-		if(currentTag.data("action") == "AJAX_addEventHost")
-		{
-			if(keyPressed == 13) AddEventFounder("", currentTag.val());
-		}
-		if(currentTag.data("action") == "AJAX_addEventGuest")
-		{
-			if(keyPressed == 13) AddEventOwner("", currentTag.val());
-		}
-		if(currentTag.data("action") == "AJAX_addEditEventAddEventIndustry")
-		{
-			if(keyPressed == 13) AddEventIndustry("", currentTag.val());
-		}
-	};
-
 	var	BlockButton_ClickHandler = function()
 	{
 		var		currTag = $(this);
@@ -390,14 +313,16 @@ edit_event = (function()
 
 		if(currTag.data("action") == "AJAX_unblockEvent")
 		{
+			// --- good2go
 
 		}
 		else if(currTag.data("action") == "AJAX_blockEvent")
 		{
+			// --- good2go
 
 		}
 
-		$.getJSON('/cgi-bin/event.cgi?action=' + currTag.data("action"), {id: currTag.data("id"), rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/event.cgi?action=" + currTag.data("action"), {id: currTag.data("id"), rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -467,7 +392,7 @@ edit_event = (function()
 		$("span#eventTitle").html(eventProfile.title);
 		$("span#eventLink").html(eventProfile.link);
 		$("span#eventAddress").html(eventProfile.address.length ? eventProfile.address : "(без адреса)");
-		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)")
+		$("p#eventDescription").html(eventProfile.description ? eventProfile.description : "(описание отсутствует)");
 
 		$("div#eventInfo .editableSpan").on("click", editableFuncReplaceSpanToInput);
 		$("div#eventInfo .editableSpan").mouseenter(editableFuncHighlightBgcolor);
@@ -482,13 +407,11 @@ edit_event = (function()
 
 	var	RenderEventStart = function()
 	{
-		var		result = $();
 		var		spanTimestamp = $("<span>").addClass("eventStartTimestamp  formatDate")
 											.data("id", "not used")
 											.data("action", "AJAX_updateStartDate")
 											.data("script", "event.cgi");
 
-		var		startTime;
 
 		if(typeof(eventProfile) == "undefined")
 		{
@@ -516,7 +439,7 @@ edit_event = (function()
 
 	var	RenderChecklist = function()
 	{
-		$("#eventChecklist").empty().append(eventChecklist_global.GetDOM())
+		$("#eventChecklist").empty().append(eventChecklist_global.GetDOM());
 	};
 
 	var	EventHostZeroize = function()
@@ -529,7 +452,7 @@ edit_event = (function()
 	var	RenderEventHosts = function()
 	{
 		$("#eventHostList").empty();
-		eventProfile.hosts.forEach(function(item, i, arr)
+		eventProfile.hosts.forEach(function(item)
 			{
 				var		removeSign = $("<span>").addClass("glyphicon glyphicon-remove cursor_pointer")
 												.attr("data-action", "AJAX_removeEventHost")
@@ -589,7 +512,7 @@ edit_event = (function()
 				return result;
 			});
 
-		eventProfile.guests.forEach(function(item, i, arr)
+		eventProfile.guests.forEach(function(item)
 			{
 				var		divRow = $("<div>").addClass("row")
 											.attr("id", "GuestRow" + item.id);
@@ -719,17 +642,17 @@ edit_event = (function()
 		}	
 	};
 
-	var	FriendModal_SelectAll_ChangeHandler = function(e)
+	var	FriendModal_SelectAll_ChangeHandler = function()
 	{
-		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
+		var	allIngredients = $("input.friend_checkbox");
+		var	checkedIngredientCounter = 0;
 
-		allIngridients.each(function(idx) 
+		allIngredients.each(function() 
 			{
-				if($(this).is(":checked")) ++checkedIngridientCounter;
+				if($(this).is(":checked")) ++checkedIngredientCounter;
 			});
 
-		if(checkedIngridientCounter)
+		if(checkedIngredientCounter)
 		{
 			$("#GuestListModal .submit").removeAttr("disabled");
 		}
@@ -739,18 +662,15 @@ edit_event = (function()
 		}
 	};
 
-	var	FriendModal_SelectAll_ClickHandler = function(e)
+	var	FriendModal_SelectAll_ClickHandler = function()
 	{
-		var	currTag = $(this);
-		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
+		var	allIngredients = $("input.friend_checkbox");
 		var	switchPace = 100;
 		var	actionToDo = $("#checkboxSelectAll").is(":checked");
 
-		allIngridients.each(function(idx) 
+		allIngredients.each(function(idx) 
 			{
 				var		currCheckBox = $(this);
-				if($(this).is(":checked")) ++checkedIngridientCounter;
 				setTimeout(function() 
 					{
 						currCheckBox.prop("checked", actionToDo ? "checked" : "");
@@ -778,7 +698,7 @@ edit_event = (function()
 			result = result.add(selectAll).add(selectAllTitle);
 		}
 
-		guestsList.forEach(function(item, i)
+		guestsList.forEach(function(item)
 		{
 			var		friendDiv = $("<div>")		.attr("id", "ModalFriendID" + item.id)
 												.addClass("modalFriend");
@@ -813,15 +733,13 @@ edit_event = (function()
 		return result;
 	};
 
-	var	GuestListModal_Submit_ClickHandler = function(e)
+	var	GuestListModal_Submit_ClickHandler = function()
 	{
-		var		currTag = $(this);
 		var		usersListToInvite = [];
 
-		var	allIngridients = $("input.friend_checkbox");
-		var	checkedIngridientCounter = 0;
+		var	allIngredients = $("input.friend_checkbox");
 
-		allIngridients.each(function(idx) 
+		allIngredients.each(function() 
 			{
 				if($(this).is(":checked")) usersListToInvite.push($(this).val());
 			});
@@ -838,7 +756,7 @@ edit_event = (function()
 		$("#" + modalID + " .modal-body").empty().append("<div class=\"wait-notice\"><center>Подождите <span class='fa fa-refresh fa-spin fa-fw animateClass'></span></center>");
 
 		$.getJSON(
-			'/cgi-bin/event.cgi',
+			"/cgi-bin/event.cgi",
 			{action:"AJAX_getFriendsNotOnEvent", event_id: eventProfile.id})
 			.done(function(data) {
 				$("#" + modalID + " .modal-body .wait-notice").hide(250);
@@ -866,12 +784,12 @@ edit_event = (function()
 		// if(currentValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:currentValue})
 				.done(function(data) {
 						var	AutocompleteList = [];
 
-						data.forEach(function(item, i, arr)
+						data.forEach(function(item)
 							{
 								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
 							});
@@ -899,7 +817,7 @@ edit_event = (function()
 		else
 		{
 			// --- check duplicates
-			eventProfile.guests.forEach(function(item, i, arr)
+			eventProfile.guests.forEach(function(item)
 				{
 					if(item.user_id == userID) isDuplicate = true;
 				});
@@ -930,7 +848,7 @@ edit_event = (function()
 		$("button#ButtonAddEventGuest").button("loading");
 		$("input#eventGuest").attr("disabled", "");
 
-		$.getJSON('/cgi-bin/event.cgi?action=AJAX_addEventGuest', {user_id: obj.user_id, user_email: obj.user_email, event_id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=AJAX_addEventGuest", {user_id: obj.user_id, user_email: obj.user_email, event_id: eventProfile.id})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -945,7 +863,7 @@ edit_event = (function()
 					console.debug("AddGuest_InputHandler: ERROR: " + data.description);
 				}
 
-				setTimeout(function(e) 
+				setTimeout(function() 
 					{
 						$("button#ButtonAddEventGuest").button("reset");
 						$("input#eventGuest").removeAttr("disabled");
@@ -956,7 +874,7 @@ edit_event = (function()
 					console.error("ERROR: parsing JSON response from server");
 					system_calls.PopoverError("eventGuest", "Ошибка ответа сервера");
 
-					setTimeout(function(e) 
+					setTimeout(function() 
 						{
 							$("button#ButtonAddEventGuest").button("reset");
 							$("input#eventGuest").removeAttr("disabled");
@@ -974,19 +892,6 @@ edit_event = (function()
 		return d1.getHours() + ":" + (d1.getMinutes() < 10 ? "0" : "") + d1.getMinutes();
 	};
 
-	var removeGeneralPreparation = function()
-	{
-		var		currTag = $(this);
-
-		$("#AreYouSure #Remove").removeData(); 
-
-		Object.keys(currTag.data()).forEach(function(item) { 
-			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
-		});
-
-		$("#AreYouSure").modal('show');
-	};
-
 	var	AreYouSure_ClickHandler = function()
 	{
 		var		currTag = $(this);
@@ -996,20 +901,8 @@ edit_event = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_dropCompanyPosession")
-		{
-			$("#AreYouSure #Remove").data("id", companyProfile.id);
-			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPosession");
-			$("#AreYouSure #Remove").data("script", "company.cgi");
-
-			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
-			$("#AreYouSure #Remove").empty().append("Уверен");
-		}
-		else
-		{
-			$("#AreYouSure .description").empty();
-			$("#AreYouSure #Remove").empty().append("Удалить");
-		}
+		$("#AreYouSure .description").empty();
+		$("#AreYouSure #Remove").empty().append("Удалить");
 
 		$("#AreYouSure").modal("show");
 	};
@@ -1022,9 +915,9 @@ edit_event = (function()
 		if((typeof(affectedScript) == "undefined") || (affectedScript === ""))
 			affectedScript = "event.cgi";
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				var		removeItemIndex;
 
@@ -1041,7 +934,7 @@ edit_event = (function()
 
 						removeItemIndex = -1;
 
-						eventProfile.hosts.forEach(function(item, i, arr)
+						eventProfile.hosts.forEach(function(item, i)
 						{
 							if(item.id == affectedID) removeItemIndex = i;
 						});
@@ -1060,7 +953,7 @@ edit_event = (function()
 					{
 						removeItemIndex = -1;
 
-						eventProfile.guests.forEach(function(item, i, arr)
+						eventProfile.guests.forEach(function(item, i)
 						{
 							if(item.id == affectedID) removeItemIndex = i;
 						});
@@ -1086,7 +979,7 @@ edit_event = (function()
 				}
 				else if(data.result === "success")
 				{
-
+					// --- good2go
 				}
 				else
 				{
@@ -1133,12 +1026,12 @@ edit_event = (function()
 		$(tag).width($(this).width() + 30);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if(!$(this).hasClass("formatDate")) 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateStartDate") 
 		{
@@ -1157,9 +1050,9 @@ edit_event = (function()
 				monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек" ],
 				dateFormat: "dd/mm/yy",
 				changeMonth: true,
-	  			changeYear: true,
-	  			showOtherMonths: true
-	  			// maxDate: system_calls.ConvertMonthNameToNumber($(tag).next().val()) || system_calls.ConvertMonthNameToNumber($(tag).next().text())
+				changeYear: true,
+				showOtherMonths: true
+				// maxDate: system_calls.ConvertMonthNameToNumber($(tag).next().val()) || system_calls.ConvertMonthNameToNumber($(tag).next().text())
 			});
 		}
 
@@ -1202,7 +1095,7 @@ edit_event = (function()
 	{
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
 		var		newTag = $("<span>", {
-					text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+					text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 					id: $(currentTag).attr("id"),
 					class: $(currentTag).attr("class")
 				});
@@ -1222,13 +1115,13 @@ edit_event = (function()
 			// --- don't replace datepicker back to span
 			// --- it expose bootstrap error, few ms after replacement
 
-			eventProfile.startTimestamp = GetEventStartTimestamp()
+			eventProfile.startTimestamp = GetEventStartTimestamp();
 			ajaxValue = eventProfile.startTimestamp;
 		}
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on('click', editableFuncReplaceSpanToInput);
+			$(newTag).on("click", editableFuncReplaceSpanToInput);
 			$(newTag).mouseenter(editableFuncHighlightBgcolor);
 			$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 		}
@@ -1306,7 +1199,7 @@ edit_event = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceParagraphToTextarea);
+		$(newTag).on("click", editableFuncReplaceParagraphToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -1335,7 +1228,7 @@ edit_event = (function()
 
 				eventProfile.description = filteredEventDescription;
 
-				$.post('/cgi-bin/event.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/event.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						description: filteredEventDescription,
 						action: "AJAX_updateEventDescription",
@@ -1348,7 +1241,7 @@ edit_event = (function()
 
 							if(resultJSON.result === "success")
 							{
-								if(filteredEventDescription == "")
+								if(filteredEventDescription === "")
 								{
 									$("#eventDescription").empty().append("(описание отсутствует)");
 								}
@@ -1363,14 +1256,14 @@ edit_event = (function()
 							console.error("ERROR: parse JSON in server response (" + e.message + ")");
 						}
 					})
-					.fail(function(data) {
+					.fail(function() {
 						console.error("ERROR: getting server response");
 					});
 			} // --- if action == updateEventDescription
 		} // --- if textarea value changed
 		else
 		{
-			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change")
+			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
 		editableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
@@ -1382,14 +1275,14 @@ edit_event = (function()
 		editableFuncReplaceToParagraphRenderHTML(currentTag, currentTag.attr("initValue"));
 	};
 
-	var	editableFuncReplaceParagraphToTextarea = function (e) 
+	var	editableFuncReplaceParagraphToTextarea = function () 
 	{
 		var	ButtonAcceptHandler = function() {
 			var		associatedTextareaID = $(this).data("associatedTagID");
 			editableFuncReplaceToParagraphAccept($("#" + associatedTextareaID));
 		};
 
-		var	ButtonRejectHandler = function(e) {
+		var	ButtonRejectHandler = function() {
 			var		associatedTextareaID = $(this).data("associatedTagID");
 			editableFuncReplaceToParagraphReject($("#" + associatedTextareaID));
 		};
@@ -1442,15 +1335,15 @@ edit_event = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
 
-	var UpdateEventStartDatePickerOnChangeHandler = function(event) {
+	var UpdateEventStartDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue;
@@ -1510,24 +1403,24 @@ edit_event = (function()
 
 		if($(this).data("action") == "AJAX_updateAccessType")
 		{
-			Object.keys(system_calls.eventTypes).forEach(function(item, i , arr)
+			Object.keys(system_calls.eventTypes).forEach(function(item)
 			{
 				$(tag).append($("<option>")	.append(system_calls.eventTypes[item])
 											.attr("value", item));
-			})
+			});
 		}
 		if($(this).data("action") == "AJAX_updateStartTime")
 		{
-			Object.keys(system_calls.startTime).forEach(function(item, i , arr)
+			Object.keys(system_calls.startTime).forEach(function(item)
 			{
 				$(tag).append($("<option>")	.append(system_calls.startTime[item])
 											.attr("value", item));
-			})
+			});
 		}
 
 		$(tag).val(currentValue); 
 
-		var	selectChangeHandler = function(event) 
+		var	selectChangeHandler = function() 
 		{
 			editableFuncReplaceSelectToSpan($(this), editableFuncReplaceSpanToSelect);
 		};
@@ -1554,23 +1447,24 @@ edit_event = (function()
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
+			// --- stub part
 		}
 
 		$(tag).select();
-	}
+	};
 
 
 
 	// --- Replacement Select to Span
 	// --- input: 1) tag
-	// ---        2) function to call to convert Span->Select
+	// ---		2) function to call to convert Span->Select
 	var	editableFuncReplaceSelectToSpan = function (param, funcFromSelectToSpan) 
 	{
 		var		ajaxAction;
@@ -1578,10 +1472,10 @@ edit_event = (function()
 		var		ajaxValue;
 
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
-		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 
 		var	newTag = $("<span>", {
-			text: $(currentTag).children("[value='" + currentTag.val() + "']").text().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).children("[value='" + currentTag.val() + "']").text().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -1591,7 +1485,7 @@ edit_event = (function()
 		$(newTag).data("value", $(currentTag).val());
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -1629,7 +1523,7 @@ edit_event = (function()
 						}
 						else
 						{
-							console.debug("editableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + actionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
+							console.debug("editableFuncReplaceSelectToSpan: ERROR in ajax [action = " + ajaxAction + ", id = " + ajaxActionID + ", ajaxValue = " + ajaxValue + "] " + ajaxResult.description);
 						}
 					}
 					catch(e)
@@ -1646,7 +1540,7 @@ edit_event = (function()
 		var		tagCanvas = $("#canvasForEventLogo");
 		var		logoPath = "";
 
-		$('#progress .progress-bar').css('width', '0%');
+		$("#progress .progress-bar").css("width", "0%");
 		if(eventProfile.logo_filename.length) logoPath = "/images/events/" + eventProfile.logo_folder + "/" + eventProfile.logo_filename;
 
 
@@ -1654,14 +1548,14 @@ edit_event = (function()
 	};
 
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 	};
 
-	var NoGift_ClickHeader = function(e)
+	var NoGift_ClickHeader = function()
 	{
 		var   currentTag = $(this);
 		var   state = currentTag.data("state");
@@ -1670,7 +1564,7 @@ edit_event = (function()
 		if(state == "Y") state = "N"; else state = "Y";
 
 
-		$.getJSON('/cgi-bin/event.cgi?action=' + (state == "Y" ? "AJAX_setNoGift_Y" : "AJAX_setNoGift_N"), {event_id: eventProfile.id})
+		$.getJSON("/cgi-bin/event.cgi?action=" + (state == "Y" ? "AJAX_setNoGift_Y" : "AJAX_setNoGift_N"), {event_id: eventProfile.id})
 		.done(function(data) {
 			if(data.result == "success")
 			{	
@@ -1680,11 +1574,11 @@ edit_event = (function()
 			}
 			else
 			{
-			  console.debug("ERROR: " + data.description);
+				console.debug("ERROR: " + data.description);
 			}
 		})
-		.fail(function(data){
-			console.debug("ERROR: fail parse server responce");
+		.fail(function(){
+			console.debug("ERROR: fail parse server response");
 		});
 	};
 
@@ -1710,16 +1604,19 @@ edit_event = (function()
 
 	var	RenderFavoriteChecklistTabs = function(checklists)
 	{
-		$("#favorite_checklists_placeholder").empty().append(common_bestbounty.GetCheckListFavoritTabs_DOM(checklists, "_favorite", Tab_ClickHandler));
+		$("#favorite_checklists_placeholder").empty().append(common_bestbounty.GetCheckListFavoriteTabs_DOM(checklists, "_favorite", Tab_ClickHandler));
 	};
 
-	var	Tab_ClickHandler = function(e)
+	var	Tab_ClickHandler = function()
 	{
 		var	curr_tag = $(this);
 		var	curr_id = curr_tag.attr("data-id");
 		var	pane_tag = $(".__tab_pane_favorite[data-id=\"" + curr_id + "\"]");
 
-		if(pane_tag.html().length) {}
+		if(pane_tag.html().length) 
+		{
+			// --- no need to update content
+		}
 		else
 		{
 			GetFavoriteChecklistItemsFromTheServer(curr_id);
@@ -1733,7 +1630,7 @@ edit_event = (function()
 		if(curr_tag.empty())
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_getFavoriteChecklistItems",
 					id: id,
@@ -1756,7 +1653,7 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
@@ -1765,12 +1662,12 @@ edit_event = (function()
 		}
 	};
 
-	var	RenderFavoriteChecklist = function(favorite_checklist_id, chacklists)
+	var	RenderFavoriteChecklist = function(favorite_checklist_id, checklists)
 	{
-		$(".__tab_pane_favorite[data-id=\"" + favorite_checklist_id + "\"]").empty().append(eventChecklist_global.FavoriteChecklist_GetDOM(favorite_checklist_id, chacklists, AddItemsFromFavoriteChecklist_ClickHandler));
+		$(".__tab_pane_favorite[data-id=\"" + favorite_checklist_id + "\"]").empty().append(eventChecklist_global.FavoriteChecklist_GetDOM(favorite_checklist_id, checklists, AddItemsFromFavoriteChecklist_ClickHandler));
 	};
 
-	var	AddItemsFromFavoriteChecklist_ClickHandler = function(e)
+	var	AddItemsFromFavoriteChecklist_ClickHandler = function()
 	{
 		var	curr_tag			= $(this);
 		var	checklist_id		= curr_tag.attr("data-checklist_id");
@@ -1778,7 +1675,7 @@ edit_event = (function()
 		if(checklist_id)
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_addFavoriteChecklistItems",
 					event_id: eventProfile.id,
@@ -1795,16 +1692,16 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 					}, 200);
 				});
 		}
-	}
+	};
 
-	var	AddCheckListitem_ClickHandler = function(e)
+	var	AddCheckListItem_ClickHandler = function()
 	{
 		var	curr_tag		= $(this);
 		var	category_tag	= $("#custom_checklist_item_category");
@@ -1820,7 +1717,7 @@ edit_event = (function()
 		if(isValid())
 		{
 			$.getJSON(
-				'/cgi-bin/event.cgi',
+				"/cgi-bin/event.cgi",
 				{
 					action: "AJAX_addChecklistItem",
 					title: title,
@@ -1840,7 +1737,7 @@ edit_event = (function()
 						system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 					}
 				})
-				.fail(function(data)
+				.fail(function()
 				{
 					setTimeout(function() {
 						system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
@@ -1849,7 +1746,7 @@ edit_event = (function()
 		}
 		else
 		{
-			system_calls.PopoverError(curr_tag, "Заполните название")
+			system_calls.PopoverError(curr_tag, "Заполните название");
 		}
 	};
 

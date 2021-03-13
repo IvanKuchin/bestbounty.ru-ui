@@ -3,7 +3,7 @@ var	edit_profile = edit_profile || {};
 
 edit_profile = (function()
 {
-'use strict';
+"use strict";
 
 var 	JSON_jobTitleID = [];
 var 	JSON_certificationVendors = [];
@@ -17,7 +17,6 @@ var		JSON_university = [];
 var		JSON_school = [];
 var		JSON_language = [];
 var		JSON_skill = [];
-var		JSON_book = [];
 var		JSON_dataForProfile = {};
 var		userProfile;
 var		addCarrierCompany = {};
@@ -28,7 +27,6 @@ var		addUniversity = {};
 var		addLanguage = {};
 var		addSkill = {};
 var		addBook = {};
-var		addRecommendation = {};
 var		datepickerDateFormat;
 var		AutocompleteList = [];
 
@@ -39,7 +37,7 @@ var	Init = function()
 
 	$("#AreYouSure #Remove").on("click", AreYouSureRemoveHandler);
 
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getUserProfile', {param1: "_"})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getUserProfile", {param1: "_"})
 		.done(function(data) {
 			if(data.result === "success")
 			{
@@ -47,7 +45,7 @@ var	Init = function()
 				InitBirthdayAccessLabel();
 				RenderCity();
 				RenderUserSex();
-				RenderUserBirthay();
+				RenderUserBirthday();
 				RenderGiftPath();
 			}
 			else
@@ -88,43 +86,43 @@ var	Init = function()
 		setTimeout(function () 
 			{
 				// --- AJAX jobTitle download 
-				$.getJSON('/cgi-bin/index.cgi?action=AJAX_getDataForProfile', {param1: ''})
+				$.getJSON("/cgi-bin/index.cgi?action=AJAX_getDataForProfile", {param1: ""})
 						.done(function(data) {
 							JSON_dataForProfile = data;
 
-							data.geo_country.forEach(function(item, i, arr)
+							data.geo_country.forEach(function(item)
 							{
 								JSON_geoCountry.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.geo_region.forEach(function(item, i, arr)
+							data.geo_region.forEach(function(item)
 							{
 								JSON_geoRegion.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.geo_locality.forEach(function(item, i, arr)
+							data.geo_locality.forEach(function(item)
 							{
 								JSON_geoLocality.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.university.forEach(function(item, i, arr)
+							data.university.forEach(function(item)
 							{
 								JSON_university.push(system_calls.ConvertHTMLToText(item.title));
 							});
 							jQuery.unique(JSON_university);
 
-							data.school.forEach(function(item, i, arr)
+							data.school.forEach(function(item)
 							{
 								JSON_school.push(system_calls.ConvertHTMLToText(item.title));
 							});
 							jQuery.unique(JSON_school);
 
-							data.language.forEach(function(item, i, arr)
+							data.language.forEach(function(item)
 							{
 								JSON_language.push(system_calls.ConvertHTMLToText(item.title));
 							});
 
-							data.skill.forEach(function(item, i, arr)
+							data.skill.forEach(function(item)
 							{
 								JSON_skill.push(system_calls.ConvertHTMLToText(item.title));
 							});
@@ -168,7 +166,7 @@ var	Init = function()
 
 	$("#AddGeneralCoverButton").on("change", AddGeneralCoverUploadChangeHandler);
 	$("#AddGeneralCoverNoUploadButton").on("change", AddGeneralCoverNoUploadChangeHandler);
-	// --- Gift Initialazation finish
+	// --- Gift Initialization finish
 
 	// --- Modal: thank to grantor
 	$("button#GiftGrantorThankModalSubmit").on("click", GiftGrantorThank_ClickHandler);
@@ -200,20 +198,20 @@ var	Init = function()
 	});
 
 	$("#DeleteAvatarDialogBoxBS_Submit").on("click", function() {
-		console.debug("removed avatar id " + $("#DeteledAvatarID_InBSForm").val());
+		console.debug("removed avatar id " + $("#DeletedAvatarID_InBSForm").val());
 
 		$("#DeleteAvatarDialogBoxBS").modal("hide");
 
-		// --- Real avatar deletion after closing dialog to improve User Expirience
-		DeletePreviewAvatar($("#DeteledAvatarID_InBSForm").val());
+		// --- Real avatar deletion after closing dialog to improve User Experience
+		DeletePreviewAvatar($("#DeletedAvatarID_InBSForm").val());
 	});
 
 	// --- Image uploader
 	$(function () {
 		// Change this to the location of your server-side upload handler:
-		$('#fileupload').fileupload({
-			url: '/cgi-bin/avataruploader.cgi',
-			dataType: 'json',
+		$("#fileupload").fileupload({
+			url: "/cgi-bin/avataruploader.cgi",
+			dataType: "json",
 			maxFileSize: 30 * 1024 * 1024, 
 			acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
@@ -242,17 +240,17 @@ var	Init = function()
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
-				$('#progress .progress-bar').css(
-					'width',
-					progress + '%'
+				$("#progress .progress-bar").css(
+					"width",
+					progress + "%"
 				);
 			},
 			fail: function (e, data) {
 				alert("ошибка загрузки фаила: " + data.textStatus);
 			}
 
-		}).prop('disabled', !$.support.fileInput)
-			.parent().addClass($.support.fileInput ? undefined : 'disabled');
+		}).prop("disabled", !$.support.fileInput)
+			.parent().addClass($.support.fileInput ? undefined : "disabled");
 	});
 
 	ScrollToElementID("#" + system_calls.GetParamFromURL("scrollto"));
@@ -262,18 +260,6 @@ var	ScrollToElementID = function(elementID)
 {
 	if((elementID.length > 1) && $(elementID).length) // --- elementID is "#XXXX"
 		system_calls.ScrollWindowToElementID(elementID);
-};
-
-var	getDate = function ( elem ) 
-{
-  var date;
-  try {
-	date = $.datepicker.parseDate( datepickerDateFormat, elem.value );
-  } catch( error ) {
-	date = null;
-  }
-
-  return date;
 };
 
 var AddCarrierPathCollapsibleZeroize = function()
@@ -420,11 +406,11 @@ var AddCarrierPathCollapsibleInit = function()
 														function() {
 															$(this).children("img").data("initial_src", $(this).children("img").attr("src"));
 															// $(this).children("img").attr("src", "/images/pages/common/checkbox_animated.gif"); 
-															$(this).addClass("editable_highlited_class", 400);
+															$(this).addClass("editable_highlighted_class", 400);
 														}, 
 														function() {
 															// $(this).children("img").attr("src", $(this).children("img").data("initial_src")); 
-															$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+															$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 														})
 														.on("click", AddCarrierPathCollapsibleCurrentEmployment_ClickHandler);
 	$("div#AddCarrierCompany button#AddCarrierCompanyAddButton").on("click", AddCarrierCompanyAddButton_ClickHandler);
@@ -510,7 +496,7 @@ var AddCarrierPathCollapsibleInitJobTitle = function()
 		create: function () {
 			// console.debug ("AddCarrierPathCollapsibleInitJobTitle: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -559,7 +545,7 @@ var AddCertificationPathCollapsibleInitVendorTitle = function()
 		create: function () {
 			// console.debug ("AddCertificationPathCollapsibleInitVendorTitle:AddCertificationVendor: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -603,7 +589,7 @@ var AddCertificationPathCollapsibleInitVendorTitle = function()
 		create: function () {
 			// console.debug ("AddCertificationPathCollapsibleInitVendorTitle:AddCourseVendor: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -651,7 +637,7 @@ var AddCertificationPathCollapsibleInitTracksTitle = function()
 		create: function () {
 			// console.debug ("AddCertificationPathCollapsibleInitTracksTitle: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -693,7 +679,7 @@ var AddCertificationPathCollapsibleInitTracksTitle = function()
 		create: function () {
 			// console.debug ("AddCertificationPathCollapsibleInitTracksTitle: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -742,7 +728,7 @@ var AddDataForProfileCollapsibleInit = function()
 				// $("select#AddUniversityPeriodStart").removeAttr("disabled");
 				// $("select#AddUniversityPeriodFinish").removeAttr("disabled");
 
-				AddUnivertityUpdateRadioSelect();
+				AddUniversityUpdateRadioSelect();
 			}
 		},
 		close: function (event, ui) 
@@ -752,7 +738,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -793,7 +779,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -834,7 +820,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -876,7 +862,7 @@ var AddDataForProfileCollapsibleInit = function()
 				// $("select#AddSchoolPeriodStart").removeAttr("disabled");
 				// $("select#AddSchoolPeriodFinish").removeAttr("disabled");
 
-				AddUnivertityUpdateRadioSelect();
+				AddUniversityUpdateRadioSelect();
 			}
 		},
 		close: function (event, ui) 
@@ -886,7 +872,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -930,7 +916,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -971,7 +957,7 @@ var AddDataForProfileCollapsibleInit = function()
 		create: function () {
 			// console.debug ("AddDataForProfileCollapsibleInit: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -1017,7 +1003,7 @@ var AddCarrierPathCollapsibleInitCompany = function()
 		create: function () {
 			// console.debug ("AddCarrierPathCollapsibleInitCompany: _create event handler"); 
 		},
-		_renderMenu: function (ul, items)  // --- requres plugin only
+		_renderMenu: function (ul, items)  // --- requires plugin only
 		{
 			var	that = this;
 			currentCategory = "";
@@ -1048,7 +1034,7 @@ var	GetRegionNameByID = function(regionID)
 	return regionName;
 };
 
-var AddUnivertityUpdateRadioSelect = function()
+var AddUniversityUpdateRadioSelect = function()
 {
 	var		universityPicked = $("input#AddUniversityTitle").val();
 	var		radioButtonUniversityArray;
@@ -1177,14 +1163,14 @@ var AddGiftAllFieldsFreeze = function()
 {
 	$("div#AddGift input").attr("disabled", "");
 	$("div#AddGift textarea").attr("disabled", "");
-	$("div#AddGift button").button('loading');
+	$("div#AddGift button").button("loading");
 };
 
 var	AddGiftAllFieldsReset = function()
 {
 	$("div#AddGift input").removeAttr("disabled", "");
 	$("div#AddGift textarea").removeAttr("disabled", "");
-	$("div#AddGift button").button('reset');
+	$("div#AddGift button").button("reset");
 };
 
 var GetDataFromProvidedURL = function()
@@ -1200,7 +1186,7 @@ var GetDataFromProvidedURL = function()
 	{
 		AddGiftAllFieldsFreeze();
 
-		$.getJSON('/cgi-bin/gift.cgi?action=AJAX_getURLMetaData', {url: giftLink})
+		$.getJSON("/cgi-bin/gift.cgi?action=AJAX_getURLMetaData", {url: giftLink})
 		 		.done(function(data) {
 					if(data.result == "success")
 					{
@@ -1262,7 +1248,7 @@ var	AddBookPathFindBookByISBN10 = function()
 	{
 		AddBookAllFieldsLoading();
 
-		$.getJSON('/cgi-bin/book.cgi?action=JSON_getBookByISBN10', {id: isbn10})
+		$.getJSON("/cgi-bin/book.cgi?action=JSON_getBookByISBN10", {id: isbn10})
 			.done(function(data) {
 
 				if(data.result === "success")
@@ -1310,7 +1296,7 @@ var AddCertificationPathPrefillByTitle = function()
 
 	if(certificationTitle.length)
 	{
-		$.getJSON('/cgi-bin/index.cgi?action=JSON_getCertificationDetailsByTitle', {certificationTitle: certificationTitle})
+		$.getJSON("/cgi-bin/index.cgi?action=JSON_getCertificationDetailsByTitle", {certificationTitle: certificationTitle})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1339,7 +1325,7 @@ var AddCoursePathPrefillByTitle = function()
 
 	if(courseTitle.length)
 	{
-		$.getJSON('/cgi-bin/index.cgi?action=JSON_getCourseDetailsByTitle', {courseTitle: courseTitle})
+		$.getJSON("/cgi-bin/index.cgi?action=JSON_getCourseDetailsByTitle", {courseTitle: courseTitle})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1369,7 +1355,7 @@ var AddBookPathPrefillISBNs = function()
 
 	if(bookTitle.length && bookAuthor.length)
 	{
-		$.getJSON('/cgi-bin/book.cgi?action=JSON_getBookISBNsByAuthorAndTitle', {bookTitle: bookTitle, bookAuthor: bookAuthor})
+		$.getJSON("/cgi-bin/book.cgi?action=JSON_getBookISBNsByAuthorAndTitle", {bookTitle: bookTitle, bookAuthor: bookAuthor})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1390,7 +1376,7 @@ var AddBookPathPrefillISBNs = function()
 	}
 	else if(bookTitle.length)
 	{
-		$.getJSON('/cgi-bin/book.cgi?action=JSON_getBookDetailsByTitle', {bookTitle: bookTitle})
+		$.getJSON("/cgi-bin/book.cgi?action=JSON_getBookDetailsByTitle", {bookTitle: bookTitle})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1421,7 +1407,7 @@ var	AddBookPathFindBookByISBN13 = function()
 	{
 		AddBookAllFieldsLoading();
 
-		$.getJSON('/cgi-bin/book.cgi?action=JSON_getBookByISBN10', {id: isbn13})
+		$.getJSON("/cgi-bin/book.cgi?action=JSON_getBookByISBN10", {id: isbn13})
 			.done(function(data) {
 
 				if(data.result === "success")
@@ -1483,7 +1469,7 @@ var AddCarrierCompanyAddButton_ClickHandler = function()
 			if(pos >= 0) addCarrierCompany.AddCarrierCompanyCompany = addCarrierCompany.AddCarrierCompanyCompany.replace(item, "");
 		});
 	system_calls.companyTypes.pop(); // --- remove temporarily added latin-letter "OOO"
-	addCarrierCompany.AddCarrierCompanyCompany.replace(/^\s+/, '').replace(/\s+$/, '');
+	addCarrierCompany.AddCarrierCompanyCompany.replace(/^\s+/, "").replace(/\s+$/, "");
 
 	// --- fields correctness checks
 	if(addCarrierCompany.AddCarrierCompanyTitle === "")
@@ -1559,9 +1545,9 @@ var AddCarrierCompanyAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddCarrierCompanyAddButton").button('loading');
+		$("#AddCarrierCompanyAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddCarrierCompany",
 							"title": addCarrierCompany.AddCarrierCompanyTitle,
@@ -1607,7 +1593,7 @@ var AddCarrierCompanyAddButton_ClickHandler = function()
 			console.debug("AddCarrierCompanyAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddCarrierCompanyAddButton").button('reset');
+			$("#AddCarrierCompanyAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -1675,9 +1661,9 @@ var AddCertificationAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddCertificationAddButton").button('loading');
+		$("#AddCertificationAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddCertificate",
 							"vendor": system_calls.ConvertTextToHTML(addCertification.AddCertificationVendor),
@@ -1715,7 +1701,7 @@ var AddCertificationAddButton_ClickHandler = function()
 			console.debug("AddCertificationAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddCertificationAddButton").button('reset');
+			$("#AddCertificationAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -1766,9 +1752,9 @@ var AddCourseAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddCourseAddButton").button('loading');
+		$("#AddCourseAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?random=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?random=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action": "AJAX_addEditProfileAddCourse",
 							"vendor": system_calls.ConvertTextToHTML(addCourse.AddCourseVendor),
@@ -1804,7 +1790,7 @@ var AddCourseAddButton_ClickHandler = function()
 			console.debug("AddCourseAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddCourseAddButton").button('reset');
+			$("#AddCourseAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -1914,9 +1900,9 @@ var AddSchoolAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddSchoolAddButton").button('loading');
+		$("#AddSchoolAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddSchool",
 							"locality": system_calls.ConvertTextToHTML(addSchool.AddSchoolLocality.replace(/\s+\(.*/, "")),
@@ -1956,7 +1942,7 @@ var AddSchoolAddButton_ClickHandler = function()
 			console.debug("AddSchoolAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddSchoolAddButton").button('reset');
+			$("#AddSchoolAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -2098,9 +2084,9 @@ var AddUniversityAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddUniversityAddButton").button('loading');
+		$("#AddUniversityAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddUniversity",
 							"region": system_calls.ConvertTextToHTML(addUniversity.AddUniversityRegion),
@@ -2142,7 +2128,7 @@ var AddUniversityAddButton_ClickHandler = function()
 			console.debug("AddUniversityAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddUniversityAddButton").button('reset');
+			$("#AddUniversityAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -2191,9 +2177,9 @@ var AddLanguageAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddLanguageAddButton").button('loading');
+		$("#AddLanguageAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000),
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000),
 						{
 							"action" : "AJAX_addEditProfileAddLanguage",
 							"title": system_calls.ConvertTextToHTML(addLanguage.AddLanguageTitle),
@@ -2229,7 +2215,7 @@ var AddLanguageAddButton_ClickHandler = function()
 			console.debug("AddLanguageAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddLanguageAddButton").button('reset');
+			$("#AddLanguageAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -2260,9 +2246,9 @@ var AddSkillAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddSkillAddButton").button('loading');
+		$("#AddSkillAddButton").button("loading");
 
-		$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddSkill",
 							"title": system_calls.ConvertTextToHTML(addSkill.AddSkillTitle)
@@ -2294,7 +2280,7 @@ var AddSkillAddButton_ClickHandler = function()
 			console.debug("AddSkillAddButton_ClickHandler: ERROR: fail to get response");
 		}) // --- .always()
 		.always(function() {
-			$("#AddSkillAddButton").button('reset');
+			$("#AddSkillAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -2311,7 +2297,7 @@ var	AddBookComplainSubmit_ClickHandler = function(e)
 
 	$("#BookComplainModal").modal("hide");
 
-	$.getJSON('/cgi-bin/book.cgi?action=AJAX_complainBook', {complainBookAuthor: complainBookAuthor, complainBookTitle: complainBookTitle, complainBookISBN10: complainBookISBN10, complainBookISBN13: complainBookISBN13, complainBookCover: complainBookCover, complainBookComment: system_calls.ConvertTextToHTML(complainBookComment)})
+	$.getJSON("/cgi-bin/book.cgi?action=AJAX_complainBook", {complainBookAuthor: complainBookAuthor, complainBookTitle: complainBookTitle, complainBookISBN10: complainBookISBN10, complainBookISBN13: complainBookISBN13, complainBookCover: complainBookCover, complainBookComment: system_calls.ConvertTextToHTML(complainBookComment)})
 		.done(function(data) {
 			var		resultText;
 
@@ -2362,7 +2348,7 @@ var ComplainSpecifiedImageModal_Submit_ClickHandler = function()
 
 	$("#ImageComplainModal").modal("hide");
 
-	$.getJSON('/cgi-bin/complain.cgi?action=AJAX_SubmitImageComplain', {id: id, type: type})
+	$.getJSON("/cgi-bin/complain.cgi?action=AJAX_SubmitImageComplain", {id: id, type: type})
 		.done(function(data) {
 			var		resultText;
 
@@ -2449,9 +2435,9 @@ var AddBookAddButton_ClickHandler = function()
 
 	if(isClearToAdd)
 	{
-		$("#AddBookAddButton").button('loading');
+		$("#AddBookAddButton").button("loading");
 
-		$.post('/cgi-bin/book.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/book.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addEditProfileAddBook",
 							"title": system_calls.ConvertTextToHTML(addBook.AddBookTitle),
@@ -2491,7 +2477,7 @@ var AddBookAddButton_ClickHandler = function()
 			console.debug("AddBookAddButton_ClickHandler: ERROR: fail to get response");
 		})
 		.always(function() {
-			$("#AddBookAddButton").button('reset');
+			$("#AddBookAddButton").button("reset");
 		}) // --- .always()
 		;
 	}
@@ -2527,7 +2513,7 @@ var	GiftGrantorThank_ClickHandler = function()
 	{
 		$("#GiftGrantorThankModal button").button("loading");
 
-		$.getJSON('/cgi-bin/gift.cgi?action=AJAX_GiftThank', 
+		$.getJSON("/cgi-bin/gift.cgi?action=AJAX_GiftThank", 
 									{
 										giftID: giftID,
 										grantorUserID: grantorUserID,
@@ -2562,23 +2548,45 @@ var	GiftGrantorThank_ClickHandler = function()
 	}
 };
 
+var	isGiftObjectValid = function(gift)
+{
+	var	result = true;
+
+	if(gift.AddGiftTitle === "")
+	{
+		result = false;
+		system_calls.PopoverError($("input#AddGiftTitle"), "Добавте название");
+	}
+	if(gift.AddGiftLink.length)
+	{
+		if(system_calls.isValidHTTPURL(gift.AddGiftLink))
+		{
+		}
+		else
+		{
+			result = false;
+			system_calls.PopoverError($("input#AddGiftLink"), "Некорректрый URL (должен начинаться с http:// или https://)");
+		}
+	}
+
+	return result;
+};
+
 var AddGiftButton_ClickHandler = function()
 {
+	var	curr_tag = $(this);
+
 	addBook.AddGiftTitle = $("input#AddGiftTitle").val();
 	addBook.AddGiftLink = $("input#AddGiftLink").val();
 	addBook.AddGiftPrice = $("input#AddGiftPrice").val();
 	addBook.AddGiftQuantity = $("input#AddGiftQuantity").val();
 	addBook.AddGiftDescription = $("textarea#AddGiftDescription").val();
 
-	if(addBook.AddGiftTitle === "")
+	if(isGiftObjectValid(addBook))
 	{
-		system_calls.PopoverError("AddGiftTitle", "Укажите название подарка.");
-	}
-	else
-	{
-		$("#AddGiftAddButton").button('loading');
+		$("#AddGiftAddButton").button("loading");
 
-		$.post('/cgi-bin/gift.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+		$.post("/cgi-bin/gift.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							"action" : "AJAX_addGift",
 							"title": system_calls.ConvertTextToHTML(addBook.AddGiftTitle),
@@ -2631,9 +2639,13 @@ var AddGiftButton_ClickHandler = function()
 			console.error("AddGiftButton_ClickHandler: ERROR: fail to get response");
 		})
 		.always(function() {
-			$("#AddGiftAddButton").button('reset');
+			$("#AddGiftAddButton").button("reset");
 		}) // --- .always()
 		;
+	}
+	else
+	{
+		system_calls.PopoverError(curr_tag, "Некоторые поля заролнены некорректно");
 	}
 };
 
@@ -2646,7 +2658,7 @@ var	GainedQuantityButton_ClickHandler = function(e)
 	{
 		currTag.button("loading");
 
-		$.getJSON('/cgi-bin/gift.cgi?action=AJAX_GotIt', {id: id})
+		$.getJSON("/cgi-bin/gift.cgi?action=AJAX_GotIt", {id: id})
 			.done(function(data) {
 				if(data.result == "success")
 				{
@@ -2713,7 +2725,7 @@ var	AutocompleteWithBookAuthors = function(e)
 		if(inputValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/book.cgi',
+				"/cgi-bin/book.cgi",
 				{action:"JSON_getBookAuthorListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						AutocompleteList = [];
@@ -2747,7 +2759,7 @@ var	AutocompleteWithBookAuthors = function(e)
 							create: function () {
 								console.debug ("autocompleteBookAuthor.OnInputHandler autocomplete.create: _create event handler"); 
 							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
+							_renderMenu: function (ul, items)  // --- requires plugin only
 							{
 								var	that = this;
 								var currentCategory = "";
@@ -2794,7 +2806,7 @@ var	AutocompleteWithBookTitles = function(e)
 		if(inputValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/book.cgi',
+				"/cgi-bin/book.cgi",
 				{action:"JSON_getBookTitleListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						AutocompleteList = [];
@@ -2832,7 +2844,7 @@ var	AutocompleteWithBookTitles = function(e)
 							create: function () {
 								console.debug ("AutocompleteWithBookTitle.OnInputHandler autocomplete.create: _create event handler"); 
 							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
+							_renderMenu: function (ul, items)  // --- requires plugin only
 							{
 								var	that = this;
 								var currentCategory = "";
@@ -2902,7 +2914,7 @@ var ChangeCurrentStatus_ClickHandler = function()
 				item.currentCompany = "0";
 			}
 
-			$.getJSON('/cgi-bin/index.cgi?action=AJAX_changeEditProfileCompanyEmployemtEndDateStatus', {companyID: item.companyID})
+			$.getJSON("/cgi-bin/index.cgi?action=AJAX_changeEditProfileCompanyEmploymentEndDateStatus", {companyID: item.companyID})
 				.done(function(data) {
 					if(data.result === "success")
 					{
@@ -2935,7 +2947,7 @@ var	RenderCVandTitle = function()
 
 var	UpdateUserSex = function(userSex)
 {
-	$.getJSON('/cgi-bin/account.cgi?action=AJAX_changeUserSex', {userSex: userSex})
+	$.getJSON("/cgi-bin/account.cgi?action=AJAX_changeUserSex", {userSex: userSex})
 		.done(function(data) {
 			if(data.result === "success")
 			{
@@ -2981,7 +2993,7 @@ var	RenderUserSex = function()
 
 };
 
-var	RenderUserBirthay = function()
+var	RenderUserBirthday = function()
 {
 	var		result = $();
 	var		currentEmploymentText = "";
@@ -3048,7 +3060,7 @@ var	RenderCarrierPath = function()
 												.attr("data-action", "update_occupation_start")
 												.addClass("occupation_start datePick formatDate")
 												.append(system_calls.ConvertMonthNumberToAbbrName(item.occupationStart));
-		var		spanFinishEmplyment = $("<span>").attr("data-id", item.companyID)
+		var		spanFinishEmployment = $("<span>").attr("data-id", item.companyID)
 												.attr("data-action", "update_occupation_finish")
 												.addClass("occupation_finish editableSpan formatDate")
 												.append(system_calls.ConvertMonthNumberToAbbrName(item.occupationFinish));
@@ -3076,11 +3088,11 @@ var	RenderCarrierPath = function()
 														function() {
 															$(this).children("img").data("initial_src", $(this).children("img").attr("src"));
 															$(this).children("img").attr("src", "/images/pages/common/checkbox_animated.gif"); 
-															$(this).addClass("editable_highlited_class", 400);
+															$(this).addClass("editable_highlighted_class", 400);
 														}, 
 														function() {
 															$(this).children("img").attr("src", $(this).children("img").data("initial_src")); 
-															$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+															$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 														})
 													.on("click", ChangeCurrentStatus_ClickHandler);
 		var		spanClose = $("<span>").attr("data-id", item.companyID)
@@ -3116,13 +3128,13 @@ var	RenderCarrierPath = function()
 		divRowTitle.append(divTimeline.append(paragraphTimeline.append("c ")
 																.append(spanStartEmployment)
 																.append("<br>по ")
-																.append((item.currentCompany == "1" ? "" : spanFinishEmplyment))
+																.append((item.currentCompany == "1" ? "" : spanFinishEmployment))
 																.append(spanCurrentPositionText)));
 		divRowTitle.append(divClose.append(spanClose));
 
 
 		var		divRowResponsibilities = $("<div>").addClass("row")
-												.attr("id", "responsibilitie" + item.companyID);
+												.attr("id", "responsibilities" + item.companyID);
 		var		divResponsibilities = $("<div>").addClass("col-xs-12 col-sm-offset-1 col-sm-9");
 		var		paragraphResponsibilities = $("<p>").attr("id", "paragraphRowResponsibilities" + item.companyID)
 													.addClass("editableParagraph")
@@ -3276,7 +3288,7 @@ var	RenderSchoolPath = function()
 												.append(item.schoolOccupationStart);
 		var		spanOccupationFinish = $("<span>").attr("data-id", item.schoolID)
 												.attr("data-action", "updateSchoolOccupationFinish")
-												.addClass("schoolOccupationFnish editableSelectYears19302017")
+												.addClass("schoolOccupationFinish editableSelectYears19302017")
 												.append(item.schoolOccupationFinish);
 		var		spanLocality = $("<span>").attr("data-id", item.schoolID)
 												.attr("data-action", "updateSchoolLocality")
@@ -3370,9 +3382,9 @@ var	RenderUniversityPath = function()
 												.attr("data-action", "updateUniversityOccupationStart")
 												.addClass("UniversityOccupationStart editableSelectYears19302017")
 												.append(item.universityOccupationStart);
-		var		spanOccuopationFinish = $("<span>").attr("data-id", item.universityID)
+		var		spanOccupationFinish = $("<span>").attr("data-id", item.universityID)
 												.attr("data-action", "updateUniversityOccupationFinish")
-												.addClass("UniversityOccupationFnish editableSelectYears19302017")
+												.addClass("UniversityOccupationFinish editableSelectYears19302017")
 												.append(item.universityOccupationFinish);
 		var		spanDegree = $("<span>").attr("data-id", item.universityID)
 												.attr("data-action", "updateUniversityDegree")
@@ -3414,7 +3426,7 @@ var	RenderUniversityPath = function()
 
 		divRowUniversity.append(divUniversityTitle.append(paragraphUniversity).append(spanDegree).append(" в ").append(spanTitle).append(" (").append(spanRegion).append(")"))
 						.append(divCover.append(imgCover))
-						.append(divUniversityOccupation.append(spanOccupationStart).append(" - ").append(spanOccuopationFinish))
+						.append(divUniversityOccupation.append(spanOccupationStart).append(" - ").append(spanOccupationFinish))
 						.append(divClose.append(spanClose));
 
 		educationInTitle += item.universityTitle + "<br>";
@@ -3500,7 +3512,7 @@ var	RenderCoursePath = function()
 								{
 									var		id = $(this).data("id");
 
-									$.getJSON('/cgi-bin/index.cgi?action=AJAX_setCourseRating', {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+									$.getJSON("/cgi-bin/index.cgi?action=AJAX_setCourseRating", {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 									.done(function(data) {
 										if(data.result == "success")
 										{	
@@ -3919,7 +3931,7 @@ var	RenderBookPath = function()
 								{
 									var		id = $(this).data("id");
 
-									$.getJSON('/cgi-bin/book.cgi?action=AJAX_setBookRating', {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+									$.getJSON("/cgi-bin/book.cgi?action=AJAX_setBookRating", {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 									.done(function(data) {
 										if(data.result == "success")
 										{	
@@ -4151,7 +4163,7 @@ var	AddGeneralCoverUploadChangeHandler = function(e)
 			processData: false,
 			async: true,
 			data: formData,
-			type: 'post',
+			type: "post",
 			success: function(data) {
 				var		jsonObj = JSON.parse(data);
 				console.debug("AddGeneralCoverUploadChangeHandler:upload:successHandler: URL /images/" + uploadCoverType + "/" + jsonObj[0].logo_folder + "/" + jsonObj[0].logo_filename);
@@ -4336,7 +4348,7 @@ var BirthdayAccessButtonClickHeader = function(e)
 	currentTag.data("state", state);
 	userProfile.birthdayAccess = state;
 
-	$.getJSON('/cgi-bin/account.cgi?action=' + (state == "public" ? "AJAX_editProfile_setBirthdayPublic" : "AJAX_editProfile_setBirthdayPrivate"), {rand: Math.round(Math.random() * 100000000)})
+	$.getJSON("/cgi-bin/account.cgi?action=" + (state == "public" ? "AJAX_editProfile_setBirthdayPublic" : "AJAX_editProfile_setBirthdayPrivate"), {rand: Math.round(Math.random() * 100000000)})
 	.done(function(data) {
 		if(data.result == "success")
 		{	
@@ -4347,7 +4359,7 @@ var BirthdayAccessButtonClickHeader = function(e)
 		}
 	})
 	.fail(function(data){
-		  console.debug("BirthdayAccessButtonClickHeader: ERROR: fail parse server responce");
+		  console.debug("BirthdayAccessButtonClickHeader: ERROR: fail parse server response");
 	});
 
 	RenderGUIBirthdayAccessLabel();
@@ -4364,7 +4376,7 @@ var AppliedVacanciesButtonClickHeader = function(e)
 	currentTag.data("state", state);
 	userProfile.appliedVacanciesRender = state;
 
-	$.getJSON('/cgi-bin/index.cgi?action=' + (state == "all" ? "AJAX_editProfile_setAppliedVacanciesAll" : "AJAX_editProfile_setAppliedVacanciesInprogress"), {rand: Math.round(Math.random() * 100000000)})
+	$.getJSON("/cgi-bin/index.cgi?action=" + (state == "all" ? "AJAX_editProfile_setAppliedVacanciesAll" : "AJAX_editProfile_setAppliedVacanciesInprogress"), {rand: Math.round(Math.random() * 100000000)})
 	.done(function(data) {
 		if(data.result == "success")
 		{	
@@ -4375,7 +4387,7 @@ var AppliedVacanciesButtonClickHeader = function(e)
 		}
 	})
 	.fail(function(data){
-		  console.debug("AppliedVacanciesButtonClickHeader: ERROR: fail parse server responce");
+		  console.debug("AppliedVacanciesButtonClickHeader: ERROR: fail parse server response");
 	});
 
 	RenderGUIAppliedVacancies();
@@ -4388,7 +4400,7 @@ var AdverseCleanButtonClickHeader = function(e)
 	var   triggeredAction = currentTag.data("action");
 	var   triggeredID = currentTag.data("id");
 
-	$.getJSON('/cgi-bin/index.cgi?action=' + triggeredAction, {id: triggeredID, rand: Math.round(Math.random() * 100000000)})
+	$.getJSON("/cgi-bin/index.cgi?action=" + triggeredAction, {id: triggeredID, rand: Math.round(Math.random() * 100000000)})
 	.done(function(data) {
 		if(data.result == "success")
 		{	
@@ -4637,7 +4649,7 @@ var	DeletePreviewAvatar = function (id)
 			// --- Hide "delete" cross due to delete text avatar impossible
 			$("#canvasForAvatarPreview0_del").hide();
 
-			document.getElementById(context+"_overlay").addEventListener('click', function()
+			document.getElementById(context+"_overlay").addEventListener("click", function()
 				{
 					// --- mark all preview inactive
 					JSON_AvatarList.forEach(function(item) 
@@ -4670,7 +4682,7 @@ var	DeletePreviewAvatar = function (id)
 				if(id > 0) 
 				{
 
-					document.getElementById(context+"_overlay").addEventListener('click', function()
+					document.getElementById(context+"_overlay").addEventListener("click", function()
 					{
 						// --- mark clicked preview active
 						JSON_AvatarList.forEach(function(item) 
@@ -4689,12 +4701,12 @@ var	DeletePreviewAvatar = function (id)
 						}).done(ajaxReturnSuccess);
 					});
 
-					document.getElementById(context+"_del").addEventListener('click', function()
+					document.getElementById(context+"_del").addEventListener("click", function()
 					{
 						// $("#DeleteAvatarDialogBox").dialog("option", "id", id);
 						// $("#DeleteAvatarDialogBox").dialog("open");
 
-						$("#DeteledAvatarID_InBSForm").val(id);
+						$("#DeletedAvatarID_InBSForm").val(id);
 						$("#DeleteAvatarDialogBoxBS").modal("show");
 
 						
@@ -4728,7 +4740,7 @@ var	DeletePreviewAvatar = function (id)
 var DrawAllAvatars = function()
 {
 	// --- AJAX avatar list download 
-	$.getJSON('/cgi-bin/index.cgi?action=JSON_getAvatarList', {param1: ''})
+	$.getJSON("/cgi-bin/index.cgi?action=JSON_getAvatarList", {param1: ""})
 		.done(function(data) {
 			var		i;
 
@@ -4832,7 +4844,7 @@ var	ajaxReturnSuccess = function(data) {
 				$(tag).data("action", $(this).data("action"));
 
 				$(this).replaceWith(tag);
-				$(tag).on('click', editableFuncReplaceSpanToSelect20171930);
+				$(tag).on("click", editableFuncReplaceSpanToSelect20171930);
 				$(tag).mouseenter(editableFuncHighlightBgcolor);
 				$(tag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -4845,10 +4857,10 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -4900,7 +4912,7 @@ var	ajaxReturnSuccess = function(data) {
 				$(tag).data("action", $(this).data("action"));
 
 				$(this).replaceWith(tag);
-				$(tag).on('click', editableFuncReplaceSpanToSelectUniversityDegree);
+				$(tag).on("click", editableFuncReplaceSpanToSelectUniversityDegree);
 				$(tag).mouseenter(editableFuncHighlightBgcolor);
 				$(tag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -4913,10 +4925,10 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -4965,7 +4977,7 @@ var	ajaxReturnSuccess = function(data) {
 				$(tag).data("action", $(this).data("action"));
 
 				$(this).replaceWith(tag);
-				$(tag).on('click', editableFuncReplaceSpanToSelectLanguageLevel);
+				$(tag).on("click", editableFuncReplaceSpanToSelectLanguageLevel);
 				$(tag).mouseenter(editableFuncHighlightBgcolor);
 				$(tag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -4978,10 +4990,10 @@ var	ajaxReturnSuccess = function(data) {
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
@@ -5034,42 +5046,42 @@ var	ajaxReturnSuccess = function(data) {
 		}
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "AJAX_updateFirstName") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "AJAX_updateLastName") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "updateGiftRequestedQuantity") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "updateGiftTitle") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "updateGiftPrice") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "updateGiftLink") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 
 		if($(tag).data("action") == "updateJobTitle") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				minLength: 3,
@@ -5085,7 +5097,7 @@ var	ajaxReturnSuccess = function(data) {
 				{
 					console.debug ("autocomplete updateJobTitle: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5105,7 +5117,7 @@ var	ajaxReturnSuccess = function(data) {
 		}
 		if($(tag).data("action") == "updateCompanyName") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_CompanyNameID,
@@ -5119,7 +5131,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateCompanyName: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5181,7 +5193,7 @@ var	ajaxReturnSuccess = function(data) {
 			var tagValue = system_calls.ConvertMonthNameToNumber($(this).text());
 
 			$(tag).val(tagValue);
-			$(tag).on("change", UpdateOcupationStartDatePickerOnChangeHandler);
+			$(tag).on("change", UpdateOccupationStartDatePickerOnChangeHandler);
 			$(tag).datepicker({
 				firstDay: 1,
 				dayNames: [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
@@ -5200,7 +5212,7 @@ var	ajaxReturnSuccess = function(data) {
 			var tagValue = system_calls.ConvertMonthNameToNumber($(this).text());
 
 			$(tag).val(tagValue);
-			$(tag).on("change", UpdateOcupationFinishDatePickerOnChangeHandler);
+			$(tag).on("change", UpdateOccupationFinishDatePickerOnChangeHandler);
 			$(tag).datepicker({
 				firstDay: 1,
 				dayNames: [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
@@ -5216,7 +5228,7 @@ var	ajaxReturnSuccess = function(data) {
 		}
 		if(($(tag).data("action") == "updateCourseVendor") || ($(tag).data("action") == "updateCertificationVendor"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_certificationVendors,
@@ -5230,7 +5242,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateCourseVendor: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5251,7 +5263,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateCertificationTrack") || ($(tag).data("action") == "updateCourseTrack") )
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_certificationTracks,
@@ -5265,7 +5277,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateCertificationTrack: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5286,7 +5298,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateSchoolLocality"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_geoLocality,
@@ -5300,7 +5312,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateSchoolLocality: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5321,7 +5333,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "AJAX_updateCity"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_geoLocality,
@@ -5335,7 +5347,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete AJAX_updateCity: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5356,7 +5368,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateUniversityRegion"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_geoRegion,
@@ -5370,7 +5382,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateUniversityRegion: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5391,7 +5403,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateUniversityTitle"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_university,
@@ -5405,7 +5417,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateUniversityTitle: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5426,7 +5438,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateSchoolTitle"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_school,
@@ -5440,7 +5452,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateSchoolTitle: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5461,7 +5473,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateLanguageTitle"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_language,
@@ -5475,7 +5487,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateLanguageTitle: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5496,7 +5508,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(($(tag).data("action") == "updateSkillTitle"))
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 			$(tag).autocomplete({
 				delay : 300,
 				source: JSON_skill,
@@ -5510,7 +5522,7 @@ var	ajaxReturnSuccess = function(data) {
 				create: function () {
 					// console.debug ("autocomplete updateLanguageTitle: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -5547,7 +5559,7 @@ var	ajaxReturnSuccess = function(data) {
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceToTextarea);
+		$(newTag).on("click", editableFuncReplaceToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -5563,7 +5575,7 @@ var	ajaxReturnSuccess = function(data) {
 			{
 				if(currentContent === "") {	currentContent = "Напишите несколько слов о себе.";	}
 
-				$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						cv: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
 						action: "AJAX_updateUserCV",
@@ -5586,7 +5598,7 @@ var	ajaxReturnSuccess = function(data) {
 			{
 				if(currentContent === "") {	currentContent = "(описание отсутствует)";	}
 
-				$.post('/cgi-bin/gift.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/gift.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						id: $(currentTag).data("id"), 
 						value: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
@@ -5676,10 +5688,10 @@ var	ajaxReturnSuccess = function(data) {
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
@@ -5752,10 +5764,9 @@ var	ajaxReturnSuccess = function(data) {
 				data: {action:ajaxAction, id:ajaxActionID, value:dateReadBook.getTime()/1000}
 			}).done(function (data) 
 				{
-					var		ajaxResul = JSON.parse(data);
 					console.debug("UpdateBookReadDatePickerOnChangeHandler(" + data + "): enter");
 
-					userProfile.companies.forEach(function(item, i, arr)
+					userProfile.companies.forEach(function(item)
 					{
 						if(item.companyID == ajaxActionID)
 						{
@@ -5770,23 +5781,22 @@ var	ajaxReturnSuccess = function(data) {
 		}
 	};
 
-	var UpdateOcupationStartDatePickerOnChangeHandler = function(event) {
+	var UpdateOccupationStartDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue = $(this).val();
 
 		/* Act on the event */
-		console.debug("UpdateOcupationStartDatePickerOnChangeHandler change event");
+		console.debug("UpdateOccupationStartDatePickerOnChangeHandler change event");
 		$(this).next().datepicker("option", "minDate", ajaxValue);
 		$.ajax({
 			url:"/cgi-bin/index.cgi",
 			data: {action:ajaxAction, id:ajaxActionID, value:ajaxValue}
 		}).done(function (data) 
 			{
-				var		ajaxResul = JSON.parse(data);
-				console.debug("UpdateOcupationStartDatePickerOnChangeHandler(" + data + "): enter");
+				console.debug("UpdateOccupationStartDatePickerOnChangeHandler(" + data + "): enter");
 
-				userProfile.companies.forEach(function(item, i, arr)
+				userProfile.companies.forEach(function(item)
 				{
 					if(item.companyID == ajaxActionID)
 					{
@@ -5794,26 +5804,26 @@ var	ajaxReturnSuccess = function(data) {
 					}
 				});
 
-				console.debug("UpdateOcupationStartDatePickerOnChangeHandler: exit");
+				console.debug("UpdateOccupationStartDatePickerOnChangeHandler: exit");
 			});
 	};
 
-	var UpdateOcupationFinishDatePickerOnChangeHandler = function(event) {
+	var UpdateOccupationFinishDatePickerOnChangeHandler = function() {
 		var		ajaxAction = $(this).data("action");
 		var		ajaxActionID = $(this).data("id");
 		var		ajaxValue = $(this).val();
 
 		/* Act on the event */
-		console.debug("UpdateOcupationFinishDatePickerOnChangeHandler change event");
+		console.debug("UpdateOccupationFinishDatePickerOnChangeHandler change event");
 		$(this).prev().datepicker("option", "maxDate", ajaxValue);
 		$.getJSON(
-			'/cgi-bin/index.cgi',
+			"/cgi-bin/index.cgi",
 			{action:ajaxAction, id:ajaxActionID, value:ajaxValue},
 			function (data) 
 			{
-				console.debug("UpdateOcupationFinishDatePickerOnChangeHandler(" + data + "): enter");
+				console.debug("UpdateOccupationFinishDatePickerOnChangeHandler(" + data + "): enter");
 
-				userProfile.companies.forEach(function(item, i, arr)
+				userProfile.companies.forEach(function(item)
 				{
 					if(item.companyID == ajaxActionID)
 					{
@@ -5821,7 +5831,7 @@ var	ajaxReturnSuccess = function(data) {
 					}
 				});
 
-				console.debug("UpdateOcupationFinishDatePickerOnChangeHandler: exit");
+				console.debug("UpdateOccupationFinishDatePickerOnChangeHandler: exit");
 			}
 		);
 
@@ -5831,9 +5841,9 @@ var	ajaxReturnSuccess = function(data) {
 		console.debug("editableFuncReplaceInputToSpan: start");
 
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
-		var	initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var	initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -5857,7 +5867,7 @@ var	ajaxReturnSuccess = function(data) {
 			Object.keys($(currentTag).data()).forEach(function(item) { $(newTag).data(item, $(currentTag).data(item)); });
 
 			setTimeout(function(){ currentTag.replaceWith(newTag); }, 100);
-			$(newTag).on('click', editableFuncReplaceToInput);
+			$(newTag).on("click", editableFuncReplaceToInput);
 			$(newTag).mouseenter(editableFuncHighlightBgcolor);
 			$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 		}
@@ -5941,7 +5951,7 @@ var	ajaxReturnSuccess = function(data) {
 
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -5950,7 +5960,7 @@ var	ajaxReturnSuccess = function(data) {
 		$(newTag).data("action", $(currentTag).data("action"));
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -6046,11 +6056,11 @@ var	ajaxReturnSuccess = function(data) {
 	};
 
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 
 	};
 
@@ -6070,7 +6080,7 @@ var	ajaxReturnSuccess = function(data) {
 		// $("#AreYouSure #Remove").data("script", affectedScript);
 
 
-		$("#AreYouSure").modal('show');
+		$("#AreYouSure").modal("show");
 	};
 
 	var	AreYouSureRemoveHandler = function() {
@@ -6080,9 +6090,9 @@ var	ajaxReturnSuccess = function(data) {
 
 		if(typeof(affectedScript) == "undefined") affectedScript = "";
 		if(!affectedScript.length) affectedScript = "index.cgi";
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -6094,7 +6104,7 @@ var	ajaxReturnSuccess = function(data) {
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately) 
+		// --- To improve User Experience (react on user actions immediately) 
 		// ---	 I'm updating GUI immediately after click, not waiting server response
 		if(affectedAction == "AJAX_removeCompanyExperience")
 		{
@@ -6216,7 +6226,7 @@ var	ajaxReturnSuccess = function(data) {
 		}
 		else
 		{
-			system_calls.PopoverInfo(curr_tag, "Ссылка не указана")
+			system_calls.PopoverInfo(curr_tag, "Ссылка не указана");
 		}
 	};
 

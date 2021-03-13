@@ -2,7 +2,7 @@ var		view_profile = view_profile || {};
 
 view_profile = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		userProfile;
 	var		addRecommendation = {};
@@ -23,9 +23,10 @@ view_profile = (function()
 		FillinUserProfile();
 	};
 
+
 	var FillinUserProfile = function()
 	{
-		$.getJSON('/cgi-bin/index.cgi?action=JSON_getUserProfile', {id: $("#friendLastName").data("friendid")})
+		$.getJSON("/cgi-bin/index.cgi?action=JSON_getUserProfile", {id: $("#friendLastName").data("friendid")})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -34,6 +35,7 @@ view_profile = (function()
 					RenderBirthday();
 					RenderCity();
 					RenderControlButtons();
+					HandShakers();
 
 					if(system_calls.GetParamFromURL("scrollto").length) system_calls.ScrollWindowToElementID("#" + system_calls.GetParamFromURL("scrollto"));
 				}
@@ -43,10 +45,32 @@ view_profile = (function()
 				}
 			})
 			.fail(function() {
-				system_calls.PopoverError("friendName", "ошибка ответа сервера")
+				system_calls.PopoverError("friendName", "ошибка ответа сервера");
 				console.error("ERROR parsing JSON response");
 			});
 
+	};
+
+	var	HandShakers = function()
+	{
+		var		my_user_id = $("#myUserID").data("myuserid");
+		var		friend_user_id = $("#friendLastName").data("friendid");
+
+		if(parseInt(my_user_id) && parseInt(friend_user_id))
+		{
+			$.getJSON("/cgi-bin/index.cgi?action=JSON_getFindFriendByID", {lookForKey: friend_user_id})
+		 		.done(function(data) 
+		 		{
+					if(data.result == "success")
+					{
+						system_calls.RenderFriendshipButtons(data.users[0], $("#viewProfileFriendshipButton"));
+					}
+					else
+					{
+						console.debug("HandShakers: getJSON(JSON_getShakeHands).done(): ERROR [" + data.description + "]");
+					}
+				});
+		}
 	};
 
 	var	DrawFriendAvatar = function (friendImage, friendName, friendLastName)
@@ -55,7 +79,7 @@ view_profile = (function()
 
 		$("#canvasForAvatar").attr("width", "160")
 							.attr("height", "160")
-							.addClass('canvas-big-avatar');
+							.addClass("canvas-big-avatar");
 		canvasCtx = $("#canvasForAvatar")[0].getContext("2d");
 
 		DrawUserAvatar(canvasCtx, friendImage, friendName, friendLastName);
@@ -111,7 +135,7 @@ view_profile = (function()
 								{
 									if(item1.companyID == item2.companyID) 
 									{
-										if(IsCompanyDuplicate(handshakeCompanies, item1.companyID) == false)
+										if(IsCompanyDuplicate(handshakeCompanies, item1.companyID) === false)
 										{
 											handshakeCompanies.push({companyID : item1.companyID, company : item1.company});
 										}
@@ -140,14 +164,14 @@ view_profile = (function()
 
 			var		user1Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "top")
 												.attr("title", data.user1.name + " " + data.user1.nameLast);
 			var		user1CanvasCtx = user1Canvas[0].getContext("2d");
 			var		user2Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "top")
 												.attr("title", data.user2.name + " " + data.user2.nameLast);
@@ -172,7 +196,7 @@ view_profile = (function()
 						var		hrefUserLink = $("<a>").attr("href", "/userprofile/" + item.id);
 						var		friendCanvas = $("<canvas>").attr("width", "40")
 															.attr("height", "40")
-															.addClass('canvas-big-avatar class-tooltip');
+															.addClass("canvas-big-avatar class-tooltip");
 						var		friendCanvasCtx = friendCanvas[0].getContext("2d");
 						var		fullName = "", name = "", nameLast = "";
 
@@ -243,14 +267,14 @@ view_profile = (function()
 		{
 			var		user1Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "bottom")
 												.attr("title", data.user1.name + " " + data.user1.nameLast);
 			var		user1CanvasCtx = user1Canvas[0].getContext("2d");
 			var		user2Canvas = $("<canvas>").attr("width", "80")
 												.attr("height", "80")
-												.addClass('canvas-big-avatar class-tooltip')
+												.addClass("canvas-big-avatar class-tooltip")
 												.data("toggle", "tooltip")
 												.data("placement", "bottom")
 												.attr("title", data.user2.name + " " + data.user2.nameLast);
@@ -319,7 +343,7 @@ view_profile = (function()
 			}
 		}
 
-		$('.class-tooltip').tooltip();
+		$(".class-tooltip").tooltip();
 
 		console.debug("DrawPathFromUser1ToUser2: end");
 	};
@@ -402,7 +426,7 @@ view_profile = (function()
 													.attr("data-action", "update_occupation_start")
 													.addClass("occupation_start datePick formatDate")
 													.append(system_calls.ConvertDateSQLToHuman(item.occupationStart));
-			var		spanFinishEmplyment = $("<span>").attr("data-id", item.companyID)
+			var		spanFinishEmployment = $("<span>").attr("data-id", item.companyID)
 													.attr("data-action", "update_occupation_finish")
 													.addClass("occupation_finish editableSpan formatDate")
 													.append(system_calls.ConvertDateSQLToHuman(item.occupationFinish));
@@ -465,12 +489,12 @@ view_profile = (function()
 			divRowTitle.append(divTimeline.append(paragraphTimeline.append("c ")
 																	.append(spanStartEmployment)
 																	.append(" по ")
-																	.append(item.currentCompany == "1" ? spanCurrentPositionText : spanFinishEmplyment) ));
+																	.append(item.currentCompany == "1" ? spanCurrentPositionText : spanFinishEmployment) ));
 			if(employmentDuration.length) paragraphEmployment.append(spanEmploymentDuration);
 
 
 			var		divRowResponsibilities = $("<div>").addClass("row")
-													.attr("id", "responsibilitie" + item.companyID);
+													.attr("id", "responsibilities" + item.companyID);
 			var		divResponsibilities = $("<div>").addClass("col-xs-offset-1 col-xs-11");
 			var		paragraphResponsibilities = $("<p>").attr("id", "paragraphRowResponsibilities" + item.companyID)
 														.addClass("editableParagraph")
@@ -622,7 +646,7 @@ view_profile = (function()
 									{
 										var		id = $(this).data("id");
 
-										$.getJSON('/cgi-bin/index.cgi?action=AJAX_setCourseRating', {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+										$.getJSON("/cgi-bin/index.cgi?action=AJAX_setCourseRating", {id: usersCoursesID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 										.done(function(data) {
 											if(data.result == "success")
 											{	
@@ -702,7 +726,7 @@ view_profile = (function()
 													.append(item.schoolOccupationStart);
 			var		spanOccupationFinish = $("<span>").attr("data-id", item.schoolID)
 													.attr("data-action", "updateSchoolOccupationFinish")
-													.addClass("schoolOccupationFnish editableSelectYears19302017")
+													.addClass("schoolOccupationFinish editableSelectYears19302017")
 													.append(item.schoolOccupationFinish);
 			var		spanLocality = $("<span>").attr("data-id", item.schoolID)
 													.attr("data-action", "updateSchoolLocality")
@@ -782,9 +806,9 @@ view_profile = (function()
 													.attr("data-action", "updateUniversityOccupationStart")
 													.addClass("UniversityOccupationStart editableSelectYears19302017")
 													.append(item.universityOccupationStart);
-			var		spanOccuopationFinish = $("<span>").attr("data-id", item.universityID)
+			var		spanOccupationFinish = $("<span>").attr("data-id", item.universityID)
 													.attr("data-action", "updateUniversityOccupationFinish")
-													.addClass("UniversityOccupationFnish editableSelectYears19302017")
+													.addClass("UniversityOccupationFinish editableSelectYears19302017")
 													.append(item.universityOccupationFinish);
 			var		spanDegree = $("<span>").attr("data-id", item.universityID)
 													.attr("data-action", "updateUniversityDegree")
@@ -825,7 +849,7 @@ view_profile = (function()
 
 			divRowUniversity.append(divUniversityTitle.append(paragraphUniversity).append(spanDegree).append(" в ").append(spanTitle).append(" (").append(spanRegion).append(")"));
 			divRowUniversity.append(divCover.append(imgCover));
-			divRowUniversity.append(divUniversityOccupation.append(spanOccupationStart).append(" - ").append(spanOccuopationFinish));
+			divRowUniversity.append(divUniversityOccupation.append(spanOccupationStart).append(" - ").append(spanOccupationFinish));
 			// divRowUniversity.append(divClose);
 
 			educationInTitle += item.universityTitle + "<br>";
@@ -1062,7 +1086,7 @@ view_profile = (function()
 									{
 										var		id = $(this).data("id");
 
-										$.getJSON('/cgi-bin/book.cgi?action=AJAX_setBookRating', {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
+										$.getJSON("/cgi-bin/book.cgi?action=AJAX_setBookRating", {id: usersBooksID, rating: rating, rand: Math.round(Math.random() * 100000000)})
 										.done(function(data) {
 											if(data.result == "success")
 											{	
@@ -1424,7 +1448,7 @@ view_profile = (function()
 		$("div#RecommendationPath .removeRecommendationEntry").on("click", RemoveRecommendationEntry);
 
 		userCache.AddCallbackRunsAfterCacheUpdate(view_profile.RenderRecommendationPath);
-		window.setTimeout(userCache.RequestServerToUpdateCache, 1000)
+		window.setTimeout(userCache.RequestServerToUpdateCache, 1000);
 	};
 
 	var		SkillConfirmationClickHandler = function(event)
@@ -1434,7 +1458,7 @@ view_profile = (function()
 		var		currTagID = currTag.data("id");
 		var		myUserID = parseInt($("#myUserID").data("myuserid"));
 
-		$.getJSON('/cgi-bin/index.cgi', {action:currTagAction, id:currTagID})
+		$.getJSON("/cgi-bin/index.cgi", {action:currTagAction, id:currTagID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1445,7 +1469,7 @@ view_profile = (function()
 				}
 			});
 		
-		// --- improve UseExpirience to avoid delay in server response
+		// --- improve UseExperience to avoid delay in server response
 		if(currTagAction == "viewProfile_SkillApprove")
 		{
 			userProfile.skill.forEach(function(item, i, arr)
@@ -1522,7 +1546,7 @@ view_profile = (function()
 
 			AddRecommendationPathToggleCollapsible();
 
-			$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+			$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 							{
 								"action" : "AJAX_addViewProfileAddRecommendation",
 								"title": system_calls.FilterUnsupportedUTF8Symbols(addRecommendation.AddRecommendationTitle),
@@ -1573,31 +1597,13 @@ view_profile = (function()
 		var		templates = [
 "Свои обязанности сотрудник выполнял отлично. В течение всего срока своей работы сотрудник демонстрировал высокий уровень внимательности, аналитические и математические способности, стремление к повышению профессионального уровня, аккуратность, исполнительность. Сотрудник является эмоционально устойчивым и коммуникабельным человеком. Кроме того, он постоянно стремился самостоятельно повысить свой профессиональный уровень. Я, как его непосредственный руководитель, с уверенностью могу рекомендовать сотрудника для работы на аналогичной должности. ",
 "В процессе работы сотрудник продемонстрировал способность хорошо ориентироваться на рынке, знание конкурентов и их потребности. Сотрудник, не только работал с существующими клиентами, но и умело искал новых. В течение всего времени работы в нашей компании сотрудник демонстрировал стремление к повышению профессионализма, прошел несколько профессиональных тренингов. Также сотрудник показал себя как работник с высоким уровнем самоорганизации, лояльности к компании, мотивации, нацеленностью на результат. Сотрудник коммуникабелен, умеет находить общий язык с клиентами и сотрудниками, неконфликтен. Рекомендую сотрудника, как способного на любые должности, связанные с его профессиональным опытом работы.",
-"Выражаю глубокую признательность и благодарность за Ваше профессиональное мастерство, талант, душевную щедрость.\
-Особенно хочется Вас поблагодарить за индивидуальный подход, компетентность, ответственность и доброжелательность.\
-Вы умный, талантливый, неповторимый профессионал своего дела!\n\
-Спасибо за все, что Вы делаете, и благодарю Вас за творческое отношение к работе, энтузиазм, открытость и доброжелательность!",
-
-"Меня вы выручили ловко,\n\
-За помощь вас благодарю.\n\
-Поддержку вашу и заботу,\n\
-Поверьте, очень я ценю.\n\n\
-Пускай судьба подарит счастье,\n\
-Вы славный, добрый человек.\n\
-Пускай здоровым и прекрасным\n\
-Лишь будет Ваш достойный век.",
-
-"Помочь – всегда святое дело,\n\
-И мне не отказали вы.\n\
-Спасибо вам за понимание,\n\
-Пусть станут явью все мечты.\n\n\
-Вы не оставили с проблемой\n\
-Меня страдать наедине.\n\
-Желаю вам всегда везения\n\
-И счастья яркого в судьбе.",
-
+"Выражаю глубокую признательность и благодарность за Ваше профессиональное мастерство, талант, душевную щедрость.",
+"Особенно хочется Вас поблагодарить за индивидуальный подход, компетентность, ответственность и доброжелательность.",
+"Вы умный, талантливый, неповторимый профессионал своего дела!\n",
+"Спасибо за все, что Вы делаете, и благодарю Вас за творческое отношение к работе, энтузиазм, открытость и доброжелательность!",
+"Меня вы выручили ловко,\nЗа помощь вас благодарю.\nПоддержку вашу и заботу,\nПоверьте, очень я ценю.\n\nПускай судьба подарит счастье,\nВы славный, добрый человек.\nПускай здоровым и прекрасным\nЛишь будет Ваш достойный век.",
+"Помочь – всегда святое дело,\nИ мне не отказали вы.\nСпасибо вам за понимание,\nПусть станут явью все мечты.\n\nВы не оставили с проблемой\nМеня страдать наедине.\nЖелаю вам всегда везения\nИ счастья яркого в судьбе.",
 "Благодарю Вас за снисхождение, оказанное мне в начале моей карьеры, за некоторые незначительные поблажки, на совершенные мной автоматические ошибки, за веру в мой проект и за возможность самореализации.",
-
 "Милый, я тебе клянусь,\nОт любви к тебе рехнусь!",
 		];
 		$("#AddRecommendationTitle").val("Уважаемый " + $("#friendName").text() + "!\n\n" + templates[Math.floor(Math.random() * templates.length)]);
@@ -1621,16 +1627,16 @@ view_profile = (function()
 		$("#AreYouSure #Remove").data("action", affectedAction);
 
 
-		$("#AreYouSure").modal('show');
+		$("#AreYouSure").modal("show");
 	};
 
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
 		var		affectedAction = $("#AreYouSure #Remove").data("action");
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/index.cgi?action=' + affectedAction, {id: affectedID})
+		$.getJSON("/cgi-bin/index.cgi?action=" + affectedAction, {id: affectedID})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1642,7 +1648,7 @@ view_profile = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately) 
+		// --- To improve User Experience (react on user actions immediately) 
 		// ---     I'm updating GUI immediately after click, not waiting server response
 		if(affectedAction == "AJAX_removeRecommendationEntry")
 		{
@@ -1658,11 +1664,11 @@ view_profile = (function()
 
 	// --- Editable function
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 
 	};
 
@@ -1698,7 +1704,7 @@ view_profile = (function()
 				{
 					if(currentContent === "") {	currentContent = "Опишите круг своих обязанностей работы в компании.";	}
 
-					$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+					$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 						{
 							id: $(currentTag).data("id"), content: system_calls.FilterUnsupportedUTF8Symbols($(currentTag).val()),
 							action: "AJAX_updateRecommendationTitle",
@@ -1742,7 +1748,7 @@ view_profile = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceToTextarea);
+		$(newTag).on("click", editableFuncReplaceToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -1806,10 +1812,10 @@ view_profile = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 

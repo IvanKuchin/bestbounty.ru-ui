@@ -1,4 +1,5 @@
-From: noreply@<<vars:EMAIL_FROM_DOMAIN>>
+To: <<vars:RECIPIENT_EMAIL>>
+From: "<<vars:SERVER_NAME>>" <noreply@<<vars:EMAIL_FROM_DOMAIN>>>
 Subject: <<vars:SERVER_NAME>>: Напоминание данных аккаунта
 Content-type: multipart/alternative; boundary="<<vars:rand>>"
 

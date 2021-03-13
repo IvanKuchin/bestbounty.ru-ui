@@ -1,5 +1,5 @@
 To: <<vars:RECIPIENT_EMAIL>>
-From: "<<vars:SERVER_NAME>>" <noreply@<<PROJECT_NAME>>>
+From: "<<vars:SERVER_NAME>>" <noreply@<<vars:EMAIL_FROM_DOMAIN>>>
 Subject: <<vars:SERVER_NAME>>: new incident S<<vars:severity>> <<vars:case_title>>
 Content-type: multipart/alternative; boundary="<<vars:rand>>"
 

@@ -38,7 +38,7 @@ forget_password = (function()
 						}
 						else
 						{
-							$.getJSON('/cgi-bin/index.cgi?action=AJAX_forgetPassword', {email: email})
+							$.getJSON("/cgi-bin/index.cgi?action=AJAX_forgetPassword", {email: email})
 							.done(
 								function(data)
 								{
@@ -77,14 +77,14 @@ forget_password = (function()
 
 	var ResetForm = function()
 	{
-		$('#forgetPasswordSubmit').button('reset');
+		$("#forgetPasswordSubmit").button("reset");
 		$("#email").removeAttr("disabled");
 	};
 
 	var ForgetPassword = function()
 	{
 		$("#email").attr("disabled", "");
-		$('#forgetPasswordSubmit').button('loading');
+		$("#forgetPasswordSubmit").button("loading");
 		SendEmail();
 	};
 

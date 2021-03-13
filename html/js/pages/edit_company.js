@@ -3,7 +3,7 @@ var	edit_company = edit_company || {};
 
 edit_company = (function()
 {
-	'use strict';
+	"use strict";
 
 	var		companyProfile = {};
 	var		AutocompleteList = [];
@@ -26,7 +26,7 @@ edit_company = (function()
 
 		$("#AreYouSure #Remove").on("click", AreYouSureRemoveHandler);
 
-		$.getJSON('/cgi-bin/company.cgi?action=JSON_getCompanyProfile', {id: companyProfile.id})
+		$.getJSON("/cgi-bin/company.cgi?action=JSON_getCompanyProfile", {id: companyProfile.id})
 			.done(function(data) {
 				if((data.result === "success") && (data.companies.length))
 				{
@@ -54,8 +54,8 @@ edit_company = (function()
 
 		PrefillInternalStructures();
 
-		// --- Drop company posession
-		$("button#companyDropPosession").on("click", AreYouSureClickHandler);
+		// --- Drop company possession
+		$("button#companyDropPossession").on("click", AreYouSureClickHandler);
 
 		// --- Founder add
 		$("input#companyFounderItem").on("keyup", InputKeyupHandler);
@@ -87,10 +87,10 @@ edit_company = (function()
 		// --- Image uploader
 		$(function () {
 		    // Change this to the location of your server-side upload handler:
-		    $('#fileupload').fileupload({
-		        url: '/cgi-bin/companylogouploader.cgi?uploadType=companyLogo',
+		    $("#fileupload").fileupload({
+		        url: "/cgi-bin/companylogouploader.cgi?uploadType=companyLogo",
 		        formData: {companyid:companyProfile.id},
-		        dataType: 'json',
+		        dataType: "json",
 		        maxFileSize: 30 * 1024 * 1024, 
 		        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 
@@ -123,17 +123,17 @@ edit_company = (function()
 		        },
 		        progressall: function (e, data) {
 		            var progress = parseInt(data.loaded / data.total * 100, 10);
-		            $('#progress .progress-bar').css(
-		                'width',
-		                progress + '%'
+		            $("#progress .progress-bar").css(
+		                "width",
+		                progress + "%"
 		            );
 		        },
 		        fail: function (e, data) {
 		        	alert("ошибка загрузки фаила: " + data.textStatus);
 		        }
 
-		    }).prop('disabled', !$.support.fileInput)
-		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    }).prop("disabled", !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : "disabled");
 		});
 
 	};
@@ -145,20 +145,20 @@ edit_company = (function()
 		var		link;
 
 		{
-			var		tempArr = document.location.host.split('.');
+			var		tempArr = document.location.host.split(".");
 
-			mailDomain = tempArr.slice(tempArr.length - 2).join('.');
+			mailDomain = tempArr.slice(tempArr.length - 2).join(".");
 		}
 
-		link	= 'mailto:admin@' + mailDomain + '?subject=Ошибка в данных компании ' + company.name + ' (id: ' + company.id + ')'
-				+ '&body=Добрый день ! ' + encodeURIComponent("\n\n")
-				+ 'Найдена ошибка в данных компании ' + company.name + ' (id: ' + company.id + ')' + encodeURIComponent("\n")
-				+ 'Прошу рассмотреть исправление некорректного значения ________ на ___________ ' + encodeURIComponent("\n\n")
-				+ 'С уважением ' + $("#myFirstName").text() + " " + $("#myLastName").text() + ' (userid:' + $("#myUserID").data("myuserid") + ').';
+		link	= "mailto:admin@" + mailDomain + "?subject=Ошибка в данных компании " + company.name + " (id: " + company.id + ")"
+				+ "&body=Добрый день ! " + encodeURIComponent("\n\n")
+				+ "Найдена ошибка в данных компании " + company.name + " (id: " + company.id + ")" + encodeURIComponent("\n")
+				+ "Прошу рассмотреть исправление некорректного значения ________ на ___________ " + encodeURIComponent("\n\n")
+				+ "С уважением " + $("#myFirstName").text() + " " + $("#myLastName").text() + " (userid:" + $("#myUserID").data("myuserid") + ").";
 
 
 	    window.location.href = link;
-	}
+	};
 
 	var	PrefillInternalStructures = function() 
 	{
@@ -178,7 +178,7 @@ edit_company = (function()
 				JSON_skill = e.data.JSONarrWithID_skill;
 
 				AddDataForProfileCollapsibleInit();
-			}
+			};
 
 			setTimeout(function () 
 				{
@@ -190,46 +190,46 @@ edit_company = (function()
 			setTimeout(function () 
 				{
 					// --- AJAX jobTitle download 
-					$.getJSON('/cgi-bin/index.cgi?action=AJAX_getDataForProfile', {param1: ''})
+					$.getJSON("/cgi-bin/index.cgi?action=AJAX_getDataForProfile", {param1: ""})
 							.done(function(data) {
 								JSON_dataForProfile = data;
 
 								data.geo_country.forEach(function(item, i, arr)
 								{
 									JSON_geoCountry.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 
 								data.geo_region.forEach(function(item, i, arr)
 								{
 									JSON_geoRegion.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 
 								data.geo_locality.forEach(function(item, i, arr)
 								{
 									JSON_geoLocality.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 
 								data.university.forEach(function(item, i, arr)
 								{
 									JSON_university.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 								jQuery.unique(JSON_university);
 
 								data.school.forEach(function(item, i, arr)
 								{
 									JSON_school.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 								jQuery.unique(JSON_school);
 
 								data.language.forEach(function(item, i, arr)
 								{
 									JSON_language.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 
 								data.skill.forEach(function(item, i, arr)
 								{
 									JSON_skill.push(system_calls.ConvertHTMLToText(item.title));
-								})
+								});
 								jQuery.unique(JSON_skill);
 
 								AddDataForProfileCollapsibleInit();
@@ -280,7 +280,7 @@ edit_company = (function()
 				create: function () {
 					// console.debug ("CreateAutocompleteWithChangeCallback: _create event handler"); 
 				},
-				_renderMenu: function (ul, items)  // --- requres plugin only
+				_renderMenu: function (ul, items)  // --- requires plugin only
 				{
 					var	that = this;
 					currentCategory = "";
@@ -407,7 +407,7 @@ edit_company = (function()
 														.text("Добавление");
 					$("input#companyFounderItem").attr("disabled", "");
 
-					$.getJSON('/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyFounder', {userid: userID, username: system_calls.FilterUnsupportedUTF8Symbols(userName), companyid: companyProfile.id})
+					$.getJSON("/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyFounder", {userid: userID, username: system_calls.FilterUnsupportedUTF8Symbols(userName), companyid: companyProfile.id})
 						.done(function(data) {
 							if(data.result === "success")
 							{
@@ -499,7 +499,7 @@ edit_company = (function()
 														.text("Добавление");
 					$("input#companyOwnerItem").attr("disabled", "");
 
-					$.getJSON('/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyOwner', {userid: userID, username: system_calls.FilterUnsupportedUTF8Symbols(userName), companyid: companyProfile.id})
+					$.getJSON("/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyOwner", {userid: userID, username: system_calls.FilterUnsupportedUTF8Symbols(userName), companyid: companyProfile.id})
 						.done(function(data) {
 							if(data.result === "success")
 							{
@@ -591,7 +591,7 @@ edit_company = (function()
 														.text("Добавление");
 					$("input#companyIndustryItem").attr("disabled", "");
 
-					$.getJSON('/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyIndustry', {industrytitle: system_calls.FilterUnsupportedUTF8Symbols(industryTitle), companyid: companyProfile.id})
+					$.getJSON("/cgi-bin/index.cgi?action=AJAX_addEditCompanyAddCompanyIndustry", {industrytitle: system_calls.FilterUnsupportedUTF8Symbols(industryTitle), companyid: companyProfile.id})
 						.done(function(data) {
 							if(data.result === "success")
 							{
@@ -637,7 +637,7 @@ edit_company = (function()
 		{
 			if(keyPressed == 13) AddCompanyIndustry("", currentTag.val());
 		}
-	}
+	};
 
 	var AutocompleteWithUsers = function() 
 	{
@@ -664,7 +664,7 @@ edit_company = (function()
 		if(inputValue.length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getFindFriendsListAutocompleteIncludingMyself", lookForKey:inputValue})
 				.done(function(data) {
 						AutocompleteList = [];
@@ -717,7 +717,7 @@ edit_company = (function()
 							create: function () {
 								console.debug ("edit_company.OnInputHandler autocomplete.create: _create event handler"); 
 							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
+							_renderMenu: function (ul, items)  // --- requires plugin only
 							{
 								var	that = this;
 								var currentCategory = "";
@@ -770,7 +770,7 @@ edit_company = (function()
 		if(inputValue.length == 2)
 		{
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"JSON_getIndustryListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						AutocompleteList = [];
@@ -807,7 +807,7 @@ edit_company = (function()
 								create: function () {
 									console.debug ("edit_company.OnInputHandler autocomplete.create: _create event handler"); 
 								},
-								_renderMenu: function (ul, items)  // --- requres plugin only
+								_renderMenu: function (ul, items)  // --- requires plugin only
 								{
 									var	that = this;
 									var currentCategory = "";
@@ -827,7 +827,7 @@ edit_company = (function()
 						} // --- if status == "success"
 						else
 						{
-							console.debug("AutocompleteWithIndustries")
+							console.debug("AutocompleteWithIndustries");
 						} // --- if status == "success"
 					}); // --- getJSON.done()
 
@@ -850,7 +850,7 @@ edit_company = (function()
 		$("#companyFounderItem").val("");
 		$("#companyFounderItem").removeAttr("disabled");
 		$("#ButtonAddFounderToCompany").attr("disabled", "");
-	}
+	};
 
 	var	RenderCompanyFounders = function()
 	{
@@ -879,7 +879,7 @@ edit_company = (function()
 		$("#companyOwnerItem").val("");
 		$("#companyOwnerItem").removeAttr("disabled");
 		$("#ButtonAddOwnerToCompany").attr("disabled", "");
-	}
+	};
 
 	var	RenderCompanyOwners = function()
 	{
@@ -908,7 +908,7 @@ edit_company = (function()
 		$("#companyIndustryItem").val("");
 		$("#companyIndustryItem").removeAttr("disabled");
 		$("#ButtonAddIndustryToCompany").attr("disabled", "");
-	}
+	};
 
 	var	RenderCompanyIndustries = function()
 	{
@@ -973,7 +973,7 @@ edit_company = (function()
 			{
 
 				var		divRowCandidate			= $("<div>")	.addClass("row form-group")
-																.attr("id", "rowAppliedCandidate" + item.id)
+																.attr("id", "rowAppliedCandidate" + item.id);
 				var		divColFitness			= $("<div>")	.addClass("col-xs-3 col-md-1");
 				var		divColName				= $("<div>")	.addClass("col-xs-9 col-md-3");
 				var		divColCompanyQue		= $("<div>")	.addClass("col-xs-4 col-md-2 padding_0px");
@@ -1040,7 +1040,7 @@ edit_company = (function()
 					}
 					else
 					{
-						spanAnswer.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>")
+						spanAnswer.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>");
 					}
 
 					answerRoaster = answerRoaster.add(spanAnswer);
@@ -1064,12 +1064,12 @@ edit_company = (function()
 						}
 						else
 						{
-							spanSkill.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>")
+							spanSkill.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>");
 						}
 					}
 					else
 					{
-						spanSkill.append("<i class=\"fa fa-circle-o fa-stack-2x color_grey\"></i>")
+						spanSkill.append("<i class=\"fa fa-circle-o fa-stack-2x color_grey\"></i>");
 					}
 
 					skillRoaster = skillRoaster.add(spanSkill);
@@ -1093,12 +1093,12 @@ edit_company = (function()
 						}
 						else
 						{
-							spanLng.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>")
+							spanLng.append("<i class=\"fa fa-circle-o fa-stack-2x color_red\"></i><i class=\"fa fa-times fa-stack-1x color_red\"></i>");
 						}
 					}
 					else
 					{
-						spanLng.append("<i class=\"fa fa-circle-o fa-stack-2x color_grey\"></i>")
+						spanLng.append("<i class=\"fa fa-circle-o fa-stack-2x color_grey\"></i>");
 					}
 
 					lngRoaster = lngRoaster.add(spanLng);
@@ -1106,8 +1106,8 @@ edit_company = (function()
 
 
 				candidateRating = Math.round(candidateScore / positionScore * 100);
-				if(candidateRating < 33) ratingClass = "color_red"
-				else if(candidateRating < 66) ratingClass = "color_orange"
+				if(candidateRating < 33) ratingClass = "color_red";
+				else if(candidateRating < 66) ratingClass = "color_orange";
 				else ratingClass = "color_green";
 				divColFitness	.append(candidateRating + "%")
 								.addClass(ratingClass);
@@ -1143,7 +1143,7 @@ edit_company = (function()
 		$("#OpenVacancy" + openVacancyID + "Candidates [data-toggle=\"tooltip\"]").tooltip({ animation: "animated bounceIn"});
 
 		return		result;
-	}
+	};
 
 	var AppliedCandidatesListClickHandler = function(openVacancyID)
 	{
@@ -1151,7 +1151,7 @@ edit_company = (function()
 		$("button[data-group='OpenVacancy" + openVacancyID + "CandidatesButtons']").button("loading");
 
 
-		$.getJSON('/cgi-bin/company.cgi?action=AJAX_getCandidatesAppliedToPosition', {id: openVacancyID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/company.cgi?action=AJAX_getCandidatesAppliedToPosition", {id: openVacancyID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1179,7 +1179,7 @@ edit_company = (function()
 				console.debug("InitAppliedCandidatesToVacancy: ERROR: parse JSON response from server");
 				setTimeout(function() {$("button[data-group='OpenVacancy" + openVacancyID + "CandidatesButtons']").button("reset"); }, 500); // --- wait for animation
 			});
-	}
+	};
 
 	// --- Rendering vacancy collapsible immediately after page loading.
 	var InitAppliedCandidatesToVacancy = function(openVacancy)
@@ -1187,13 +1187,13 @@ edit_company = (function()
 		var		id = openVacancy.id;
 		var		divRowCollapsible	= $("<div>").addClass("collapse form-group")
 												.attr("id", "OpenVacancy" + id + "CandidatesCollapsible");
-		var		divRowTop			= $("<div>")	.addClass("row form-group")
+		var		divRowTop			= $("<div>")	.addClass("row form-group");
 		var		divColTop			= $("<div>")	.addClass("col-xs-12 collapse-top-shadow form-group")
 													.append($("<p>"));
 
 		var		divCandidate		= $("<div>")	.attr("id", "OpenVacancy" + id + "Candidates");
 
-		var		divRowBottom		= $("<div>")	.addClass("row")
+		var		divRowBottom		= $("<div>")	.addClass("row");
 		var		divColBottom		= $("<div>")	.addClass("col-xs-12 collapse-bottom-shadow")
 													.append($("<p>"));
 		divRowTop				.append(divColTop);
@@ -1204,7 +1204,7 @@ edit_company = (function()
 		divRowCollapsible.append(divRowBottom);
 
 		return divRowCollapsible;
-	}
+	};
 
 	// --- Rendering single open vacancy collapsible for editing.
 	var RenderSingleVacancyCollapsible = function(openVacancy)
@@ -1212,7 +1212,7 @@ edit_company = (function()
 		var		id = openVacancy.id;
 		var		divRowCollapsible	= $("<div>").addClass("collapse form-group")
 												.attr("id", "OpenVacancy" + id + "Edit");
-		var		divRowTop			= $("<div>")	.addClass("row form-group")
+		var		divRowTop			= $("<div>")	.addClass("row form-group");
 		var		divColTop			= $("<div>")	.addClass("col-xs-12 collapse-top-shadow form-group")
 													.append($("<p>"));
 
@@ -1475,7 +1475,7 @@ edit_company = (function()
 		var		buttonCancel		= $("<button>").addClass("btn btn-default form-control")
 													.on("click", function() { $("#OpenVacancy" + id + "Edit").collapse("toggle"); })
 													.append("Закрыть");
-		var		divRowBottom		= $("<div>")	.addClass("row")
+		var		divRowBottom		= $("<div>")	.addClass("row");
 		var		divColBottom		= $("<div>")	.addClass("col-xs-12 collapse-bottom-shadow")
 													.append($("<p>"));
 
@@ -1544,7 +1544,7 @@ edit_company = (function()
 
 
 		return divRowCollapsible;
-	}
+	};
 
 	var	RenderCompanyOpenVacancies = function()
 	{
@@ -1577,7 +1577,7 @@ edit_company = (function()
 			var		divRow = $("<div>").addClass("row")
 										.attr("id", "openVacancy" + item.id);
 			var		divRowControl_xs = $("<div>").addClass("row");
-			var		divSeparatop = $("<div>").addClass("col-xs-12").append($("<p>"));
+			var		divSeparator = $("<div>").addClass("col-xs-12").append($("<p>"));
 			var		divStatus = $("<div>").addClass("col-xs-2 col-md-1");
 			var		divTitle = $("<div>").addClass("col-xs-8 col-md-7");
 			var		divMonth = $("<div>").addClass("col-xs-2 col-md-1");
@@ -1636,14 +1636,14 @@ edit_company = (function()
 
 			if((currentTS <= publishFinishTS))
 			{
-				var		publisDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
+				var		publishDaysRemains = Math.floor((publishFinishTS.getTime() - currentTS.getTime()) / (24 * 3600 * 1000) );
 
 				spanStatus = $("<span>").addClass("fa-stack")
 										.append($("<i>").addClass("fa fa-circle-o fa-stack-2x color_green"))
 										.append($("<i>").addClass("fa fa-check fa-stack-1x color_green"))
 										.attr("data-toggle", "tooltip")
 										.attr("data-placement", "top")
-										.attr("title", "Опубликована (еще " + publisDaysRemains + " " + system_calls.GetDaysSpelling(publisDaysRemains) + ")");
+										.attr("title", "Опубликована (еще " + publishDaysRemains + " " + system_calls.GetDaysSpelling(publishDaysRemains) + ")");
 			}
 			else
 			{
@@ -1665,7 +1665,7 @@ edit_company = (function()
 			divControl2_xs.append(buttonControl2_xs);
 			divControl3_xs.append(buttonControl3_xs);
 
-			divRow	.append(divSeparatop)
+			divRow	.append(divSeparator)
 					.append(divStatus)
 					.append(divTitle)
 					.append(divMonth)
@@ -1711,7 +1711,7 @@ edit_company = (function()
 		$("span#companyWebSite").html(companyProfile.webSite.length ? companyProfile.webSite : "(отсутствует)");
 		$("span#companyFoundationDate").html(companyProfile.foundationDate);
 		$("span#companyNumberOfEmployee").html(companyProfile.numberOfEmployee.length ? companyProfile.numberOfEmployee : "0");
-		$("p#companyDescription").html(companyProfile.description ? companyProfile.description : "(описание отсутствует)")
+		$("p#companyDescription").html(companyProfile.description ? companyProfile.description : "(описание отсутствует)");
 
 		$("div#companyInfo .editableSpan").on("click", editableFuncReplaceSpanToInput);
 		$("div#companyInfo .editableSpan").mouseenter(editableFuncHighlightBgcolor);
@@ -1737,8 +1737,8 @@ edit_company = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		$("#AreYouSure").modal('show');
-	}
+		$("#AreYouSure").modal("show");
+	};
 
 	var	AreYouSureClickHandler = function()
 	{
@@ -1749,10 +1749,10 @@ edit_company = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_dropCompanyPosession")
+		if(currTag.data("action") == "AJAX_dropCompanyPossession")
 		{
 			$("#AreYouSure #Remove").data("id", companyProfile.id);
-			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPosession");
+			$("#AreYouSure #Remove").data("action", "AJAX_dropCompanyPossession");
 			$("#AreYouSure #Remove").data("script", "company.cgi");
 
 			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
@@ -1765,7 +1765,7 @@ edit_company = (function()
 		}
 
 		$("#AreYouSure").modal("show");
-	}
+	};
 
 	var	AreYouSureRemoveHandler = function() {
 		var		affectedID = $("#AreYouSure #Remove").data("id");
@@ -1775,9 +1775,9 @@ edit_company = (function()
 		if((typeof(affectedScript) == "undefined") || (affectedScript == ""))
 			affectedScript = "index.cgi";
 
-		$("#AreYouSure").modal('hide');
+		$("#AreYouSure").modal("hide");
 
-		$.getJSON('/cgi-bin/' + affectedScript + '?action=' + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
+		$.getJSON("/cgi-bin/" + affectedScript + "?action=" + affectedAction, {id: affectedID, rand: Math.random() * 1234567890})
 			.done(function(data) {
 				if(data.result === "success")
 				{
@@ -1789,7 +1789,7 @@ edit_company = (function()
 			});
 
 		// --- update GUI has to be inside getJSON->done->if(success).
-		// --- To improve User Expirience (react on user actions immediately, inspite on potential server error's) 
+		// --- To improve User Experience (react on user actions immediately, in-spite on potential server error's) 
 		if(affectedAction == "AJAX_removeCompanyFounder")
 		{
 			var		removeItemIndex = -1;
@@ -1842,7 +1842,7 @@ edit_company = (function()
 		{
 			$("#rowAppliedCandidate" + affectedID).remove();
 		}
-		if(affectedAction == "AJAX_dropCompanyPosession")
+		if(affectedAction == "AJAX_dropCompanyPossession")
 		{
 			window.location.href = "/companies_i_own_list?rand=" + system_calls.GetUUID();
 		}
@@ -1884,16 +1884,16 @@ edit_company = (function()
 		$(tag).width($(this).width() + 30);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "AJAX_updateCompanyWebSite") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateCompanyEmployeeNumber") 
 		{
-			$(tag).on('blur', editableFuncReplaceInputToSpan);
+			$(tag).on("blur", editableFuncReplaceInputToSpan);
 		}
 		if($(tag).data("action") == "AJAX_updateCompanyFoundationDate") 
 		{
@@ -1922,7 +1922,7 @@ edit_company = (function()
 	{
 		var currentTag = ((typeof param.html == "function") ? param : $(this));
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -1938,7 +1938,7 @@ edit_company = (function()
 		else
 		{
 			$(currentTag).replaceWith(newTag);
-			$(newTag).on('click', editableFuncReplaceSpanToInput);
+			$(newTag).on("click", editableFuncReplaceSpanToInput);
 			$(newTag).mouseenter(editableFuncHighlightBgcolor);
 			$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 		}
@@ -2012,7 +2012,7 @@ edit_company = (function()
 		currentTag.replaceWith(newTag);
 		$("#" + currentID + "ButtonAccept").remove();
 		$("#" + currentID + "ButtonReject").remove();
-		$(newTag).on('click', editableFuncReplaceParagraphToTextarea);
+		$(newTag).on("click", editableFuncReplaceParagraphToTextarea);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 	};
@@ -2041,7 +2041,7 @@ edit_company = (function()
 
 				companyProfile.description = filteredCompanyDescription;
 
-				$.post('/cgi-bin/index.cgi?rand=' + Math.floor(Math.random() * 1000000000), 
+				$.post("/cgi-bin/index.cgi?rand=" + Math.floor(Math.random() * 1000000000), 
 					{
 						description: filteredCompanyDescription,
 						action: "AJAX_updateCompanyDescription",
@@ -2066,7 +2066,7 @@ edit_company = (function()
 		} // --- if textarea value changed
 		else
 		{
-			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change")
+			console.debug("editableFuncReplaceToParagraphAccept: textarea value hasn't change");
 		}
 
 		editableFuncReplaceToParagraphRenderHTML(currentTag, system_calls.ConvertTextToHTML(currentContent));
@@ -2138,10 +2138,10 @@ edit_company = (function()
 		});
 
 		currentTag.replaceWith(tag);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).removeClass("editable_highlighted_class");
 		$(tag).after(tagButtonAccept);
 		$(tag).after(tagButtonReject);
-		$(tag).on('keyup', keyupEventHandler);
+		$(tag).on("keyup", keyupEventHandler);
 		$(tag).select();
 	};
 
@@ -2193,7 +2193,7 @@ edit_company = (function()
 		system_calls.companyTypes.forEach(function(item, i , arr)
 		{
 			$(tag).append($("<option>").append(item));
-		})
+		});
 
 		$(tag).val(currentValue); 
 
@@ -2224,15 +2224,15 @@ edit_company = (function()
 		$(tag).width($(this).width()*2);
 
 		$(this).replaceWith(tag);
-		$(tag).on('keyup', keyupEventHandler);
-		$(tag).on('change', selectChangeHandler);
-		$(tag).on('blur', selectChangeHandler);
-		$(tag).removeClass('editable_highlited_class');
+		$(tag).on("keyup", keyupEventHandler);
+		$(tag).on("change", selectChangeHandler);
+		$(tag).on("blur", selectChangeHandler);
+		$(tag).removeClass("editable_highlighted_class");
 
 		if($(tag).data("action") == "XXXXXXXXXX") 
 		{
 		}
-	}
+	};
 
 	// --- Replacement Select to Span
 	// --- input: 1) tag
@@ -2244,10 +2244,10 @@ edit_company = (function()
 		var		ajaxValue;
 
 		var 	currentTag = ((typeof param.html == "function") ? param : $(this));
-		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, '').replace(/\s+$/, '');
+		var		initValue = $(currentTag).attr("initValue").replace(/^\s+/, "").replace(/\s+$/, "");
 
 		var	newTag = $("<span>", {
-			text: $(currentTag).val().replace(/^\s+/, '').replace(/\s+$/, ''),
+			text: $(currentTag).val().replace(/^\s+/, "").replace(/\s+$/, ""),
 			id: $(currentTag).attr("id"),
 			class: $(currentTag).attr("class")
 		});
@@ -2256,7 +2256,7 @@ edit_company = (function()
 		$(newTag).data("action", $(currentTag).data("action"));
 
 		$(currentTag).replaceWith(newTag);
-		$(newTag).on('click', funcFromSelectToSpan);
+		$(newTag).on("click", funcFromSelectToSpan);
 		$(newTag).mouseenter(editableFuncHighlightBgcolor);
 		$(newTag).mouseleave(editableFuncNormalizeBgcolor);
 
@@ -2305,11 +2305,11 @@ edit_company = (function()
 	};
 
 	var editableFuncHighlightBgcolor = function () {
-		$(this).addClass("editable_highlited_class", 400);
+		$(this).addClass("editable_highlighted_class", 400);
 	};
 
 	var editableFuncNormalizeBgcolor = function () {
-		$(this).removeClass("editable_highlited_class", 200, "easeInOutCirc");
+		$(this).removeClass("editable_highlighted_class", 200, "easeInOutCirc");
 	};
 
 	var	AddNewOpenVacancyClickHandler = function() 
@@ -2410,7 +2410,7 @@ edit_company = (function()
 		{
 			$("#AddNewOpenVacancySubmitButton").button("loading");
 
-			$.post('/cgi-bin/company.cgi',
+			$.post("/cgi-bin/company.cgi",
 						{
 							action: "AJAX_precreateNewOpenVacancy",
 							company_id: companyProfile.id, 
@@ -2477,7 +2477,7 @@ edit_company = (function()
 					}
 					catch (e) // --- catch JSON.parse exception
 					{
-						console.log("AddNewOpenVacancySubmitButton:exception handler: ERROR: " + e.name + " (most probably wrong JSON reponse)");
+						console.log("AddNewOpenVacancySubmitButton:exception handler: ERROR: " + e.name + " (most probably wrong JSON response)");
 						system_calls.PopoverError("EditOpenVacancy" + id + "SubmitButton", "Ошибка JSON-ответа севера. Необходимо сообщить в тех. поддержку.");
 					}
 				setTimeout(function() {$("#AddNewOpenVacancySubmitButton").button("reset"); }, 500); // --- wait for animation
@@ -2592,7 +2592,7 @@ edit_company = (function()
 		{
 			$("#EditOpenVacancy" + id + "SubmitButton").button("loading");
 
-			$.post('/cgi-bin/company.cgi', 
+			$.post("/cgi-bin/company.cgi", 
 				{
 					action: "AJAX_updateOpenVacancy",
 					id: id, 
@@ -2657,7 +2657,7 @@ edit_company = (function()
 					}
 					catch (e) // --- catch JSON.parse exception
 					{
-						console.log("UpdateOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON reponse)");
+						console.log("UpdateOpenVacancyClickHandler:exception handler: ERROR: " + e.name + " (most probably wrong JSON response)");
 						system_calls.PopoverError("EditOpenVacancy" + id + "SubmitButton", "Ошибка JSON-ответа севера. Необходимо сообщить в тех. поддержку.");
 					}
 					setTimeout(function() {$("#EditOpenVacancy" + id + "SubmitButton").button("reset"); }, 500); // --- wait for animation
@@ -2709,7 +2709,7 @@ edit_company = (function()
 
 			$("#CreateOpenVacancyClosureDate option:nth-child(" + currMonth + ")").attr("selected", "");
 		}
-	}
+	};
 
 	return {
 		Init: Init,

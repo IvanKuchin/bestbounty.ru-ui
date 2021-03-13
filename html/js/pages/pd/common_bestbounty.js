@@ -2,7 +2,7 @@ common_bestbounty = (function()
 {
 	"use strict";
 
-	var GetCheckListFavoritTabs_DOM = function(checklists, suffix, Tab_ClickHandler)
+	var GetCheckListFavoriteTabs_DOM = function(checklists, suffix, Tab_ClickHandler)
 	{
 		var		result = $();
 
@@ -59,7 +59,7 @@ common_bestbounty = (function()
 	};
 
 	return {
-		GetCheckListFavoritTabs_DOM:GetCheckListFavoritTabs_DOM,
+		GetCheckListFavoriteTabs_DOM:GetCheckListFavoriteTabs_DOM,
 	};
 }
 )();

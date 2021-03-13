@@ -222,7 +222,7 @@
 		  </div>
 		  <div class="row">
 			  <div class="col-xs-12 col-md-6 col-md-offset-1">
-				  <input type="url" class="form-control" id="AddGiftLink" placeholder="Ссылка">
+				  <input type="url" class="form-control" id="AddGiftLink" placeholder="Ссылка (https:// или http://)">
 			  </div>
 			  <div class="col-xs-12 col-md-3 col-md-offset-0">
 				  <button type="button" class="btn btn-primary form-control" id="AddGiftLinkButton" placeholder="Получить данные" maxlength="512" data-loading-text="<span class='fa fa-refresh fa-spin fa-fw animateClass'></span> Загрузка...">Получить данные</button>
@@ -287,7 +287,7 @@
 	  </div>
 	  <div class="modal-body">
 		  Изображение будет удалено ?
-		<input type=hidden id="DeteledAvatarID_InBSForm">
+		<input type=hidden id="DeletedAvatarID_InBSForm">
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

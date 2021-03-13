@@ -1,5 +1,6 @@
-From: "<<vars:SERVER_NAME>>" <noreply@connme.ru>
-Subject: Event invite
+To: <<vars:RECIPIENT_EMAIL>>
+From: "<<vars:SERVER_NAME>>" <noreply@<<vars:EMAIL_FROM_DOMAIN>>>
+Subject: <<vars:SERVER_NAME>>: Event invite
 Content-type: multipart/alternative; boundary="<<vars:rand>>"
 
 --<<vars:rand>>

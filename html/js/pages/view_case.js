@@ -4,13 +4,13 @@ var	view_case = view_case || {};
 
 var	view_case = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	DATE_FORMAT_GLOBAL = "DD MMMM YYYY HH:mm:ss";
 	var	data_global;
 	var	helpdesk_ticket_obj_global;
 	var	user_global;
-	var	interfal_flag_global = 0;
+	var	interval_flag_global = 0;
 
 	var	Init = function()
 	{
@@ -30,16 +30,16 @@ var	view_case = (function()
 					}, 60000);
 	};
 
-	var	SetIntervalFlag		= function() { interfal_flag_global = 1; };
-	var	ResetIntervalFlag	= function() { interfal_flag_global = 0; };
-	var	isIntervalFlag		= function() { return interfal_flag_global; };
+	var	SetIntervalFlag		= function() { interval_flag_global = 1; };
+	var	ResetIntervalFlag	= function() { interval_flag_global = 0; };
+	var	isIntervalFlag		= function() { return interval_flag_global; };
 
 	var	GetCaseFromServer = function(case_id)
 	{
 		var	curr_tag = $("#case_view");
 
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				action:			"AJAX_getCase",
 				id: 			case_id,
@@ -74,7 +74,7 @@ var	view_case = (function()
 	var	GetUserInfoFromServer = function()
 	{
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				action:	"AJAX_getUserInfo",
 			})
@@ -176,7 +176,7 @@ var	view_case = (function()
 					.empty()
 					.append(helpdesk_ticket.TicketHistory_GetDOM(ticket));
 
-		// --- update input field only if it called regulat flow, 
+		// --- update input field only if it called regular flow, 
 		if(isIntervalFlag())
 		{
 			ResetIntervalFlag();

@@ -1,20 +1,8 @@
-/*jslint devel: true, indent: 4, maxerr: 50*/
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
+/* exported sms_confirmation */
 
 sms_confirmation = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var	country_code_selector_global = "";
 	var	phone_number_selector_global = "";
@@ -31,26 +19,26 @@ sms_confirmation = (function ()
 		$(".sms-confirmation-code").on("input", PhoneConfirmationCode_InputHandler);
 	};
 
-	var	SetTriggerSelector		= function(item) 	{ $(item).on('click', PhoneConfirmation_ClickHandler); };
+	var	SetTriggerSelector		= function(item) 	{ $(item).on("click", PhoneConfirmation_ClickHandler); };
 	var	SetCountryCodeSelector	= function(item)	{ country_code_selector_global			= item; };
 	var	SetPhoneNumberSelector	= function(item)	{ phone_number_selector_global			= item; };
 	var	SetSuccessCallback		= function(item)	{ success_callback_global				= item; };
 	var	SetFailCallback			= function(item)	{ fail_callback_global					= item; };
 
 	var	SetAdditionalParams1	= function(item)	{ additional_params1_selector_global	= item; };
-	var	SetScript1				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-script1', item); };
-	var	SetAction1				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-action1', item); };
+	var	SetScript1				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-script1", item); };
+	var	SetAction1				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-action1", item); };
 	var	SetAdditionalParams2	= function(item)	{ additional_params2_selector_global	= item; };
-	var	SetScript2				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-script2', item); };
-	var	SetAction2				= function(item) 	{ $("#DialogPhoneConfirmation").attr('data-action2', item); };
+	var	SetScript2				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-script2", item); };
+	var	SetAction2				= function(item) 	{ $("#DialogPhoneConfirmation").attr("data-action2", item); };
 
 	// --- phone part
 	var	GetOnlyDigits = function(param)
 	{
-		return param.replace(/\D/g, '');
+		return param.replace(/\D/g, "");
 	};
 
-	var PhoneConfirmation_ClickHandler = function(event)
+	var PhoneConfirmation_ClickHandler = function()
 	{
 		var		curr_tag = $(this);
 		var		country_code = GetOnlyDigits($(country_code_selector_global + " option:selected").val());
@@ -103,7 +91,7 @@ sms_confirmation = (function ()
 					} // --- if(data.status == "success")
 				})
 			.fail(
-				function(data) 
+				function() 
 				{
 					PhoneConfirmationCode_Status("ошибка доставки SMS.", "color_red");
 				});
@@ -134,7 +122,7 @@ sms_confirmation = (function ()
 			.append(message);
 	};
 
-	var	PhoneConfirmationCode_InputHandler = function(e)
+	var	PhoneConfirmationCode_InputHandler = function()
 	{
 		var	curr_tag = $(this);
 		var	curr_value = curr_tag.val();
@@ -209,7 +197,7 @@ sms_confirmation = (function ()
 						} // --- if(data.status == "success")
 					})
 				.fail(
-					function(data) 
+					function() 
 					{
 						PhoneConfirmationCode_Status("Ошибка ответа сервера", "color_red");
 						system_calls.PopoverError("Ошибка ответа сервера");
@@ -227,7 +215,7 @@ sms_confirmation = (function ()
 		}
 	};
 
-	var	PhoneConfirmationCode_Final = function(message)
+	var	PhoneConfirmationCode_Final = function()
 	{
 		$("#DialogPhoneConfirmation").modal("hide");
 	};

@@ -1,20 +1,8 @@
-/*jslint devel: true, indent: 4, maxerr: 50*/
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
+/* exported create_password_block */
 
-create_password_block = (function ()
+var create_password_block = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var	password_selector		= "#signinInputPassword";
 
@@ -30,10 +18,10 @@ create_password_block = (function ()
 		$(password_selector)		.on("keyup", CheckKeyPressedRegisterAndKeyboardLayout);
 		$("#regPassword")			.on("keyup", CheckKeyPressedRegisterAndKeyboardLayout);
 		$("#regConfirmPassword")	.on("keyup", CheckKeyPressedRegisterAndKeyboardLayout);
-		$("#regPassword")			.on("focus", function(e) { $("#password_type_progress_check").show(500); });
-		$("#regPassword")			.on("blur",  function(e) { $("#password_type_progress_check").hide(100); });
-		$("#regConfirmPassword")	.on("focus", function(e) { $("#password_type_progress_check").show(500); });
-		$("#regConfirmPassword")	.on("blur",  function(e) { $("#password_type_progress_check").hide(100); });
+		$("#regPassword")			.on("focus", function() { $("#password_type_progress_check").show(500); });
+		$("#regPassword")			.on("blur",  function() { $("#password_type_progress_check").hide(100); });
+		$("#regConfirmPassword")	.on("focus", function() { $("#password_type_progress_check").show(500); });
+		$("#regConfirmPassword")	.on("blur",  function() { $("#password_type_progress_check").hide(100); });
 
 
 		// --- password examples
@@ -54,11 +42,11 @@ create_password_block = (function ()
 	{
 		var		result = false;
 
-		if(('A' <= letter) && (letter <= 'Z'))
+		if(("A" <= letter) && (letter <= "Z"))
 		{
 			result = true;
 		}
-		if(('А' <= letter) && (letter <= 'Я'))
+		if(("А" <= letter) && (letter <= "Я"))
 		{
 			result = true;
 		}
@@ -70,11 +58,11 @@ create_password_block = (function ()
 	{
 		var		result = false;
 
-		if(('а' <= letter) && (letter <= 'я'))
+		if(("а" <= letter) && (letter <= "я"))
 		{
 			result = true;
 		}
-		if(('А' <= letter) && (letter <= 'Я'))
+		if(("А" <= letter) && (letter <= "Я"))
 		{
 			result = true;
 		}
@@ -82,7 +70,7 @@ create_password_block = (function ()
 		return result;
 	};
 
-	var	TransliteRusToEng = function(src)
+	var	TranslateRusToEng = function(src)
 	{
 		var		result = src;
 
@@ -175,7 +163,7 @@ create_password_block = (function ()
 				example = adjectives_list_global[rand1] + "" + Math.round(Math.random() * 1000) + "" + noun_list_global[rand2];
 
 				if(result.length) result += ", ";
-				result += TransliteRusToEng(example);
+				result += TranslateRusToEng(example);
 			}
 		}
 		else
@@ -190,7 +178,6 @@ create_password_block = (function ()
 	{
 		var		currTag = $(this);
 		var		shiftPressed = keyEvent.shiftKey;
-		var		capsLockAlarm = false;
 		var		alarmMessage = "";
 
 		if((typeof(keyEvent.key) != "undefined") && (keyEvent.key.length == 1))

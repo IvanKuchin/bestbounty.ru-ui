@@ -19,9 +19,6 @@
     <link href="/css/pages/news_feed.css" rel="stylesheet">
 
     <!-- tool tip bouncing -->
-    <script src="/js/pages/tooltip.js"></script>
-    <link href="/css/pages/animate.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="/css/pages/view_event_profile.css" rel="stylesheet">
     <script src="/js/pages/view_event_profile.js"></script>
@@ -114,7 +111,7 @@
           <option value=4>+4</option>
           <option value=5>+5</option>
         </select>
-        <span id="kidsPronounciation"></span>
+        <span id="kidsPronunciation"></span>
       </div>
     </div> <!-- /row -->
 

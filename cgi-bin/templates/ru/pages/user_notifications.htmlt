@@ -4,7 +4,7 @@
 
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
     <<template:templates/ru/pages/header.htmlt>>
-    <script src="/js/pages/user_notifications.js"></script>
+    <script src="/js/pages/pd/user_notifications.js"></script>
     
     <title><<vars:title_head>></title>
 

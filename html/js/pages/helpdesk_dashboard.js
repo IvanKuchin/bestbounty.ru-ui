@@ -2,7 +2,7 @@ var	helpdesk_dashboard = helpdesk_dashboard || {};
 
 var	helpdesk_dashboard = (function()
 {
-	'use strict';
+	"use strict";
 
 	var	data_global;
 
@@ -26,7 +26,7 @@ var	helpdesk_dashboard = (function()
 
 
 		$.getJSON(
-			'/cgi-bin/helpdesk.cgi',
+			"/cgi-bin/helpdesk.cgi",
 			{
 				"action":"AJAX_getDashboardData",
 			})
@@ -97,7 +97,7 @@ var	helpdesk_dashboard = (function()
 					.add(open_cases_dom);
 
 		currTag.empty().append(new_dom);
-	}
+	};
 
 	var	RenderMyCases = function()
 	{
@@ -142,7 +142,7 @@ var	helpdesk_dashboard = (function()
 					.add(my_active_cases_dom);
 
 		currTag.empty().append(new_dom);
-	}
+	};
 
 	return {
 		Init: Init

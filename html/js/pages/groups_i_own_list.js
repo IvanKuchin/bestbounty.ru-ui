@@ -3,7 +3,7 @@ var	groups_i_own_list = groups_i_own_list || {};
 
 var	groups_i_own_list = (function()
 {
-    'use strict';
+    "use strict";
 
 	var	JSON_FindGroupsList_Autocomplete = [];
 	var JSON_MyGroupsList;
@@ -41,7 +41,7 @@ var	groups_i_own_list = (function()
 			currTag.button("loading");
 
 			$.getJSON(
-				'/cgi-bin/group.cgi',
+				"/cgi-bin/group.cgi",
 				{ action:"AJAX_groupTakeOwnership", id:currTag.data("id") })
 				.done(function(data) {
 						if(data.result == "success")
@@ -67,10 +67,10 @@ var	groups_i_own_list = (function()
 		}
 		else if(currAction == "groupProfileRequestOwnership")
 		{
-			$("#PosessionRequestModal_Submit")	.data("id", currTag.data("id"))
+			$("#PossessionRequestModal_Submit")	.data("id", currTag.data("id"))
 												.data("name", currTag.data("name"));
 		}
-	}
+	};
 
 
 	var	RenderGroupsList = function(arrayGroupsList)
@@ -89,12 +89,12 @@ var	groups_i_own_list = (function()
 					$("#groups_i_own_list").append(system_calls.BuildGroupSingleBlock(item, i, arr, GroupManagementButtonClickHandler));
 				});
 		}
-	}
+	};
 
 	var	GetGroupsList = function () 
 	{
 		$.getJSON(
-			'/cgi-bin/group.cgi',
+			"/cgi-bin/group.cgi",
 			{action:"AJAX_getMyGroupsList"})
 			.done(function(data) {
 						if(data.status == "success")
@@ -114,18 +114,18 @@ var	groups_i_own_list = (function()
 							console.debug("AJAX_getMyGroupsList.done(): ERROR: " + data.description);
 						}
 				}); // --- getJSON.done()
-	}
+	};
 
 	var	AJAX_getFindGroupByID = function (event, ui) 
 	{
 		var	selectedID = ui.item.id;
 		var selectedLabel = ui.item.label;
 
-		console.debug("AJAX_getFindGroupByID autocomplete.select: selet event handler");
-		console.debug("AJAX_getFindGroupByID autocomplete.select: seletedID=" + selectedID + " selectedLabel=" + selectedLabel);
+		console.debug("AJAX_getFindGroupByID autocomplete.select: select event handler");
+		console.debug("AJAX_getFindGroupByID autocomplete.select: selectedID=" + selectedID + " selectedLabel=" + selectedLabel);
 
 		$.getJSON(
-			'/cgi-bin/group.cgi',
+			"/cgi-bin/group.cgi",
 			{action:"AJAX_getFindGroupByID", lookForKey:selectedID})
 			.done(function(data) {
 						if(data.status == "success")
@@ -147,7 +147,7 @@ var	groups_i_own_list = (function()
 				}); // --- getJSON.done()
 
 		console.debug("AJAX_getFindGroupByID autocomplete.select: end");
-	}
+	};
 
 	var FindGroupsOnInputHandler = function() 
 	{
@@ -156,7 +156,7 @@ var	groups_i_own_list = (function()
 		if(inputValue.trim().length == 3)
 		{
 			$.getJSON(
-				'/cgi-bin/group.cgi',
+				"/cgi-bin/group.cgi",
 				{action:"AJAX_getFindGroupsListAutocomplete", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -172,7 +172,7 @@ var	groups_i_own_list = (function()
 
 									if((item.title.length > 0))
 									{
-										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; };
+										if(autocompleteLabel.length > 0) { autocompleteLabel += " "; }
 										autocompleteLabel += item.title;
 									}
 
@@ -198,7 +198,7 @@ var	groups_i_own_list = (function()
 								create: function () {
 									console.debug ("FindGroupsOnInputHandler autocomplete.create: _create event handler"); 
 								},
-								_renderMenu: function (ul, items)  // --- requres plugin only
+								_renderMenu: function (ul, items)  // --- requires plugin only
 								{
 									var	that = this;
 									currentCategory = "";
@@ -225,7 +225,7 @@ var	groups_i_own_list = (function()
 						console.debug("AJAX_getFindGroupsListAutocomplete: ERROR: parse JSON response from server");
 					});
 		}
-	}
+	};
 
 
 	var FindGroupsFormSubmitHandler = function()
@@ -236,7 +236,7 @@ var	groups_i_own_list = (function()
 		if(inputValue.length >= 3)
 		{
 			$.getJSON(
-				'/cgi-bin/group.cgi',
+				"/cgi-bin/group.cgi",
 				{action:"AJAX_getFindGroupsList", lookForKey:inputValue})
 				.done(function(data) {
 						if(data.status == "success")
@@ -257,16 +257,16 @@ var	groups_i_own_list = (function()
 			// --- tooltip alert
 			$("#groupSearchText").attr("title", "Напишите более 2 букв")
 									.attr("data-placement", "top")
-									.tooltip('show');
+									.tooltip("show");
 			window.setTimeout(function()
 				{
-					$("#groupSearchText").tooltip('destroy');
+					$("#groupSearchText").tooltip("destroy");
 				} 
 				, 3000);
 									// .tooltip('hide');
 			// $("#SearchStringError").modal("show");
 		}
-	}
+	};
 
 	var FindGroupsOnKeyupHandler = function(event)
 	{
@@ -279,11 +279,11 @@ var	groups_i_own_list = (function()
 			FindGroupsFormSubmitHandler();
 		}
 
-	}
+	};
 
 
 	return {
 		Init: Init
-	}
+	};
 
 })();

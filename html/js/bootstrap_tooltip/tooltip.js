@@ -256,8 +256,8 @@
   }
 
   Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
-    // ---  this line has been uncommented earlier
-    // ---  I comment it after issue with tooltip top-aligned arrow  
+    // TODO: this line has been uncommented earlier
+    //       I comment it after issue with tooltip top-aligned arrow  
     this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
   }
 

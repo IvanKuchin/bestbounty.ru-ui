@@ -6,7 +6,7 @@ var	user_notifications = (function()
 	"use strict";
 
 	var usersNotificationArray = [];
-	var scrollLock = false; // --- controlls consecutive pagination
+	var scrollLock = false; // --- controls consecutive pagination
 	var	globalPageCounter;
 
 	var	Init = function()
@@ -21,7 +21,7 @@ var	user_notifications = (function()
 	var	UpdateUserNotificationList = function()
 	{		
 		$.getJSON(
-			'/cgi-bin/index.cgi',
+			"/cgi-bin/index.cgi",
 			{action:"AJAX_getUserNotification"})
 			.done(function(data) {
 					usersNotificationArray = data;
@@ -58,7 +58,7 @@ var	user_notifications = (function()
 			// console.debug("HandlerScrollToShow: globalPageCounter = " + globalPageCounter);
 			// --- AJAX get news_feed from the server 
 			scrollLock = true;
-			$.getJSON('/cgi-bin/index.cgi?action=AJAX_getUserNotification', {page: ++globalPageCounter})
+			$.getJSON("/cgi-bin/index.cgi?action=AJAX_getUserNotification", {page: ++globalPageCounter})
 			 		.done(function(data) {
 						// console.debug("HandlerScrollToShow: getJSON(AJAX_getNewsFeed).done(): ajax getNewsFeed");
 						usersNotificationArray = usersNotificationArray.concat(data);
@@ -103,7 +103,7 @@ var	user_notifications = (function()
 						.addClass("UnreadChatListHrefLineHeigh")
 						.append(item.notificationFriendUserName + " " + item.notificationFriendUserNameLast);
 
-			canvasAvatar.addClass('canvas-big-avatar');
+			canvasAvatar.addClass("canvas-big-avatar");
 			DrawUserAvatar(canvasAvatar[0].getContext("2d"), friendAvatar, item.notificationFriendUserName, item.notificationFriendUserNameLast);
 
 		}
@@ -113,12 +113,12 @@ var	user_notifications = (function()
 
 			hrefAvatar.attr("href", "/companyprofile/" + item.notificationFromCompany[0].id)
 					.addClass("UnreadChatListHrefLineHeigh")
-					.append(system_calls.CutLongMesssages(item.notificationFromCompany[0].type + " " + item.notificationFromCompany[0].name));
+					.append(system_calls.CutLongMessages(item.notificationFromCompany[0].type + " " + item.notificationFromCompany[0].name));
 
 			if(item.notificationFromCompany[0].logo_folder.length && item.notificationFromCompany[0].logo_filename.length)
 				avatarPath = "/images/companies/" + item.notificationFromCompany[0].logo_folder + "/" + item.notificationFromCompany[0].logo_filename;
 
-			canvasAvatar.addClass('canvas-big-avatar-corners');
+			canvasAvatar.addClass("canvas-big-avatar-corners");
 			DrawCompanyAvatar(canvasAvatar[0].getContext("2d"), avatarPath, item.notificationFromCompany[0].name, "");
 		}
 
@@ -268,7 +268,7 @@ var	user_notifications = (function()
 			}
 			else if((item.notificationCommentType == "certification"))
 			{
-				// --- certificate comments belongs to certification track, not to User/Certififcate pair
+				// --- certificate comments belongs to certification track, not to User/Certificate pair
 				spanNotifTypeTitle.empty().append(" на получение сертификата");
 
 				spanTitle.append($("<h4>").append(item.notificationCertificationCompanyName + " " + item.notificationCertificationTitle));
@@ -435,7 +435,7 @@ var	user_notifications = (function()
 			divNotificationRow	.append(divImg).append(divTitle).append(divBody);
 		}
 
-		// --- company posession request
+		// --- company possession request
 		if(item.notificationTypeID == 60)
 		{
 			var		divImg = $("<div>").addClass("col-xs-5 col-sm-3 col-md-2 margin_top_15 form-group");
@@ -444,7 +444,7 @@ var	user_notifications = (function()
 			var		divOK = $("<div>").addClass("col-xs-6 col-sm-4 col-md-5");
 			var		buttonOK = $("<button>").addClass("btn btn-primary form-control")
 												.data("id", item.notificationID)
-												.data("action", "AJAX_grantPosessionRequest")
+												.data("action", "AJAX_grantPossessionRequest")
 												.data("script", "company.cgi")
 												.append("Передать")
 												.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
@@ -452,7 +452,7 @@ var	user_notifications = (function()
 			var		divReject = $("<div>").addClass("col-xs-6 col-sm-4 col-md-5");
 			var		buttonReject = $("<button>").addClass("btn btn-danger form-control")
 												.data("id", item.notificationID)
-												.data("action", "AJAX_rejectPosessionRequest")
+												.data("action", "AJAX_rejectPossessionRequest")
 												.data("script", "company.cgi")
 												.append("Отказать")
 												.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
@@ -482,12 +482,12 @@ var	user_notifications = (function()
 			divNotificationRow	.append(divBody)
 								.append(divImg)
 								.append(divTitle);
-			if(item.notificationPosessionStatus == "requested")
+			if(item.notificationPossessionStatus == "requested")
 				divNotificationRow	.append(divOK)
 									.append(divReject);
 		}
 
-		// --- granted company posession request
+		// --- granted company possession request
 		if(item.notificationTypeID == 61)
 		{
 			var		divImg = $("<div>").addClass("col-xs-5 col-sm-3 col-md-2 margin_top_15 form-group");
@@ -505,7 +505,7 @@ var	user_notifications = (function()
 			divNotificationRow	.append(divImg).append(divTitle).append(divBody);
 		}
 
-		// --- 67 - event host addedd
+		// --- 67 - event host added
 		// --- 68 - you are invited
 		// --- 69 - event accept received
 		// --- 70 - event start in 1 day
@@ -540,13 +540,13 @@ var	user_notifications = (function()
 			$("#AreYouSure #Remove").data(item, currTag.data(item)); 
 		});
 
-		if(currTag.data("action") == "AJAX_grantPosessionRequest")
+		if(currTag.data("action") == "AJAX_grantPossessionRequest")
 		{
 
 			$("#AreYouSure .description").empty().append("Вы больше _НЕ_ будете владеть компанией.<ul><li>_НЕ_ сможете публиковать новости от имени компании</li><li>_НЕ_ сможете искать сотрудников в компанию</li></ul>");
 			$("#AreYouSure #Remove").empty().append("Согласен");
 		}
-		else if(currTag.data("action") == "AJAX_rejectPosessionRequest")
+		else if(currTag.data("action") == "AJAX_rejectPossessionRequest")
 		{
 			$("#AreYouSure .description").empty();
 			$("#AreYouSure #Remove").empty().append("Отказать");
@@ -558,7 +558,7 @@ var	user_notifications = (function()
 		}
 
 		$("#AreYouSure").modal("show");
-	}
+	};
 
 	var ModalActionConfirmedClickHandler = function()
 	{
@@ -571,7 +571,7 @@ var	user_notifications = (function()
 			currTag.button("loading");
 
 			$.getJSON(
-				'/cgi-bin/' + script,
+				"/cgi-bin/" + script,
 				{ action:action, id:currTag.data("id") })
 				.done(function(data) {
 						if(data.result == "success")
@@ -597,11 +597,11 @@ var	user_notifications = (function()
 
 		}
 
-	}
+	};
 
 	return {
 		Init: Init,
 		BuildUserNotificationList:BuildUserNotificationList
-	}
+	};
 
 })();

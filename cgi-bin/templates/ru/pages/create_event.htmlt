@@ -21,9 +21,6 @@
 		<script src="/js/pages/create_event.js"></script>
 		<link href="/css/pages/create_event.css" rel="stylesheet">
 		
-		<script src="/js/pages/tooltip.js"></script>
-		<link href="/css/pages/animate.min.css" rel="stylesheet">
-
 		<title><<vars:title_head>></title>
 
 		<script>

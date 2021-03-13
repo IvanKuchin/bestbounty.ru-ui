@@ -1,21 +1,11 @@
 /*jslint devel: true, indent: 4, maxerr: 50*/ 
-/*globals $:false localStorage:false location: false*/
-/*globals localStorage:false*/
-/*globals location:false*/
-/*globals document:false*/
-/*globals window:false*/
-/*globals Image:false*/
-/*globals jQuery:false*/
-/*globals Notification:false*/
-/*globals setTimeout:false*/
-/*globals navigator:false*/
-/*globals module:false*/
-/*globals define:false*/
+/*globals system_calls:off*/
 
 // --- change it in (chat.js, common.js, localy.h)
 var FREQUENCY_ECHO_REQUEST = 60;
-var FREQUENCY_USRENOTIFICATION_REQUEST = 60 * 5;
+var FREQUENCY_USERNOTIFICATION_REQUEST = 60 * 5;
 var FREQUENCY_RANDOM_FACTOR = 10;
+
 
 // -- global var used because of setTimeout don't support parameters in IE9
 var	navMenu_search = navMenu_search || {};
@@ -49,17 +39,17 @@ system_calls = (function()
 		$("#imageLogo").on("mouseout", function() { $(this).removeClass("box-shadow--8dp"); });
 
 		// --- Friendship buttons
-		$("#ButtonFriendshipRemovalYes").on('click', function()
+		$("#ButtonFriendshipRemovalYes").on("click", function()
 			{
 				var clickedButton = $(this).data("clickedButton");
 
-				$("#DialogFriendshipRemovalYesNo").modal('hide');
+				$("#DialogFriendshipRemovalYesNo").modal("hide");
 
 				clickedButton.data("action", "disconnect");
 				clickedButton.click();
 			});
 
-		$("#DialogFriendshipRemovalYesNo").on('shown.bs.modal', 
+		$("#DialogFriendshipRemovalYesNo").on("shown.bs.modal", 
 			function()
 			{
 				$("#DialogFriendshipRemovalYesNo button.btn.btn-default").focus();
@@ -67,37 +57,42 @@ system_calls = (function()
 
 
 		// --- Friends href
-		$("#navbar-my_network").on('click', function() 
+		$("#navbar-my_network").on("click", function() 
 			{
 				window.location.href = "/my_network?rand=" + Math.random()*98765432123456;
 			} );
 
 		// --- Сhat href
-		$("#navbar-chat").on('click', function() 
+		$("#navbar-chat").on("click", function() 
 			{
 				window.location.href = "/chat?rand=" + Math.random()*98765432123456;
 			} );
 
 		// --- Notification href
-		$("#navbar-notification").on('click', function() 
+		$("#navbar-notification").on("click", function() 
 			{
 				window.location.href = "/user_notifications?rand=" + Math.random()*98765432123456;
 			} );
 
 		// --- Menu drop down on mouse over
-		jQuery('ul.nav li.dropdown').mouseenter(function() {
-		  jQuery(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn();
+		jQuery("ul.nav li.dropdown").mouseenter(function() {
+		  jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeIn();
 		});
-		jQuery('ul.nav li.dropdown').mouseleave(function() {
-		  jQuery(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
+		jQuery("ul.nav li.dropdown").mouseleave(function() {
+		  jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeOut();
 		});
 
 		// --- Check availability / sign-in
 		window.setTimeout(SendEchoRequest, 1000);
 
 		// --- Main search
-		$("#navMenuSearchText").on("input", navMenu_search.OnInputHandler)
-								.on("keyup", navMenu_search.OnKeyupHandler);
+		$("#navMenuSearchText")
+								.on("keyup", navMenu_search.OnKeyupHandler)
+								.autocomplete({
+												source: "/cgi-bin/anyrole_1.cgi?action=AJAX_getUserAutocompleteList",
+												select: navMenu_search.AutocompleteSelectHandler,
+											});
+
 		$("#navMenuSearchSubmit").on("click", navMenu_search.OnSubmitClickHandler);
 	};
 
@@ -143,7 +138,7 @@ system_calls = (function()
 
 	var	GetUUID = function()
 	{
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);return v.toString(16);});
+		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {var r = Math.random()*16|0, v = c == "x" ? r : (r&0x3|0x8);return v.toString(16);});
 	};
 
 	var	isUserSignedin = function()
@@ -190,7 +185,7 @@ system_calls = (function()
 		return result;
 	};
 
-	var CutLongMesssages = function(message, len)
+	var CutLongMessages = function(message, len)
 	{
 	 	if(message.length > len)
 		{
@@ -332,8 +327,8 @@ system_calls = (function()
 		result = result.replace(/•/img, "*");
 		result = result.replace(/\"/img, "&quot;");
 		result = result.replace(/\\/img, "&#92;");
-		result = result.replace(/^\s+/, '');
-		result = result.replace(/\s+$/, '');
+		result = result.replace(/^\s+/, "");
+		result = result.replace(/\s+$/, "");
 
 		return result;
 	};
@@ -359,8 +354,8 @@ system_calls = (function()
 		result = result.replace(/&quot;/img, "\"");
 		result = result.replace(/&#92;/img, "\\");
 		result = result.replace(/&#39;/img, "'");
-		result = result.replace(/^\s+/, '');
-		result = result.replace(/\s+$/, '');
+		result = result.replace(/^\s+/, "");
+		result = result.replace(/\s+$/, "");
 
 		return result;
 	};
@@ -374,8 +369,8 @@ system_calls = (function()
 		result = result.replace(/>/img, "&gt;");
 		result = result.replace(/\n/img, "<br>");
 		result = result.replace(/•/img, "*");
-		result = result.replace(/^\s+/, '');
-		result = result.replace(/\s+$/, '');
+		result = result.replace(/^\s+/, "");
+		result = result.replace(/\s+$/, "");
 
 		return result;
 	};
@@ -940,7 +935,7 @@ system_calls = (function()
 	var SendEchoRequest = function()
 	{
 		$.getJSON(
-			'/cgi-bin/system.cgi',
+			"/cgi-bin/system.cgi",
 			{action:"EchoRequest"})
 			.done(function(data) 
 				{
@@ -1000,7 +995,7 @@ system_calls = (function()
 		if(isUserSignedin())
 		{
 			$.getJSON(
-				'/cgi-bin/system.cgi',
+				"/cgi-bin/system.cgi",
 				{action:"GetUserRequestNotifications"})
 				.done(function(data) 
 					{
@@ -1025,7 +1020,7 @@ system_calls = (function()
 */
 									if(data.userNotificationsArray.length > 0)
 									{
-										navMenu_userNotification.InitilizeData(data.userNotificationsArray);
+										navMenu_userNotification.InitializeData(data.userNotificationsArray);
 										navMenu_userNotification.BuildUserNotificationList();
 									}
 
@@ -1056,7 +1051,7 @@ system_calls = (function()
 		}
 
 		// --- check system notifications
-		window.setTimeout(system_calls.GetUserRequestNotifications, (FREQUENCY_USRENOTIFICATION_REQUEST + (Math.random() * FREQUENCY_RANDOM_FACTOR - FREQUENCY_RANDOM_FACTOR / 2)) * 1000);
+		window.setTimeout(system_calls.GetUserRequestNotifications, (FREQUENCY_USERNOTIFICATION_REQUEST + (Math.random() * FREQUENCY_RANDOM_FACTOR - FREQUENCY_RANDOM_FACTOR / 2)) * 1000);
 	
 		// console.debug('system_calls.GetUserRequestNotifications: end');
 	};
@@ -1083,8 +1078,8 @@ system_calls = (function()
 
 				$.getJSON
 				(
-					'/cgi-bin/system.cgi',
-					{ action: 'GetUserInfo', userID: item.friendID }
+					"/cgi-bin/system.cgi",
+					{ action: "GetUserInfo", userID: item.friendID }
 				)
 				.done(
 					function(result)
@@ -1102,7 +1097,7 @@ system_calls = (function()
 															.data("action", "disconnect");
 						var		canvasAvatar = $("<canvas/>")	.attr("width", "30")
 																.attr("height", "30")
-																.addClass('canvas-big-avatar')
+																.addClass("canvas-big-avatar")
 																.addClass("RequestUserListOverrideCanvasSize");
 
 						// --- update cache with this user
@@ -1155,7 +1150,7 @@ system_calls = (function()
 
 
 			}
-		); // --- data.notofocationsArray.forEach()
+		); // --- data.notificationsArray.forEach()
 	};
 
 	var	ScrollWindowToElementID = function(elementID)
@@ -1171,14 +1166,14 @@ system_calls = (function()
 
 			// --- scroll only if 
 			// --- 1) scroll length to element > 10
-			// --- 2) scroll from previous to current cycles is successfull (page was scrolled)
+			// --- 2) scroll from previous to current cycles is successful (page was scrolled)
 			// if((Math.abs(elementOffset - windowScrollTop) > 10) && (!globalScrollPrevOffset || (globalScrollPrevOffset > Math.abs(elementOffset - windowScrollTop))))
 			if((Math.abs(elementOffset - windowScrollTop) > 10) && (globalScrollPrevOffset != (elementOffset - windowScrollTop)))
 			{
 				globalScrollPrevOffset = elementOffset - windowScrollTop;
 
-				$('body').animate({scrollTop: elementOffset }, 400);
-				$('html').animate({scrollTop: elementOffset }, 400);
+				$("body").animate({scrollTop: elementOffset }, 400);
+				$("html").animate({scrollTop: elementOffset }, 400);
 
 				setTimeout(function() { ScrollWindowToElementID(elementID); }, 600);
 			}
@@ -1192,7 +1187,7 @@ system_calls = (function()
 	var	GetParamFromURL = function(paramName)
 	{
 		var result = ""; 
-		var	tmp = new RegExp('[\?&]' + paramName + '=([^&#]*)').exec(window.location.href);
+		var	tmp = new RegExp("[\?&]" + paramName + "=([^&#]*)").exec(window.location.href);
 
 		if(tmp && tmp.length) result = tmp[1];
 
@@ -1229,7 +1224,7 @@ system_calls = (function()
 							.data("action", "companyProfileTakeOwnership")
 							.attr("data-loading-text", "<span class='fa fa-refresh fa-spin fa-fw animateClass'></span>")
 							.attr("title", "Моя компания !")
-							.attr("data-target", "#PosessionAlertModal")
+							.attr("data-target", "#PossessionAlertModal")
 							.attr("data-toggle", "modal")
 							.tooltip({ animation: "animated bounceIn", placement: "top" });
 		}
@@ -1240,7 +1235,7 @@ system_calls = (function()
 							.addClass("btn btn-danger form-control")
 							.data("action", "companyProfileRequestOwnership")
 							.attr("title", "Отправить запрос")
-							.attr("data-target", "#PosessionRequestModal")
+							.attr("data-target", "#PossessionRequestModal")
 							.attr("data-toggle", "modal")
 							.tooltip({ animation: "animated bounceIn", placement: "top" });
 		}
@@ -1341,7 +1336,7 @@ system_calls = (function()
 		//                         .attr("height", "80");
 		tagCanvas3	= $("<canvas>").attr("width", "80")
 									.attr("height", "80")
-									.addClass('canvas-big-logo');
+									.addClass("canvas-big-logo");
 		divInfo 		= $("<div/>").addClass("col-sm-10 col-xs-12 single_block box-shadow--6dp");
 		tagA5   		= $("<a>").attr("href", "/company/" + item.link + "?rand=" + Math.random() * 1234567890);
 		spanSMButton	= $("<span>").addClass("hidden-xs pull-right");
@@ -1386,7 +1381,7 @@ system_calls = (function()
 		//                         .attr("height", "80");
 		tagCanvas3	= $("<canvas>").attr("width", "80")
 									.attr("height", "80")
-									.addClass('canvas-big-logo');
+									.addClass("canvas-big-logo");
 		divInfo 		= $("<div/>").addClass("col-sm-10 col-xs-8 single_block box-shadow--6dp");
 		tagA5   		= $("<a>").attr("href", "/event/" + item.link + "?rand=" + GetUUID());
 		spanSMButton	= $("<span>").addClass("hidden-xs pull-right form-group");
@@ -1453,7 +1448,7 @@ system_calls = (function()
 		//                         .attr("height", "80");
 		tagCanvas3	= $("<canvas>").attr("width", "80")
 									.attr("height", "80")
-									.addClass('canvas-big-logo');
+									.addClass("canvas-big-logo");
 		divInfo 		= $("<div/>").addClass("col-sm-10 col-xs-12 single_block box-shadow--6dp");
 		tagA5   		= $("<a>").attr("href", "/group/" + item.link + "?rand=" + GetUUID());
 		spanSMButton	= $("<span>").addClass("hidden-xs pull-right");
@@ -1479,7 +1474,7 @@ system_calls = (function()
 		return divContainer;
 	};
 
-	// --- build "frindship" buttons and put them into DOM-model
+	// --- build "friendship" buttons and put them into DOM-model
 	// --- input
 	// ---		friendInfo - info from GetUserListInJSONFormat
 	// ---		housingTag - tag where buttons have to be placed to
@@ -1565,7 +1560,7 @@ system_calls = (function()
 		if(handlerButton.data("action") == "disconnectDialog")
 		{
 			$("#ButtonFriendshipRemovalYes").data("clickedButton", handlerButton);
-			$("#DialogFriendshipRemovalYesNo").modal('show');
+			$("#DialogFriendshipRemovalYesNo").modal("show");
 		}
 		else
 		{
@@ -1573,12 +1568,12 @@ system_calls = (function()
 			handlerButton.text("Ожидайте ...");
 
 			$.getJSON(
-				'/cgi-bin/index.cgi',
+				"/cgi-bin/index.cgi",
 				{action:"AJAX_setFindFriend_FriendshipStatus", friendID:handlerButton.data("id"), status:handlerButton.data("action")})
 				.done(function(data) {
-						console.debug("AJAX_setFindFriend_FriendshipStatus.done(): sucess");
+						console.debug("AJAX_setFindFriend_FriendshipStatus.done(): success");
 
-						if(data.result == "ok")
+						if(data.result == "success")
 						{
 							console.debug("AJAX_setFindFriend_FriendshipStatus.done(): success");
 
@@ -1599,7 +1594,7 @@ system_calls = (function()
 							{
 								handlerButton.text("Добавить в друзья");
 								handlerButton.removeClass().addClass("btn").addClass("btn-primary");
-								handlerButton.data("action", "requested");
+								handlerButton.data("action", "confirm");
 
 								// --- remove "accept" buttonAccept
 								handlerButton.siblings().remove();
@@ -1676,7 +1671,7 @@ system_calls = (function()
 		//                         .attr("height", "80");
 		tagCanvas3	= $("<canvas>").attr("width", "80")
 									.attr("height", "80")
-									.addClass('canvas-big-avatar ' + (item.avatar.search("avatar") >= 0 ? "box-shadow--6dp " : ""));
+									.addClass("canvas-big-avatar " + (item.avatar.search("avatar") >= 0 ? "box-shadow--6dp " : ""));
 		tagDiv4 	= $("<div/>").addClass("col-md-10 col-xs-8 single_block box-shadow--6dp padding_top_bottom_5px");
 		tagA5   	= $("<a>").attr("href", "/userprofile/" + item.id + "?rand=" + Math.random() * 234567890);
 		tagSpan5	= $("<span>").addClass("hidden-xs float_right");
@@ -1914,7 +1909,7 @@ system_calls = (function()
 					curr_value = __GetTagValue(curr_tag);
 					
 					$.getJSON(
-						'/cgi-bin/' + current_script,
+						"/cgi-bin/" + current_script,
 						{
 							action: curr_tag.data("action"),
 							id: curr_tag.attr("data-id") || curr_tag.data("id"), // --- prefer attr(data_id) over jQuery.data(id), because jQuery.data doesn't updates properly
@@ -2150,7 +2145,7 @@ system_calls = (function()
 
 			if(url.length > 32) urlText = url.substring(0, 32) + " ...";
 
-			return '<a href="' + url + '" target="blank">' + urlText + '</a>'; 
+			return "<a href=\"" + url + "\" target=\"blank\">" + urlText + "</a>"; 
 		});
 
 		return resultText;
@@ -2182,13 +2177,13 @@ system_calls = (function()
 	{
 		// convert base64/URLEncoded data component to raw binary data held in a string
 		var byteString;
-		if (dataURI.split(',')[0].indexOf('base64') >= 0)
-			byteString = atob(dataURI.split(',')[1]);
+		if (dataURI.split(",")[0].indexOf("base64") >= 0)
+			byteString = atob(dataURI.split(",")[1]);
 		else
-			byteString = unescape(dataURI.split(',')[1]);
+			byteString = unescape(dataURI.split(",")[1]);
 
 		// separate out the mime component
-		var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+		var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
 		// write the bytes of the string to a typed array
 		var ia = new Uint8Array(byteString.length);
@@ -2293,6 +2288,21 @@ system_calls = (function()
 		return result;
 	};
 
+	var	isValidHTTPURL = function(url_str)
+	{
+		var		url_must_have1 = /https?:\/\//;
+		var		result = false;
+		
+		if(isValidURL && url_must_have1.exec(url_str) && (url_str.length > 10))
+		{
+			result = true;
+		}
+
+		return result;
+	};
+
+
+
 	var ClearSession = function()
 	{
 		$.removeCookie("sessid");
@@ -2314,7 +2324,7 @@ system_calls = (function()
 		isUserSignedin: isUserSignedin,
 		GetUserRequestNotifications: GetUserRequestNotifications,
 		isTouchBasedUA: isTouchBasedUA,
-		CutLongMesssages: CutLongMesssages,
+		CutLongMessages: CutLongMessages,
 		RemoveSpaces: RemoveSpaces,
 		isOrientationLandscape: isOrientationLandscape,
 		isOrientationPortrait: isOrientationPortrait,
@@ -2377,6 +2387,7 @@ system_calls = (function()
 		DrawImgOnCanvas_ScaleImgDownTo640x480: DrawImgOnCanvas_ScaleImgDownTo640x480,
 		isValidEmail: isValidEmail,
 		isValidURL: isValidURL,
+		isValidHTTPURL: isValidHTTPURL,
 		ClearSession: ClearSession
 	};
 }
@@ -2387,7 +2398,7 @@ system_calls = (function()
 var userCache = (function()
 {
 	"use strict";
-	var		cache = []; // --- main sotage
+	var		cache = []; // --- main storage
 	var		userCacheFutureUpdateArr = []; // --- used for update userCache object with new users
 	var		callbackRunAfterUpdateArr = []; 
 	var		runLock = false; // --- semaphore for racing conditions
@@ -2448,7 +2459,7 @@ var userCache = (function()
 		var		updateFlag = true;
 
 		// --- add callback function just in case userscache not empty
-		// --- otherwise there is no value to runn callback without any changes
+		// --- otherwise there is no value to run callback without any changes
 		if(userCacheFutureUpdateArr.length)
 		{
 			callbackRunAfterUpdateArr.forEach(function(item)
@@ -2473,7 +2484,7 @@ var userCache = (function()
 
 			if(param1.length)
 			{
-				$.getJSON('/cgi-bin/system.cgi', { action: 'GetUserInfo', userID: param1 })
+				$.getJSON("/cgi-bin/system.cgi", { action: "GetUserInfo", userID: param1 })
 					.done(
 						function(result)
 						{
@@ -2565,77 +2576,8 @@ navMenu_search = (function()
 		var	selectedID = ui.item.id;
 		var selectedLabel = ui.item.label;
 
-		console.debug("navMenu_search.AutocompleteSelectHandler: start. (seletedID=" + selectedID + ", selectedLabel=" + selectedLabel + ")");
-
 		window.location.href = "/userprofile/" + selectedID;
-
-		console.debug("navMenu_search.AutocompleteSelectHandler: end");
 	};
-
-	var OnInputHandler = function() 
-	{
-		var		inputValue = $(this).val();
-		console.debug("navMenu_search.OnInputHandler: start. input.val() " + $(this).val());
-
-		if(inputValue.length >= 2)
-		{
-			$.getJSON(
-				'/cgi-bin/index.cgi',
-				{action:"JSON_getFindFriendsListAutocomplete", lookForKey:inputValue})
-				.done(function(data) {
-						AutocompleteList = [];
-						data.forEach(function(item, i, arr)
-							{
-								AutocompleteList.push({id:item.id , label:item.name + " " + item.nameLast + " " + item.currentCity});
-							});
-
-
-						$("#navMenuSearchText").autocomplete({
-							delay : 300,
-							source: AutocompleteList,
-							select: AutocompleteSelectHandler,
-							change: function (event, ui) { 
-								console.debug ("navMenu_search.OnInputHandler autocomplete.change: change event handler"); 
-							},
-							close: function (event, ui) 
-							{ 
-								console.debug ("navMenu_search.OnInputHandler autocomplete.close: close event handler"); 
-							},
-							create: function () {
-								console.debug ("navMenu_search.OnInputHandler autocomplete.create: _create event handler"); 
-							},
-							_renderMenu: function (ul, items)  // --- requres plugin only
-							{
-								var	that = this;
-								var currentCategory = "";
-								$.each( items, function( index, item ) {
-									var li;
-								    if ( item.category != currentCategory ) {
-								    	ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-								        currentCategory = item.category;
-								    }
-									li = that._renderItemData( ul, item );
-									if ( item.category ) {
-									    li.attr( "aria-label", item.category + " : " + item.label + item.login );
-									} // --- getJSON.done() autocomplete.renderMenu foreach() if(item.category)
-								}); // --- getJSON.done() autocomplete.renderMenu foreach()
-							} // --- getJSON.done() autocomplete.renderMenu
-						}); // --- getJSON.done() autocomplete
-					}); // --- getJSON.done()
-
-		}
-		else
-		{
-			AutocompleteList = [];
-			$("#navMenuSearchText").autocomplete({
-							delay : 300,
-							source: AutocompleteList
-						});
-		} // --- if(inputValue.length >= 2)
-
-		console.debug("navMenu_search.OnInputHandler: end ");
-	};
-
 
 	var OnKeyupHandler = function(event)
 	{
@@ -2649,33 +2591,29 @@ navMenu_search = (function()
 			$("#navMenuSearchText").autocomplete("close");
 			// FindFriendsFormSubmitHandler();
 		}
-
-		console.debug("navMenu_search.OnKeyupHandler: end");
 	};
 
 	var OnSubmitClickHandler = function(event)
 	{
 		var		searchText = $("#navMenuSearchText").val();
 
-		console.debug("navMenu_search.OnSubmitClickHandler: start");
-
 		if(searchText.length <= 2)
 		{
 			$("#navMenuSearchText").attr("title", "Напишите более 2 букв")
 									.attr("data-placement", "bottom")
-									.tooltip('show');
+									.tooltip("show");
 			window.setTimeout(function()
 				{
-					$("#navMenuSearchText").tooltip('destroy');
+					$("#navMenuSearchText").tooltip("destroy");
 				}, 3000);
 			return false;
 		}
 	};
 
 	return {
-		OnInputHandler: OnInputHandler,	
 		OnKeyupHandler: OnKeyupHandler,
-		OnSubmitClickHandler: OnSubmitClickHandler
+		OnSubmitClickHandler: OnSubmitClickHandler,
+		AutocompleteSelectHandler: AutocompleteSelectHandler,
 	};
 }
 )();
@@ -2697,7 +2635,7 @@ navMenu_chat = (function()
 
 	};
 
-	var CutLongMultilineMesssages = function(message)
+	var CutLongMultilineMessages = function(message)
 	{
 		var		lineList;
 		var		cutMessage = [];
@@ -2766,7 +2704,7 @@ navMenu_chat = (function()
 														.data("action", "markAsRead")
 														.on("click", function(e) 
 															{
-																$.getJSON('/cgi-bin/index.cgi', {action:"AJAX_chatMarkMessageReadByMessageID", messageid:messageInfo.id})
+																$.getJSON("/cgi-bin/index.cgi", {action:"AJAX_chatMarkMessageReadByMessageID", messageid:messageInfo.id})
 																			.done(function(data) 
 																				{
 																					if(data.result == "success")
@@ -2783,7 +2721,7 @@ navMenu_chat = (function()
 															});
 					var		canvasAvatar = $("<canvas/>")	.attr("width", "30")
 															.attr("height", "30")
-															.addClass('canvas-big-avatar')
+															.addClass("canvas-big-avatar")
 															.addClass("UnreadChatListOverrideCanvasSize");
 					var		messageBody = $("<div>").addClass("UnreadChatListMessage")
 														.on("click", function(e) 
@@ -2806,7 +2744,7 @@ navMenu_chat = (function()
 
 					var hrefTemp = $("<a/>").attr("href", "/userprofile/" + userInfo.id)
 							.addClass("UnreadChatListHrefLineHeigh")
-							.append(system_calls.CutLongMesssages(userInfo.name + " " + userInfo.nameLast, 19));
+							.append(system_calls.CutLongMessages(userInfo.name + " " + userInfo.nameLast, 19));
 					userSpan.append(canvasAvatar)
 							.append(hrefTemp)
 							.append(buttonSpan);
@@ -2815,7 +2753,7 @@ navMenu_chat = (function()
 							.append(" ")
 							.append(buttonClose);
 
-					messageBody.append((item.messageType == "text" ? CutLongMultilineMesssages(item.message) : "<i>Вам прислали картинку</i>"));
+					messageBody.append((item.messageType == "text" ? CutLongMultilineMessages(item.message) : "<i>Вам прислали картинку</i>"));
 
 					DrawUserAvatar(canvasAvatar[0].getContext("2d"), userInfo.avatar, userInfo.name, userInfo.nameLast);
 
@@ -2856,7 +2794,7 @@ navMenu_chat = (function()
 		{
 
 			$.getJSON(
-				'/cgi-bin/system.cgi',
+				"/cgi-bin/system.cgi",
 				{action:"GetNavMenuChatStatus"})
 				.done(function(data) 
 					{
@@ -2939,7 +2877,7 @@ navMenu_userNotification = (function()
 
 	var		userNotificationsArray = []; // --- storing all notifications
 
-	var	InitilizeData = function (data)
+	var	InitializeData = function (data)
 	{
 		userNotificationsArray = data;
 
@@ -2970,7 +2908,7 @@ navMenu_userNotification = (function()
 		{		
 			matchArray.forEach(function(item) 
 				{
-					// --- substr'ing: @1030 -> 1030
+					// --- substring: @1030 -> 1030
 					if(userCache.isUserCached(item.substr(1, item.length - 1)))
 					{
 						var 	user = userCache.GetUserByID(item.substr(1, item.length - 1));
@@ -3081,7 +3019,7 @@ navMenu_userNotification = (function()
 															.addClass("btn btn-link")
 															.on("click", function(e) 
 																{
-																	$.getJSON('/cgi-bin/index.cgi', {action:"AJAX_notificationMarkMessageReadByMessageID", notificationID:item.notificationID})
+																	$.getJSON("/cgi-bin/index.cgi", {action:"AJAX_notificationMarkMessageReadByMessageID", notificationID:item.notificationID})
 																				.done(function(data)
 																					{
 																						if(data.result == "success")
@@ -3106,7 +3044,7 @@ navMenu_userNotification = (function()
 																});
 						var		canvasAvatar = $("<canvas/>")	.attr("width", "30")
 																.attr("height", "30")
-																.addClass('canvas-big-avatar')
+																.addClass("canvas-big-avatar")
 																.addClass("UnreadChatListOverrideCanvasSize");
 						var		messageBody = $("<div>").addClass("UnreadChatListMessage")
 															.on("click", function(e) 
@@ -3134,7 +3072,7 @@ navMenu_userNotification = (function()
 									avatarLink = "/userprofile/" + item.notificationFriendUserID + "?rand=" + system_calls.GetUUID();
 									hrefTemp = $("<a>").attr("href", avatarLink)
 											.addClass("UnreadChatListHrefLineHeigh")
-											.append(system_calls.CutLongMesssages(item.notificationFriendUserName + " " + item.notificationFriendUserNameLast));
+											.append(system_calls.CutLongMessages(item.notificationFriendUserName + " " + item.notificationFriendUserNameLast));
 
 									if(userCache.isUserCached(item.notificationFriendUserID))
 									{
@@ -3162,7 +3100,7 @@ navMenu_userNotification = (function()
 									avatarLink = "/companyprofile/" + item.notificationFromCompany[0].id + "?rand=" + system_calls.GetUUID();
 									hrefTemp = $("<a>").attr("href", avatarLink)
 											.addClass("UnreadChatListHrefLineHeigh")
-											.append(system_calls.CutLongMesssages(item.notificationFromCompany[0].name));
+											.append(system_calls.CutLongMessages(item.notificationFromCompany[0].name));
 
 									if(item.notificationFromCompany[0].logo_folder.length && item.notificationFromCompany[0].logo_filename.length)
 									{
@@ -3302,7 +3240,7 @@ navMenu_userNotification = (function()
 
 
 	return {
-		InitilizeData: InitilizeData,
+		InitializeData: InitializeData,
 		BuildUserNotificationList: BuildUserNotificationList,
 		GetAdditionalTitle: GetAdditionalTitle
 	};
@@ -3310,7 +3248,7 @@ navMenu_userNotification = (function()
 
 gift_list = (function ()
 {
-	'use strict';
+	"use strict";
 
 	var callback_function;
 
@@ -3340,7 +3278,7 @@ gift_list = (function ()
 		{
 			currTag.button("loading");
 
-			$.getJSON('/cgi-bin/' + script + '?action=' + action, {id: id})
+			$.getJSON("/cgi-bin/" + script + "?action=" + action, {id: id})
 				.done(function(data) {
 					if(data.result == "success")
 					{
@@ -3419,7 +3357,7 @@ gift_list = (function ()
 
 
 	// --- IMPORTANT !!!
-	// --- $("#GiftPath").width() - using in link widhth calculating
+	// --- $("#GiftPath").width() - using in link width calculating
 	// --- 
 	// --- input:
 	// --- 		giftsArray			- array of all gifts to display
@@ -3499,7 +3437,7 @@ gift_list = (function ()
 														.attr("data-action", "updateGiftLink")
 														.attr("data-script", "gift.cgi")
 														.addClass("giftLink editableSpan maxwidth_100percent")
-														.append(item.link.length ? system_calls.CutLongMesssages(item.link, $("#GiftPath").width() / 9) : "(ссылка не определена)");
+														.append(item.link.length ? system_calls.CutLongMessages(item.link, $("#GiftPath").width() / 9) : "(ссылка не определена)");
 
 				var		spanPrice = $("<span>").attr("data-id", item.id)
 														.attr("data-action", "updateGiftPrice")
@@ -3675,21 +3613,21 @@ system_notifications = (function ()
 
 						if((currTimestamp - notificationShownTimestamp) > 24 * 3600)
 						{
-							var		notify, prononciation;
+							var		notify, pronunciation;
 
 							localStorage.setItem("notificationShownTimestamp", currTimestamp);
 
-							if(numberOfChatMessages == 1) { prononciation = " новое сообщение"; }
-							if(numberOfChatMessages == 2) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages == 3) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages == 4) { prononciation = " новых сообщения"; }
-							if(numberOfChatMessages >= 5) { prononciation = " новых сообщений"; }
-							if(((numberOfChatMessages % 10) == 1) && (numberOfChatMessages > 19)) { prononciation = " новое сообщение"; }
-							if(((numberOfChatMessages % 10) == 2) && (numberOfChatMessages > 19)) { prononciation = " новых сообщения"; }
-							if(((numberOfChatMessages % 10) > 2) && (numberOfChatMessages > 19)) { prononciation = " новых сообщений"; }
-							if(((numberOfChatMessages % 10) > 0) && (numberOfChatMessages > 19)) { prononciation = " новых сообщений"; }
+							if(numberOfChatMessages == 1) { pronunciation = " новое сообщение"; }
+							if(numberOfChatMessages == 2) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages == 3) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages == 4) { pronunciation = " новых сообщения"; }
+							if(numberOfChatMessages >= 5) { pronunciation = " новых сообщений"; }
+							if(((numberOfChatMessages % 10) == 1) && (numberOfChatMessages > 19)) { pronunciation = " новое сообщение"; }
+							if(((numberOfChatMessages % 10) == 2) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщения"; }
+							if(((numberOfChatMessages % 10) > 2) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщений"; }
+							if(((numberOfChatMessages % 10) > 0) && (numberOfChatMessages > 19)) { pronunciation = " новых сообщений"; }
 
-							notify = new Notification("Вам письмо !", { icon: "/images/pages/chat/chat_notification_" + (Math.floor(Math.random() * 18) + 1) + ".png", body: "Вам прислали " + numberOfChatMessages + prononciation } );
+							notify = new Notification("Вам письмо !", { icon: "/images/pages/chat/chat_notification_" + (Math.floor(Math.random() * 18) + 1) + ".png", body: "Вам прислали " + numberOfChatMessages + pronunciation } );
 							notify.onclick = function() {
 								notify.close();
 								window.location.href = "/chat?rand=" + Math.random()*98765432123456;
@@ -3704,7 +3642,7 @@ system_notifications = (function ()
 				}
 				else
 				{
-					if (Notification.permission !== 'denied') 
+					if (Notification.permission !== "denied") 
 					{
 					    Notification.requestPermission();
 					}
@@ -4062,7 +4000,7 @@ troubleshooting = (function ()
 		var callback = function(stackframes) {
 		  var stringifiedStack = stackframes.map(function(sf) {
 		    return sf.toString();
-		  }).join('\n');
+		  }).join("\n");
 		  traceback += stringifiedStack + "\n";
 
 		  return traceback;
@@ -4122,29 +4060,29 @@ troubleshooting = (function ()
         other_chrome        = /(CriOS|Chrome)(?=.*\bMobile\b)/i,
         other_firefox       = /(?=.*\bFirefox\b)(?=.*\bMobile\b)/i, // Match 'Firefox' AND 'Mobile'
         seven_inch = new RegExp(
-            '(?:' +         // Non-capturing group
+            "(?:" +         // Non-capturing group
 
-            'Nexus 7' +     // Nexus 7
+            "Nexus 7" +     // Nexus 7
 
-            '|' +           // OR
+            "|" +           // OR
 
-            'BNTV250' +     // B&N Nook Tablet 7 inch
+            "BNTV250" +     // B&N Nook Tablet 7 inch
 
-            '|' +           // OR
+            "|" +           // OR
 
-            'Kindle Fire' + // Kindle Fire
+            "Kindle Fire" + // Kindle Fire
 
-            '|' +           // OR
+            "|" +           // OR
 
-            'Silk' +        // Kindle Fire, Silk Accelerated
+            "Silk" +        // Kindle Fire, Silk Accelerated
 
-            '|' +           // OR
+            "|" +           // OR
 
-            'GT-P1000' +    // Galaxy Tab 7 inch
+            "GT-P1000" +    // Galaxy Tab 7 inch
 
-            ')',            // End non-capturing group
+            ")",            // End non-capturing group
 
-            'i');           // Case-insensitive matching
+            "i");           // Case-insensitive matching
 
     var match = function(regex, userAgent) {
         return regex.test(userAgent);
@@ -4155,16 +4093,16 @@ troubleshooting = (function ()
 
         // Facebook mobile app's integrated browser adds a bunch of strings that
         // match everything. Strip it out if it exists.
-        var tmp = ua.split('[FBAN');
-        if (typeof tmp[1] !== 'undefined') {
+        var tmp = ua.split("[FBAN");
+        if (typeof tmp[1] !== "undefined") {
             ua = tmp[0];
         }
 
         // Twitter mobile app's integrated browser on iPad adds a "Twitter for
         // iPhone" string. Same probable happens on other tablet platforms.
         // This will confuse detection so strip it out if it exists.
-        tmp = ua.split('Twitter');
-        if (typeof tmp[1] !== 'undefined') {
+        tmp = ua.split("Twitter");
+        if (typeof tmp[1] !== "undefined") {
             ua = tmp[0];
         }
 
@@ -4206,7 +4144,7 @@ troubleshooting = (function ()
         // excludes 7 inch devices, classifying as phone or tablet is left to the user
         this.tablet = this.apple.tablet || this.android.tablet || this.windows.tablet;
 
-        if (typeof window === 'undefined') {
+        if (typeof window === "undefined") {
             return this;
         }
     };
@@ -4217,15 +4155,15 @@ troubleshooting = (function ()
         return IM;
     };
 
-    if (typeof module !== 'undefined' && module.exports && typeof window === 'undefined') {
+    if (typeof module !== "undefined" && module.exports && typeof window === "undefined") {
         //node
         module.exports = IsMobileClass;
-    } else if (typeof module !== 'undefined' && module.exports && typeof window !== 'undefined') {
+    } else if (typeof module !== "undefined" && module.exports && typeof window !== "undefined") {
         //browserify
         module.exports = instantiate();
-    } else if (typeof define === 'function' && define.amd) {
+    } else if (typeof define === "function" && define.amd) {
         //AMD
-        define('isMobile', [], global.isMobile = instantiate());
+        define("isMobile", [], global.isMobile = instantiate());
     } else {
         global.isMobile = instantiate();
     }
@@ -4257,16 +4195,16 @@ String.prototype.trim = function(charlist) {
 };
 
 $.fn.selectRange = function(start, end) {
-    var e = document.getElementById($(this).attr('id')); // I don't know why... but $(this) don't want to work today :-/
+    var e = document.getElementById($(this).attr("id")); // I don't know why... but $(this) don't want to work today :-/
     if (!e) return;
     else if (e.setSelectionRange) { e.focus(); e.setSelectionRange(start, end); } /* WebKit */ 
-    else if (e.createTextRange) { var range = e.createTextRange(); range.collapse(true); range.moveEnd('character', end); range.moveStart('character', start); range.select(); } /* IE */
+    else if (e.createTextRange) { var range = e.createTextRange(); range.collapse(true); range.moveEnd("character", end); range.moveStart("character", start); range.select(); } /* IE */
     else if (e.selectionStart) { e.selectionStart = start; e.selectionEnd = end; }
 };
 
 $.urlParam = function(name)
 {
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    var results = new RegExp("[\?&]" + name + "=([^&#]*)").exec(window.location.href);
     if (results === null){
        return "";
     }
