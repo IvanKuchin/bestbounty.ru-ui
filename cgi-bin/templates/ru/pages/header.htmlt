@@ -18,7 +18,6 @@
 -->
 
 
-	<!-- jQuery 3.2.1 -->
 	<script src="/js/jquery/jquery-3.6.0.min.js"></script>
 
 	<!-- unveil.patched (lazy load) -->
