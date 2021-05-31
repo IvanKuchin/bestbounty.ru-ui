@@ -24,7 +24,6 @@ login_page = (function()
 			}, 100);
 		}
 
-		CheckregInputEmailValidity();
 		$("#regInputEmail").focusout(function(event) {
 			CheckregInputEmailValidity();
 		});
@@ -153,7 +152,7 @@ login_page = (function()
 			})
 				// using the done promise callback
 				.done(function(data) {
-					console.log("DEBUG: CheckregInputEmailValidity().ajax().done: retrieved data.regEmail = " + data.regEmail);
+					console.debug("retrieved data.regEmail = " + data.regEmail);
 					if(data.regEmail == "already used"){
 						$("#regInputEmail").focus();
 						$("#regEmail_checked").val("0");
