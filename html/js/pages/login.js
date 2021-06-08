@@ -1,3 +1,5 @@
+/*global create_password_block, jsSHA */
+
 var		login_page = login_page || {};
 
 login_page = (function()
@@ -18,14 +20,14 @@ login_page = (function()
 		// --- 2) focus on-password field
 		if($.urlParam("regEmail").length)
 		{
-			setTimeout(function(e)
+			setTimeout(function()
 			{
 				$("#regInputEmail").focus();
 			}, 100);
 		}
 
 		CheckregInputEmailValidity();
-		$("#regInputEmail").focusout(function(event) {
+		$("#regInputEmail").focusout(function() {
 			CheckregInputEmailValidity();
 		});
 
@@ -44,7 +46,7 @@ login_page = (function()
 		sms_confirmation.SetPhoneNumberSelector	(login_selector);
 		sms_confirmation.SetTriggerSelector		(phone_submit_selector);
 		sms_confirmation.SetSuccessCallback		(function(param) { if((typeof(param) != "undefined") && (typeof(param.url) != "undefined") && param.url.length) window.location.replace(param.url); });
-		sms_confirmation.SetFailCallback		(function(param) { system_calls.PopoverInfo($(phone_submit_selector), "Некорректный код"); });
+		sms_confirmation.SetFailCallback		(function() { system_calls.PopoverInfo($(phone_submit_selector), "Некорректный код"); });
 		sms_confirmation.SetScript1				("noauth.cgi");
 		sms_confirmation.SetAction1				("AJAX_sendPhoneConfirmationSMS");
 		sms_confirmation.SetScript2				("index.cgi");
@@ -58,34 +60,34 @@ login_page = (function()
 		BuildCountrySelectTag();
 	};
 
-	var	UserSignup_ClickHandler = function(e)
+	var	UserSignup_ClickHandler = function()
 	{
 		var		curr_tag = $(this);
 
 		if($("#regInputEmail").val() === "")
 		{
 			system_calls.PopoverError("regInputEmail", "Укажите e-mail");
-	   		$("#regInputEmail").focus();
+			$("#regInputEmail").focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regPassword")) || !create_password_block.Check_NewPassword_Letters($("#regPassword")) || !create_password_block.Check_NewPassword_Digits($("#regPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regPassword")))
 		{
 			system_calls.PopoverError("regPassword", "Неподходящий пароль");
-	   		$("#regPassword").focus();
+			$("#regPassword").focus();
 		}
 		else if(!create_password_block.Check_NewPassword_Len($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Letters($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_Digits($("#regConfirmPassword")) || !create_password_block.Check_NewPassword_DigitLocation($("#regConfirmPassword")))
 		{
 			system_calls.PopoverError("regConfirmPassword", "Неподходящий пароль");
-	   		$("#regConfirmPassword").focus();
+			$("#regConfirmPassword").focus();
 		}
 		else if($("#regPassword").val() != $("#regConfirmPassword").val())
 		{
 			system_calls.PopoverError("regConfirmPassword", "Пароли не совпадают");
-	   		$("#regConfirmPassword").focus();
+			$("#regConfirmPassword").focus();
 		}
 		else if($("#regSecurityCode").val() === "")
 		{
 			system_calls.PopoverError("regSecurityCode", "Укажите код безопасности");
-	   		$("#regSecurityCode").focus();
+			$("#regSecurityCode").focus();
 		}
 		else
 		{
@@ -122,12 +124,12 @@ login_page = (function()
 							if(data.redirect_url.length) window.location.replace(data.redirect_url + "&rand2=" + Math.random()*98765432123456);
 						}
 					})
-					.fail(function(data)
+					.fail(function()
 					{
 						system_calls.PopoverError(curr_tag, "Ошибка JSON ответа сервера");
 						console.error("fail to parse JSON server response");
 					})
-					.always(function(data)
+					.always(function()
 					{
 						setTimeout(function() { $("#regSubmit").button("reset"); }, 300);
 					});
@@ -255,7 +257,7 @@ login_page = (function()
 					system_calls.PopoverError(curr_tag, data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				system_calls.PopoverError(curr_tag, "Ошибка JSON ответа сервера");
 			});
@@ -300,7 +302,7 @@ login_page = (function()
 		return result;
 	};
 
-	var	HidePasswordIfPhoneNumber_KeyupHandler = function(e)
+	var	HidePasswordIfPhoneNumber_KeyupHandler = function()
 	{
 		var	curr_tag = $(this);
 

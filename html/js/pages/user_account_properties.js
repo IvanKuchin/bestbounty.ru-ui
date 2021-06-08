@@ -1,3 +1,5 @@
+/* global jsSHA*/
+
 var	user_account_properties = user_account_properties || {};
 
 user_account_properties = (function()
@@ -48,7 +50,7 @@ user_account_properties = (function()
 		$("#submitChangeEmail").on("click", ChangeEmail_ClickHandler);
 		$("#EmailChangeDialog button.btn-success").on("click", EmailChangeDialogSubmit_ClickHandler);
 		$("#submitSendLink").on("click", SendWallLink);
-
+		$("#copyLinkToWall").on("click", CopyUserFeedLinkToClipboard);
 
 		$("label[for=\"case_subscription_email\"]")	.on("click", Switcher_ClickHandler);
 		$("label[for=\"case_subscription_sms\"]")	.on("click", Switcher_ClickHandler);
@@ -57,8 +59,8 @@ user_account_properties = (function()
 		sms_confirmation.SetCountryCodeSelector	("#country_code");
 		sms_confirmation.SetPhoneNumberSelector	("#phone_number");
 		sms_confirmation.SetTriggerSelector		("#submitConfirmPhoneNumber");
-		sms_confirmation.SetSuccessCallback		(function(param) { system_calls.PopoverInfo($("#submitConfirmPhoneNumber"), "Телефон подтвержден"); });
-		sms_confirmation.SetFailCallback		(function(param) { system_calls.PopoverInfo($("#submitConfirmPhoneNumber"), "Телефон НЕ подтвержден"); });
+		sms_confirmation.SetSuccessCallback		(function() { system_calls.PopoverInfo($("#submitConfirmPhoneNumber"), "Телефон подтвержден"); });
+		sms_confirmation.SetFailCallback		(function() { system_calls.PopoverInfo($("#submitConfirmPhoneNumber"), "Телефон НЕ подтвержден"); });
 		sms_confirmation.SetScript1				("account.cgi");
 		sms_confirmation.SetAction1				("AJAX_sendPhoneConfirmationSMS");
 		sms_confirmation.SetScript2				("account.cgi");
@@ -88,7 +90,7 @@ user_account_properties = (function()
 					} // --- if(data.status == "success")
 				})
 			.fail(
-				function(data) 
+				function(/*data*/) 
 				{
 					// --- Fail to block the account
 					system_calls.PopoverError($("#firstName"), "Ошибка получаения данных");
@@ -291,7 +293,7 @@ user_account_properties = (function()
 						} // --- if(data.status == "success")
 					})
 				.fail(
-					function(data) 
+					function(/*data*/) 
 					{
 						$("#submitChangeLogin").button("reset");
 						// --- Fail to block the account
@@ -371,7 +373,7 @@ user_account_properties = (function()
 						{
 							console.debug("ChangePassword: ERROR: password is having special symbols");
 
-							PopoverOnChangePasswords("Пароли НЕ должны содержать символов [\"\'\`<>]");
+							PopoverOnChangePasswords("Пароли НЕ должны содержать символов [\"'`<>]");
 						}
 						else
 						{
@@ -409,12 +411,10 @@ user_account_properties = (function()
 		console.debug("ChangePassword: stop");
 	};
 
-	var InputPasswordCleanUP = function(event)
+	var InputPasswordCleanUP = function(/*event*/)
 	{
 		var		divChangePassword1 = $("#changePassword1").parent();
 		var		divChangePassword2 = $("#changePassword2").parent();
-		var		buttonChangePassword1 = $("#changePassword1");
-		var		buttonChangePassword2 = $("#changePassword2");
 		var		spanChangePassword1 = $("#changePassword1").siblings();
 		var		spanChangePassword2 = $("#changePassword2").siblings();
 
@@ -435,11 +435,7 @@ user_account_properties = (function()
 		if($("#changePassword2").val().length)
 		{
 			var		divChangePassword1 = $("#changePassword1").parent();
-			var		divChangePassword2 = $("#changePassword2").parent();
-			var		buttonChangePassword1 = $("#changePassword1");
-			var		buttonChangePassword2 = $("#changePassword2");
 			var		spanChangePassword1 = $("#changePassword1").siblings();
-			var		spanChangePassword2 = $("#changePassword2").siblings();
 
 			InputPasswordCleanUP();
 
@@ -466,11 +462,7 @@ user_account_properties = (function()
 
 		if($("#changePassword2").val().length)
 		{
-			var		divChangePassword1 = $("#changePassword1").parent();
 			var		divChangePassword2 = $("#changePassword2").parent();
-			var		buttonChangePassword1 = $("#changePassword1");
-			var		buttonChangePassword2 = $("#changePassword2");
-			var		spanChangePassword1 = $("#changePassword1").siblings();
 			var		spanChangePassword2 = $("#changePassword2").siblings();
 
 			InputPasswordCleanUP();
@@ -506,7 +498,7 @@ user_account_properties = (function()
 											.attr("src", "/images/themes/" + theme.path + ".jpg")
 											.data("theme_id", theme.id)
 											.addClass("width_100percent_100px_cover niceborder cursor_pointer")
-											.on("click", function(e)
+											.on("click", function()
 											{
 												var		currTag = $(this);
 
@@ -576,7 +568,7 @@ user_account_properties = (function()
 		$("#case_subscription_email")	.prop("checked", email_subscriptions[0] == "Y" ? "checked" : "");
 	};
 
-	var	Switcher_ClickHandler = function(e)
+	var	Switcher_ClickHandler = function()
 	{
 		var		curr_tag = $(this);
 		var		input_tag = $("#" + $(this).attr("for"));
@@ -592,6 +584,7 @@ user_account_properties = (function()
 			{
 				if(data.result == "success")
 				{
+					// --- good 2 go
 				}
 				else
 				{
@@ -601,19 +594,19 @@ user_account_properties = (function()
 					system_calls.PopoverError(curr_tag, "Ошибка: " + data.description);
 				}
 			})
-			.fail(function(e)
+			.fail(function()
 			{
 				input_tag.prop("checked", !curr_value);
 				system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 			})
-			.always(function(e)
+			.always(function()
 			{
 			});
 
 		return true;
 	};
 
-	var	EmailChangeDialogSubmit_ClickHandler = function(e)
+	var	EmailChangeDialogSubmit_ClickHandler = function()
 	{
 		var		curr_tag = $(this);
 		var		email = $("#changeEmail").val();
@@ -628,9 +621,19 @@ user_account_properties = (function()
 		}
 	};
 
-return {
-	Init:Init
-		};
+	var	CopyUserFeedLinkToClipboard = function()
+	{
+		var		curr_tag	= $(this);
+		var		feed_link	= $("#linkToWall").val();
+
+		system_calls.copyToClipboard(feed_link);
+
+		system_calls.PopoverInfo(curr_tag, "Copied.");
+	};
+
+	return {
+				Init:Init,
+			};
 
 })();
 
