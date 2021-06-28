@@ -55,7 +55,11 @@ RewriteRule ^invite/(.*)$	/cgi-bin/index.cgi?action=check_initial_action&id=$1 [
 #
 # redirect images/videos to unencrypted site to reduce https load
 #
-RewriteRule ^images/temp/(.*)$  https://devimages.bestbounty.ru/images/temp/$1 [P]
-RewriteRule ^images/(.*)$	https://devimages.bestbounty.ru/images/$1 [L,R=301,NC]
-RewriteRule ^video/(.*)$	https://devimages.bestbounty.ru/video/$1 [L,R=301,NC]
-RewriteRule ^helpdesk_ticket_attaches/(.*)$		https://devimages.bestbounty.ru/helpdesk_ticket_attaches/$1       [L,R=301,NC]
+RewriteRule ^images/temp/(.*)$  /media/images/temp/$1 [P]
+RewriteRule ^images/(.*)$	/media/images/$1 [L,R=301,NC]
+RewriteRule ^video/(.*)$	/media/video/$1 [L,R=301,NC]
+RewriteRule ^helpdesk_ticket_attaches/(.*)$		/media/helpdesk_ticket_attaches/$1       [L,R=301,NC]
+#RewriteRule ^images/temp/(.*)$  https://devimages.bestbounty.ru/images/temp/$1 [P]
+#RewriteRule ^images/(.*)$	https://devimages.bestbounty.ru/images/$1 [L,R=301,NC]
+#RewriteRule ^video/(.*)$	https://devimages.bestbounty.ru/video/$1 [L,R=301,NC]
+#RewriteRule ^helpdesk_ticket_attaches/(.*)$		https://devimages.bestbounty.ru/helpdesk_ticket_attaches/$1       [L,R=301,NC]
