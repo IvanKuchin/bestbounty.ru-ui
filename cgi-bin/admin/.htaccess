@@ -1,5 +1,5 @@
 AuthType Basic
 AuthName "By invitation only"
-AuthUserFile /home/httpd/dev.bestbounty.ru/cgi-bin/admin/.htpasswd
+AuthUserFile htpasswd/.htpasswd
 Require valid-user
 
