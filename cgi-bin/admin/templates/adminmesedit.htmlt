@@ -55,7 +55,7 @@ function initEditor() {
 <body  onload="initEditor();">
 <table width="100%" height="255" border="0" cellspacing="5">
   <tr> 
-    <td colspan="2" bgcolor="#FE8738"><div align="center"><strong><font color=white>Domain administration <<template:templates/domain.htmlt>><br>(Добавление раздела)</font></strong></div></td>
+    <td colspan="2" bgcolor="#FE8738"><div align="center"><strong><font color=white><br>(Добавление раздела)</font></strong></div></td>
   </tr>
   <tr valign=top  bgcolor="EFF8FF"> 
     <<template:templates/menu.htmlt>>

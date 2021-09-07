@@ -7,7 +7,7 @@
 <body>
 <table width="100%" height="255" border="0" cellspacing="5">
   <tr> 
-    <td colspan="2" bgcolor="#FE8738"><div align="center"><strong><font color=white>Domain administration <<template:templates/domain.htmlt>><br>(Locality list)</font></strong></div></td>
+    <td colspan="2" bgcolor="#FE8738"><div align="center"><strong><font color=white><br>(Locality list)</font></strong></div></td>
   </tr>
   <tr valign=top  bgcolor="EFF8FF"> 
     <<template:templates/admin_menu.htmlt>>

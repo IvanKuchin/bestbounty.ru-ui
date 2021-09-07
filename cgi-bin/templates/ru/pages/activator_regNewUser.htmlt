@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <<template:templates/ru/pages/header.htmlt>>
-    <title>Активация пользователя на сайте <<template:admin/templates/domain.htmlt>></title>
+    <title>Активация пользователя на сайте</title>
     <!-- Custom styles for this template -->
     <link href="/css/pages/common_weberror.css" rel="stylesheet">
   </head>
