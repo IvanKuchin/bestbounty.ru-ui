@@ -24,6 +24,17 @@ session_pi = (function()
 		}
 		else
 		{
+			// --- option #1) keep it before "if"
+			// ---            if user will close page after local Storage, server will not mark old session for deletion (stuck session)
+			// --- option #2) put it after "if"
+			// ---            if user will close page after if, server will mark old session for deletion, but client will continue using it
+			// ---            this case will log error something like "session has been deleted, but client still wants to use it"
+			// --- option #3) inside "if"
+			// ---            don't move it inside "if"
+			// ---            same as "option #2", but with higher prob, due to local Storage will wait longer for server-reply
+			localStorage.setItem("sessid", $.cookie("sessid"));
+
+
 			// --- save sessid to persistence storage
 			$.getJSON("/cgi-bin/account.cgi", {action:"AJAX_sessionHandshake"})
 				.done(function(data)
@@ -42,10 +53,6 @@ session_pi = (function()
 					system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 				});
 
-			// --- don't move it inside AJAX_sessionHandshake
-			// --- this will helps to avoid issues when user quickly jump out from this page w/o waiting AJAX response
-			// --- at the same time session should not be removed on the server side w/o confirmation
-			localStorage.setItem("sessid", $.cookie("sessid"));
 		}
 
 		return	result;
