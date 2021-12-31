@@ -76,7 +76,7 @@
                                   .fadeToggle(250);
       });
 
-    socket_stat = new WebSocket(system_calls.GetWebSocketProtocol() + "//" + window.location.hostname + ":" + common_connme.GetWebSockerPort(), "status-protocol");
+    socket_stat = new WebSocket(system_calls.GetWebSocketProtocol() + "//" + window.location.hostname + ":" + common_connme.GetWebSocketPort(), "status-protocol");
 
     socket_stat.onopen = function(event)
     {
