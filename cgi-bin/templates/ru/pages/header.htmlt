@@ -23,9 +23,8 @@
 	<!-- unveil.patched (lazy load) -->
 	<script src="/js/unveil/jquery.unveil.patched.js"></script>
 
-	<!-- jQuery UI v 1.12.1 -->
-	<link href="/css/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
-	<script src="/js/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+	<link  href="/js/jquery-ui/jquery-ui-1.13.1/jquery-ui.css" rel="stylesheet">
+	<script src="/js/jquery-ui/jquery-ui-1.13.1/jquery-ui.min.js"></script>
 
 	<!-- jQuery.cookie -->
 	<script src="/js/jquery.cookie/jquery.cookie.js"></script>
