@@ -6,6 +6,8 @@ user_account_properties = (function()
 {
 	"use strict";
 
+	var	git_commit_id = "";
+
 	var Init = function()
 	{
 		UpdateAccountInfo();
@@ -55,6 +57,8 @@ user_account_properties = (function()
 		$("label[for=\"case_subscription_email\"]")	.on("click", Switcher_ClickHandler);
 		$("label[for=\"case_subscription_sms\"]")	.on("click", Switcher_ClickHandler);
 
+		FetchGitCommitID("/info/git_commit_id");
+
 		// --- sms login block
 		sms_confirmation.SetCountryCodeSelector	("#country_code");
 		sms_confirmation.SetPhoneNumberSelector	("#phone_number");
@@ -65,6 +69,31 @@ user_account_properties = (function()
 		sms_confirmation.SetAction1				("AJAX_sendPhoneConfirmationSMS");
 		sms_confirmation.SetScript2				("account.cgi");
 		sms_confirmation.SetAction2				("AJAX_confirmPhoneNumber");
+	};
+
+	var FetchGitCommitID = function(url) {
+		const my_init = {
+			  method: 'GET',
+			  cache: 'no-cache',
+			};
+
+		const my_req = new Request(url);
+
+		fetch(my_req)
+			.then((response) => {
+				var result = response.text();
+
+			    if (!response.ok) {
+					var err = new Error(`fail to fetch git_commit_id, Status: ${ response.status }`);
+					result = err.message;
+					system_calls.PopoverError("firstName", result);
+			    }
+
+			    return result;
+			})
+			.then((data) => {
+				document.querySelector("[git_commit_id]").textContent = data;
+			});
 	};
 
 	var UpdateAccountInfo = function()
