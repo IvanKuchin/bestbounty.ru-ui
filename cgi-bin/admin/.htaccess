@@ -1,5 +1,0 @@
-AuthType Basic
-AuthName "By invitation only"
-AuthUserFile htpasswd/.htpasswd
-Require valid-user
-

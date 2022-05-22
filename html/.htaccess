@@ -2,55 +2,55 @@ RewriteEngine on
 Options +FollowSymlinks
 RewriteBase /
 
-RewriteRule ^$ /cgi-bin/index.cgi
-RewriteRule ^password_recovery(.*)$ /cgi-bin/index.cgi?action=password_recovery_template&$1 [QSA]
-RewriteRule ^email_change(.*)$ /cgi-bin/account.cgi?action=email_change_template&$1 [QSA]
-RewriteRule ^autologin(.*)$ /cgi-bin/index.cgi?action=autologin$1 [QSA]
-RewriteRule ^login(.*)$ /cgi-bin/index.cgi?action=login$1 [QSA]
-RewriteRule ^showmain$ /cgi-bin/index.cgi?action=showmain$1 [QSA]
-RewriteRule ^logout(.*)$ /cgi-bin/index.cgi?action=logout$1
-RewriteRule ^edit_profile(.*)$ /cgi-bin/index.cgi?action=edit_profile&$1
+RewriteRule ^$ /cgi-bin/index.cgi [QSA,L,R=301,NC]
+RewriteRule ^password_recovery(.*)$ /cgi-bin/index.cgi?action=password_recovery_template&$1 [QSA,L,R=301,NC]
+RewriteRule ^email_change(.*)$ /cgi-bin/account.cgi?action=email_change_template&$1 [QSA,L,R=301,NC]
+RewriteRule ^autologin(.*)$ /cgi-bin/index.cgi?action=autologin$1 [QSA,L,R=301,NC]
+RewriteRule ^login(.*)$ /cgi-bin/index.cgi?action=login$1 [QSA,L,R=301,NC]
+RewriteRule ^showmain$ /cgi-bin/index.cgi?action=showmain$1 [QSA,L,R=301,NC]
+RewriteRule ^logout(.*)$ /cgi-bin/index.cgi?action=logout$1 [QSA,L,R=301,NC]
+RewriteRule ^edit_profile(.*)$ /cgi-bin/index.cgi?action=edit_profile&$1 [QSA,L,R=301,NC]
 
-RewriteRule ^news_feed(.*)$ /cgi-bin/index.cgi?action=news_feed&$1 [QSA]
-RewriteRule ^feed(.*)$ /cgi-bin/index.cgi?action=news_feed&$1
-RewriteRule ^find_friends(.*)$ /cgi-bin/index.cgi?action=find_friends&$1
-RewriteRule ^my_network(.*)$ /cgi-bin/index.cgi?action=my_network&$1
-RewriteRule ^user_account_properties(.*)$ /cgi-bin/index.cgi?action=user_account_properties&$1
-RewriteRule ^user_notifications/(.*)$ /cgi-bin/index.cgi?action=user_notifications&notificationid=$1
-RewriteRule ^user_notifications$ /cgi-bin/index.cgi?action=user_notifications
-RewriteRule ^activate_me/(.*)$ /cgi-bin/index.cgi?action=activateNewUser&activator=$1
-RewriteRule ^admin(.*)$ /cgi-bin/admin/admin.cgi
-RewriteRule ^events_list(.*)$ /cgi-bin/event.cgi?action=events_list&$1 [QSA]
-RewriteRule ^edit_event(.*)$ /cgi-bin/event.cgi?action=edit_event [QSA]
-RewriteRule ^createnewevent$ /cgi-bin/event.cgi?action=createnewevent [QSA]
+RewriteRule ^news_feed(.*)$ /cgi-bin/index.cgi?action=news_feed&$1 [QSA,L,R=301,NC]
+RewriteRule ^feed(.*)$ /cgi-bin/index.cgi?action=news_feed&$1 [QSA,L,R=301,NC]
+RewriteRule ^find_friends(.*)$ /cgi-bin/index.cgi?action=find_friends&$1 [QSA,L,R=301,NC]
+RewriteRule ^my_network(.*)$ /cgi-bin/index.cgi?action=my_network&$1 [QSA,L,R=301,NC]
+RewriteRule ^user_account_properties(.*)$ /cgi-bin/index.cgi?action=user_account_properties&$1 [QSA,L,R=301,NC]
+RewriteRule ^user_notifications/(.*)$ /cgi-bin/index.cgi?action=user_notifications&notificationid=$1 [QSA,L,R=301,NC]
+RewriteRule ^user_notifications$ /cgi-bin/index.cgi?action=user_notifications [QSA,L,R=301,NC]
+RewriteRule ^activate_me/(.*)$ /cgi-bin/index.cgi?action=activateNewUser&activator=$1 [QSA,L,R=301,NC]
+RewriteRule ^admin(.*)$ /cgi-bin/admin/admin.cgi [QSA,L,R=301,NC]
+RewriteRule ^events_list(.*)$ /cgi-bin/event.cgi?action=events_list&$1 [QSA,L,R=301,NC]
+RewriteRule ^edit_event(.*)$ /cgi-bin/event.cgi?action=edit_event [QSA,L,R=301,NC]
+RewriteRule ^createnewevent$ /cgi-bin/event.cgi?action=createnewevent [QSA,L,R=301,NC]
 
-RewriteRule ^eula(.*)$ /cgi-bin/index.cgi?action=eula_wrapper_template&$1 [QSA]
-RewriteRule ^privacy_policy(.*)$ /cgi-bin/index.cgi?action=privacy_policy_wrapper_template&$1 [QSA]
-RewriteRule ^cookie_policy(.*)$ /cgi-bin/index.cgi?action=cookie_policy_wrapper_template&$1 [QSA]
+RewriteRule ^eula(.*)$ /cgi-bin/index.cgi?action=eula_wrapper_template&$1 [QSA,L,R=301,NC]
+RewriteRule ^privacy_policy(.*)$ /cgi-bin/index.cgi?action=privacy_policy_wrapper_template&$1 [QSA,L,R=301,NC]
+RewriteRule ^cookie_policy(.*)$ /cgi-bin/index.cgi?action=cookie_policy_wrapper_template&$1 [QSA,L,R=301,NC]
 
 #
 # Initial actions
 #
-RewriteRule ^helpdesk_dashboard$ /cgi-bin/helpdesk.cgi?action=helpdesk_dashboard_template [QSA]
+RewriteRule ^helpdesk_dashboard$ /cgi-bin/helpdesk.cgi?action=helpdesk_dashboard_template [QSA,L,R=301,NC]
 
 #
 # Helpdesk actions
 #
-RewriteRule ^helpdesk_edit_profile$ /edit_profile [QSA]
+RewriteRule ^helpdesk_edit_profile$ /edit_profile [QSA,L,R=301,NC]
 
 #
 # profile by id (number)
 #
-RewriteRule ^userprofile/(.*)$ /cgi-bin/index.cgi?action=view_profile&userid=$1
+RewriteRule ^userprofile/(.*)$ /cgi-bin/index.cgi?action=view_profile&userid=$1 [QSA,L,R=301,NC]
 
 #
 # profile by id (name)
 #
-RewriteRule ^userid/(.*)$	/cgi-bin/index.cgi?action=getUserWall&id=$1 [QSA]
-RewriteRule ^user$			/cgi-bin/index.cgi?action=getUserWall [QSA]
-RewriteRule ^user/(.*)$		/cgi-bin/index.cgi?action=getUserWall&login=$1 [QSA]
-RewriteRule ^event/(.*)$	/cgi-bin/index.cgi?action=getEventWall&link=$1 [QSA]
-RewriteRule ^invite/(.*)$	/cgi-bin/index.cgi?action=check_initial_action&id=$1 [QSA]
+RewriteRule ^userid/(.*)$	/cgi-bin/index.cgi?action=getUserWall&id=$1 [QSA,L,R=301,NC]
+RewriteRule ^user$			/cgi-bin/index.cgi?action=getUserWall [QSA,L,R=301,NC]
+RewriteRule ^user/(.*)$		/cgi-bin/index.cgi?action=getUserWall&login=$1 [QSA,L,R=301,NC]
+RewriteRule ^event/(.*)$	/cgi-bin/index.cgi?action=getEventWall&link=$1 [QSA,L,R=301,NC]
+RewriteRule ^invite/(.*)$	/cgi-bin/index.cgi?action=check_initial_action&id=$1 [QSA,L,R=301,NC]
 
 #
 # redirect images/videos to unencrypted site to reduce https load
