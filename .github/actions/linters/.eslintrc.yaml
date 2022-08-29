@@ -7,7 +7,6 @@ env:
 # --- avoid no-undef warning for variables below
 globals:
     helpdesk_ticket_list_obj: writable
-    document: writable
     Image: writable
     isMobile: writable
     jQuery: writable
@@ -23,7 +22,24 @@ globals:
     StackTrace: writable
     troubleshooting: writable
     Uint8Array: writable
-    window: writable
+    DrawUserAvatar: writable
+    common_bestbounty: writable
+    common_connme: writable
+    infomed_stat: writable
+    common_timecard: writable
+
+ignorePatterns: 
+  - "**/*.js"
+  - "!**/js/pages/**/*"
+
+overrides:
+  - files: 
+      # --- infomed-stat
+      - "**/months_model/*.js"
+      - "**/survival_analysis/*.js"
+      - "**/pd/save2xls.js"
+    parserOptions:
+        sourceType: module
 
 # --- rules turn on/off
 #rules:
