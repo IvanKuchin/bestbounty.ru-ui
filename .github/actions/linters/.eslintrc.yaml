@@ -25,7 +25,7 @@ globals:
     DrawUserAvatar: writable
     common_bestbounty: writable
     common_connme: writable
-    infomed_stat: writable
+    common_infomed_stat: writable
     common_timecard: writable
 
 ignorePatterns: 
