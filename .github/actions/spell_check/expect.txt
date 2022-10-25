@@ -292,3 +292,5 @@ maxwidth
 Translite
 UITo
 YYY
+captcha
+getnew
