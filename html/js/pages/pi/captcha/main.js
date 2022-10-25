@@ -2,7 +2,6 @@ class Captcha {
 	constructor () {
 		let tag = document.getElementById("captcha")
 		tag.addEventListener("click", this._MakeNew.bind(this))
-
 	}
 
 	Do() {
@@ -20,24 +19,24 @@ class Captcha {
 	}
 
 	async _GetNewID() {
-        return fetch("/captcha/getnew?rand=" + Math.random() * 76543567890)
-                .then(response => {
-                        if (response.ok) {
-                        	// --- ok
-                        } else {
-                            throw new Error(`HTTP error! Status: ${ response.status }`);
-                        }
-        
-                        return response.json();
-                })
-                .then(data => {
-                        if(data.captcha_id.length) {
-                        	return data.captcha_id;
-                        } else {
-                        	system_calls.PopoverError($("body"), "Ошибка: " + data.description);
-                        }
-                })
-                .catch(err => {throw new Error(err)});
+		return fetch("/captcha/getnew?rand=" + Math.random() * 76543567890)
+				.then(response => {
+					if (response.ok) {
+						// --- ok
+					} else {
+						throw new Error(`HTTP error! Status: ${ response.status }`);
+					}
+
+					return response.json();
+				})
+				.then(data => {
+						if(data.captcha_id.length) {
+							return data.captcha_id;
+						} else {
+							system_calls.PopoverError($("body"), "Ошибка: " + data.description);
+						}
+				})
+				.catch(err => {throw new Error(err)});
 	}
 }
 
