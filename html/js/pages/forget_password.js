@@ -1,8 +1,8 @@
-var	forget_password = forget_password || {};
+/* exported forget_password */
 
-forget_password = (function()
+var forget_password = (function()
 {
-	redirectUrl = "/";
+	let redirectUrl = "/";
 
 	var Init = function()
 	{
@@ -22,7 +22,7 @@ forget_password = (function()
 		{
 			console.debug("SendEmail: ERROR: email is empty");
 			$("#email").popover({"placement": "top",
-								 "content": "Введите адрес куда необходимо выслать инструкцию по восстановлению пароля."})
+								"content": "Введите адрес куда необходимо выслать инструкцию по восстановлению пароля."})
 								.popover("show");
 			setTimeout(function ()
 				{
@@ -34,7 +34,7 @@ forget_password = (function()
 						if((email.indexOf("\"") >= 0) || (email.indexOf("\n") >= 0) || (email.indexOf("\r") >= 0) || (email.indexOf("\t") >= 0) || (email.indexOf("`") >= 0) || (email.indexOf("'") >= 0) || (email.indexOf("<") >= 0) || (email.indexOf(">") >= 0))
 						{
 							console.debug("SendEmail: ERROR: email contain special symbols");
-							PopoverOnChangePasswords("e-mail НЕ должн содержать символы [\"\'\`<>]");
+							PopoverOnChangePasswords("e-mail НЕ должн содержать символы [\"'`<>]");
 						}
 						else
 						{
@@ -62,7 +62,7 @@ forget_password = (function()
 										console.debug("SendEmail: error in mail sending [" + data.description + "]");
 										ResetForm();
 										$("#email").popover({"placement": "top",
-															 "content": data.description})
+															"content": data.description})
 															.popover("show");
 										setTimeout(function ()
 											{
@@ -93,6 +93,21 @@ forget_password = (function()
 		window.location.href = redirectUrl;
 	};
 
+	var PopoverOnChangePasswords = function(message)
+	{
+		$("#changePassword2").popover({"content": message})
+							.popover("show");
+		$("#changePassword1").popover({"content": message})
+							.popover("show");
+
+		setTimeout(function () 
+			{
+				$("#changePassword1").popover("destroy");
+				$("#changePassword2").popover("destroy");
+			}, 3000);
+
+	};
+	
 	return {
 		Init: Init
 	};

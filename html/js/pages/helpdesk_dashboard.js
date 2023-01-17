@@ -1,4 +1,4 @@
-var	helpdesk_dashboard = helpdesk_dashboard || {};
+/* exported helpdesk_dashboard */
 
 var	helpdesk_dashboard = (function()
 {
@@ -45,7 +45,7 @@ var	helpdesk_dashboard = (function()
 					system_calls.PopoverError(currTag, "Ошибка: " + data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				setTimeout(function() {
 					system_calls.PopoverError(currTag, "Ошибка ответа сервера");
@@ -71,7 +71,7 @@ var	helpdesk_dashboard = (function()
 						.attr("data-html", "true")
 						.attr("data-placement", "top")
 						.attr("title", "невзятые кейсы")
-						.on("click", function(e) { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=new&rand=" + Math.random() * 35987654678923; });
+						.on("click", function() { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=new&rand=" + Math.random() * 35987654678923; });
 
 		new_cases_dom.tooltip({ animation: "animated bounceIn"});
 
@@ -83,7 +83,7 @@ var	helpdesk_dashboard = (function()
 						.attr("data-html", "true")
 						.attr("data-placement", "top")
 						.attr("title", "открытые кейсы")
-						.on("click", function(e) { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=open&rand=" + Math.random() * 35987654678923; });
+						.on("click", function() { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=open&rand=" + Math.random() * 35987654678923; });
 
 		open_cases_dom.tooltip({ animation: "animated bounceIn"});
 
@@ -104,7 +104,6 @@ var	helpdesk_dashboard = (function()
 		var		currTag = $("#my_open_cases");
 		var		my_active_cases_counter = data_global.my_active_cases;
 		var		my_company_pending_cases_counter = data_global.my_company_pending_cases;
-		var		active_cases = data_global.active_cases;
 		var		my_active_cases_dom;
 		var		my_company_pending_cases_dom;
 		var		new_dom = $();
@@ -120,7 +119,7 @@ var	helpdesk_dashboard = (function()
 						.attr("data-html", "true")
 						.attr("data-placement", "top")
 						.attr("title", "мои незакрытые кейсы")
-						.on("click", function(e) { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=my_open&rand=" + Math.random() * 35987654678923; });
+						.on("click", function() { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=my_open&rand=" + Math.random() * 35987654678923; });
 
 		my_active_cases_dom.tooltip({ animation: "animated bounceIn"});
 
@@ -132,7 +131,7 @@ var	helpdesk_dashboard = (function()
 						.attr("data-html", "true")
 						.attr("data-placement", "top")
 						.attr("title", "мои кейсы, ожидающие ответа")
-						.on("click", function(e) { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=my_open&rand=" + Math.random() * 35987654678923; });
+						.on("click", function() { window.location.href = "/cgi-bin/helpdesk.cgi?action=cases_list_template&filter=my_open&rand=" + Math.random() * 35987654678923; });
 
 		my_company_pending_cases_dom.tooltip({ animation: "animated bounceIn"});
 

@@ -1,4 +1,6 @@
-/*jslint devel: true, indent: 4, maxerr: 50, esversion: 6*/
+/* jslint devel: true, indent: 4, maxerr: 50, esversion: 6*/
+/* exported helpdesk_ticket_list_obj */
+/* global helpdesk_ticket_list_obj:off */
 
 var	helpdesk_ticket_obj = function()
 {
@@ -109,7 +111,7 @@ var	helpdesk_ticket_obj = function()
 		return result;
 	};
 
-	var	CloseCase_ClickHandler = function(e)
+	var	CloseCase_ClickHandler = function()
 	{
 		var	curr_tag = $(this);
 
@@ -125,7 +127,7 @@ var	helpdesk_ticket_obj = function()
 
 		if(form_type_global.action == "edit")
 		{
-			var row_1 = $("<div>").addClass("row form-group");
+			let row_1 = $("<div>").addClass("row form-group");
 			var col_11 = $("<div>").addClass("col-xs-6 col-md-2 col-md-offset-8");
 			var button_11 = $("<button>")
 							.addClass("btn btn-primary form-control")
@@ -235,7 +237,7 @@ var	helpdesk_ticket_obj = function()
 "	</div>"
 								);
 
-			col_91.find("button.submit").on("click", function(e) 
+			col_91.find("button.submit").on("click", function() 
 													{
 														var	context = this;
 														$("#CloseTicketModal").modal("hide");
@@ -272,7 +274,7 @@ var	helpdesk_ticket_obj = function()
 		}
 		else if(form_type_global.action == "open")
 		{
-			var row_1 = $("<div>").addClass("row form-group");
+			let row_1 = $("<div>").addClass("row form-group");
 			var col_1 = $("<div>").addClass("col-xs-6 col-md-2 col-md-offset-10");
 			var button_1 = $("<button>")
 							.addClass("btn btn-primary form-control")
@@ -417,7 +419,7 @@ var	helpdesk_ticket_obj = function()
 		return result;
 	};
 
-	var	File_LoadHandler = function(e)
+	var	File_LoadHandler = function()
 	{
 		var		curr_tag		= $(this);
 		var		files			= curr_tag[0].files;
@@ -567,7 +569,7 @@ var	helpdesk_ticket_obj = function()
 						system_calls.PopoverInfo(curr_tag, "Ошибка ответа сервера");
 					}
 				},
-				error: function(data, textStatus, errorThrown)
+				error: function()
 				{
 					curr_tag.button("reset");
 					system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
@@ -580,7 +582,7 @@ var	helpdesk_ticket_obj = function()
 		window.location.replace("/cgi-bin/helpdesk.cgi?action=view_case_template&case_id=" + case_id + "&rand=" + Math.random() * 8765434567890);
 	};
 
-	var	Submit_ClickHandler = function(e)
+	var	Submit_ClickHandler = function()
 	{
 		var curr_tag = $(this);
 
@@ -674,12 +676,10 @@ var	helpdesk_ticket_obj = function()
 
 			result = result.add(container);
 
-			if(typeof(target_element) != "undefined") target_element.append(container);
-
 			return result;
 		};
 
-	var	TicketHistory_GetDOM = function(ticket, target_element)
+	var	TicketHistory_GetDOM = function(ticket)
 	{
 		var	result = $();
 
