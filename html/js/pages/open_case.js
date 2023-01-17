@@ -1,12 +1,11 @@
-/*jslint devel: true, indent: 4, maxerr: 50, esversion: 6*/
-
-var	open_case = open_case || {};
+/* jslint devel: true, indent: 4, maxerr: 50, esversion: 6 */
+/* global helpdesk_ticket_obj */
+/* exported open_case */
 
 var	open_case = (function()
 {
 	"use strict";
 
-	var	data_global;
 	var	helpdesk_ticket_obj_global;
 
 	var	Init = function()
@@ -20,7 +19,7 @@ var	open_case = (function()
 		$("#S1_modal .btn-default")	.on("click", Fallback_S2);
 	};
 
-	var	Fallback_S2 = function(e)
+	var	Fallback_S2 = function()
 	{
 		$("#severity_2").click();
 	};

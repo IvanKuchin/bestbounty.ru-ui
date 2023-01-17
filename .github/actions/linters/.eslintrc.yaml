@@ -38,6 +38,10 @@ overrides:
       - "**/months_model/*.js"
       - "**/survival_analysis/*.js"
       - "**/pd/save2xls.js"
+      # --- connme
+      - "**/view_profile.js"
+      - "**/edit_profile.js"
+      - "**/ribbons.js"
     parserOptions:
         sourceType: module
 

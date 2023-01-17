@@ -1,6 +1,6 @@
-/*jslint devel: true, indent: 4, maxerr: 50, esversion: 6*/
-
-var	view_case = view_case || {};
+/* jslint devel: true, indent: 4, maxerr: 50, esversion: 6 */
+/* global helpdesk_ticket_obj */
+/* exported view_case */
 
 var	view_case = (function()
 {
@@ -58,7 +58,7 @@ var	view_case = (function()
 					system_calls.PopoverInfo(curr_tag, data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 			})
@@ -73,6 +73,8 @@ var	view_case = (function()
 
 	var	GetUserInfoFromServer = function()
 	{
+		var	curr_tag = $("#case_view");
+
 		$.getJSON(
 			"/cgi-bin/helpdesk.cgi",
 			{
@@ -91,7 +93,7 @@ var	view_case = (function()
 					system_calls.PopoverInfo(curr_tag, data.description);
 				}
 			})
-			.fail(function(data)
+			.fail(function()
 			{
 				system_calls.PopoverError(curr_tag, "Ошибка ответа сервера");
 			})
@@ -111,10 +113,8 @@ var	view_case = (function()
 
 	var	RenderTicket = function(ticket)
 	{
-		var now					= new Date();
 		var highest_severity	= Number.POSITIVE_INFINITY;
 		var	helpdesk_ticket 	= new helpdesk_ticket_obj();
-		var	curr_sla_waiting	= 0;
 
 		ticket.history.sort(function(a, b)
 		{
