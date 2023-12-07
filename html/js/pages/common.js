@@ -84,6 +84,7 @@ system_calls = (function()
 
 		// --- Check availability / sign-in
 		window.setTimeout(SendEchoRequest, 1000);
+		window.setTimeout(system_calls.PingDomainName, 1100);
 
 		// --- Main search
 		$("#navMenuSearchText")
@@ -1056,6 +1057,11 @@ system_calls = (function()
 		// console.debug('system_calls.GetUserRequestNotifications: end');
 	};
 
+	async function PingDomainName() {
+		return fetch("/api/v1/domain", {
+			method: "POST"
+		})
+	}
 
 	var BuildUserRequestList = function()
 	{
@@ -2323,6 +2329,7 @@ system_calls = (function()
 		Init: Init,
 		isUserSignedin: isUserSignedin,
 		GetUserRequestNotifications: GetUserRequestNotifications,
+		PingDomainName: PingDomainName,
 		isTouchBasedUA: isTouchBasedUA,
 		CutLongMessages: CutLongMessages,
 		RemoveSpaces: RemoveSpaces,
