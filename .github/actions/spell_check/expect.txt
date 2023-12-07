@@ -3,6 +3,7 @@ ahref
 allowfullscreen
 amd
 anyrole
+api
 atob
 attr
 autocomplete
