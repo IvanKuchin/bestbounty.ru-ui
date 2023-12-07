@@ -76,10 +76,10 @@ system_calls = (function()
 
 		// --- Menu drop down on mouse over
 		jQuery("ul.nav li.dropdown").mouseenter(function() {
-		  jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeIn();
+			jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeIn();
 		});
 		jQuery("ul.nav li.dropdown").mouseleave(function() {
-		  jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeOut();
+			jQuery(this).find(".dropdown-menu").stop(true, true).delay(200).fadeOut();
 		});
 
 		// --- Check availability / sign-in
@@ -164,8 +164,8 @@ system_calls = (function()
 	};
 
 	function isTouchBasedUA() {
-	  try{ document.createEvent("TouchEvent"); return true; }
-	  catch(e){ return false; }
+		try{ document.createEvent("TouchEvent"); return true; }
+		catch(e){ return false; }
 	}
 
 	function isOrientationPortrait()
@@ -190,7 +190,7 @@ system_calls = (function()
 	{
 	 	if(message.length > len)
 		{
-	 		return message.substr(0, len) + "...";
+			return message.substr(0, len) + "...";
 		}
 
 	 	return message;
@@ -1072,7 +1072,7 @@ system_calls = (function()
 		{
 		 	if(userName.length > 19)
 		 	{
-		 		return userName.substr(0, 19) + "...";
+				return userName.substr(0, 19) + "...";
 		 	}
 
 		 	return userName;
@@ -1355,7 +1355,7 @@ system_calls = (function()
 		divContainer.append(divRow)
 					.append(divRowXSButtons.append(divColXSButtons));
 		divRow 		.append(divColLogo)
-				    .append(divInfo);
+						.append(divInfo);
 		divColLogo	.append(tagA3);
 		tagA3		.append(tagImg3);
 		tagA3		.append(tagCanvas3);
@@ -1403,7 +1403,7 @@ system_calls = (function()
 		container = container	.add(divRow)
 								.add(divRowXSButtons.append(divColXSButtons));
 		divRow 		.append(divColLogo)
-				    .append(divInfo);
+						.append(divInfo);
 		divColLogo	.append(tagCanvasLink);
 		// tagCanvasLink.append(tagImg3);
 		
@@ -1467,7 +1467,7 @@ system_calls = (function()
 		divContainer.append(divRow)
 					.append(divRowXSButtons.append(divColXSButtons));
 		divRow 		.append(divColLogo)
-				    .append(divInfo);
+						.append(divInfo);
 		divColLogo	.append(tagA3);
 		tagA3		.append(tagImg3);
 		tagA3		.append(tagCanvas3);
@@ -1693,7 +1693,7 @@ system_calls = (function()
 		tagDiv1.append(tagDiv2);
 		tagDiv2 .append(tagDiv3)
 				.append(tagDivButtons) // --- friendship button
-			    .append(tagDiv4);
+					.append(tagDiv4);
 		tagDiv3.append(tagA3);
 		tagA3.append(tagImg3);
 		tagA3.append(tagCanvas3);
@@ -2264,8 +2264,8 @@ system_calls = (function()
 
 	var isValidEmail = function(email)
 	{
-	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    return re.test(String(email).toLowerCase());
+		  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		  return re.test(String(email).toLowerCase());
 	};
 
 	var	isValidURL = function(url_str)
@@ -3651,7 +3651,7 @@ system_notifications = (function ()
 				{
 					if (Notification.permission !== "denied") 
 					{
-					    Notification.requestPermission();
+							Notification.requestPermission();
 					}
 					else
 					{
@@ -4005,12 +4005,12 @@ troubleshooting = (function ()
 		var	traceback = "";
 
 		var callback = function(stackframes) {
-		  var stringifiedStack = stackframes.map(function(sf) {
-		    return sf.toString();
-		  }).join("\n");
-		  traceback += stringifiedStack + "\n";
+			var stringifiedStack = stackframes.map(function(sf) {
+				return sf.toString();
+			}).join("\n");
+			traceback += stringifiedStack + "\n";
 
-		  return traceback;
+			return traceback;
 		};
 
 		var errback = function(err) { console.log(err.message); };
